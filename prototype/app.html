@@ -84,6 +84,10 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .small { font-size: .88rem; }
 .tag { font: .7rem var(--font-tag); letter-spacing: .04em; color: var(--muted); }
 .tag.new { color: var(--gold); }
+.taglink { font: inherit; letter-spacing: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn.done, .btn.done[disabled] { opacity: 1; cursor: default; background: var(--surface-2); color: var(--muted); border-color: var(--line); box-shadow: 0 3px 0 var(--line); }
+.btn.done .heart { color: var(--heart); }
 
 /* sprites and the cat card */
 .sprite { --z: 4; width: calc(60px * var(--z)); height: calc(68px * var(--z)); max-width: 100%; position: relative; background: var(--coat) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; flex: none; }
@@ -91,8 +95,8 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .catcard { background: var(--surface); border: 3px solid var(--ink-soft); border-radius: 12px; padding: 8px 8px 6px; box-shadow: 0 4px 0 var(--ink-soft); display: grid; gap: 6px; justify-items: stretch; }
 .plate { font: 1rem var(--font-tag); letter-spacing: .06em; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 30px; }
 .plate-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.plate-icons { display: flex; gap: 2px; flex: none; }
-.plate-icons img { width: 38px; height: 46px; object-fit: contain; margin-block: -8px; }
+.plate-icons { display: flex; gap: 4px; flex: none; }
+.plate-icons img { width: 19px; height: 23px; object-fit: contain; }
 .frame { background: repeating-linear-gradient(180deg, var(--frame) 0 10px, var(--frame-stripe) 10px 12px); border: 3px solid var(--frame-line); border-radius: 6px; display: grid; place-items: center; padding: 10px 0 6px; overflow: hidden; }
 .quote { text-align: center; font-style: italic; color: var(--muted); }
 
@@ -173,7 +177,7 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .heartpop { position: absolute; color: var(--heart); font-size: 1.6rem; animation: heartpop .9s ease-out forwards; }
 @keyframes heartpop { from { transform: translate(-50%, 0) scale(.6); opacity: 0; } 20% { opacity: 1; } to { transform: translate(-50%, -80px) scale(1.15); opacity: 0; } }
 .crop { --s: 1; display: inline-block; flex: none; width: calc(38px * var(--s)); height: calc(46px * var(--s)); background-image: var(--layer), var(--mannequin); background-size: calc(60px * var(--s)) calc(68px * var(--s)); background-position: calc(-4px * var(--s)) 0; background-repeat: no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; }
-.plate-icons .crop { margin-block: -8px; }
+.plate-icons .crop { --s: .5; }
 .slot .crop { --s: 1.5; }
 .badge.heart { color: var(--heart); border-color: var(--heart); }
 .milestone.bond { border-color: var(--bond-line); }
@@ -396,11 +400,13 @@ function renderCats(view) {
   frame.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); doPet(cat.id, frame); } });
   view.append(card,
     h("div", { style: "display:grid;gap:2px;justify-items:center" }, h("p", { class: "quote" }, `“${cat.line}”`),
-      h("span", { class: "tag" }, `${coat.name.toUpperCase()} · HOME SINCE ${cat.joined}`)),
-    h("div", { class: "row", style: "justify-content:center" },
-      h("button", { class: `btn ${petted ? "" : "primary"}`, type: "button", onclick: () => doPet(cat.id, frame) }, `Pet ${cat.name}`),
-      h("button", { class: "btn", type: "button", onclick: () => openDressSheet(cat.id) }, "Dress up"),
-      h("button", { class: "link small", type: "button", onclick: () => openRename(cat.id) }, "Rename")),
+      h("span", { class: "tag" }, `${coat.name.toUpperCase()} · ADOPTED ${dayLabel(cat.joined).toUpperCase()} · `,
+        h("button", { class: "taglink", type: "button", onclick: () => openRename(cat.id) }, "RENAME"))),
+    h("div", { class: "actions" },
+      petted
+        ? h("button", { class: "btn done", type: "button", disabled: true }, h("span", { class: "heart", "aria-hidden": "true" }, "♥ "), "Petted today")
+        : h("button", { class: "btn primary", type: "button", onclick: () => doPet(cat.id, frame) }, `Pet ${cat.name}`),
+      h("button", { class: "btn", type: "button", onclick: () => openDressSheet(cat.id) }, "Dress up")),
     friendshipPanel(cat));
   if (state.cats.length === 1) view.append(h("p", { class: "devnote" }, "More cats find their way to you over time. How they arrive is still being designed; in this prototype, use TOOLS → “A new cat arrives”."));
 }
@@ -534,10 +540,10 @@ function renderCollection(view) {
   };
   view.append(h("section", { class: "panel" }, h("h2", {}, "Animal Hoods"), progressBar(),
     h("div", { class: "wardrobe" }, [...Game.POOL, ...Game.MILESTONES.map((m) => m.hat)].map(slot)),
-    h("p", { class: "legend small muted" }, h("i", { "aria-hidden": "true" }), "Rewards for set progress.")),
+    h("p", { class: "legend small muted" }, h("i", { "aria-hidden": "true" }), "Rewarded for set progress")),
     h("section", { class: "panel" }, h("h2", {}, "Friendship hats"),
       h("div", { class: "wardrobe" }, state.cats.map(bondSlot)),
-      h("p", { class: "legend bondlegend small muted" }, h("i", { "aria-hidden": "true" }), `Each cat's own hat, at ${Game.FRIENDSHIP.hearts} hearts.`)));
+      h("p", { class: "legend bondlegend small muted" }, h("i", { "aria-hidden": "true" }), `Rewarded at ${Game.FRIENDSHIP.hearts} friendship hearts`)));
 }
 
 function openDressSheet(catId) {
