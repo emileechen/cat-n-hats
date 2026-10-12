@@ -43,7 +43,7 @@ UNRELEASED_COLOURS = {
 }
 SOURCES = {
     "ahhh.psd": "Master file. Every cat colour (including unreleased tabbies and open-eye tests) and every hat, including the Jester variants, birds, food, holiday lights and prototypes.",
-    "icon.psd": "19×23 icons for cats, Animal Hoods, Basic, Strawberry and Googly Eyes.",
+    "icon.psd": "The 2022 icons (19×23). Icons aren't used in the rebuild.",
     "mannequin.psd": "The grey mannequin cat.",
     "cats and hats.psd": "March 2022 UI mockup: player cards and the first froggy/bunny tests.",
     "animals.psd": "Animal Hoods set sheet (announcement image).",
@@ -90,7 +90,6 @@ def build_data():
                 "obtain": c["obtain"] if c else None,
                 "released": bool(c),
                 "layer": maybe(base.with_suffix(".png")),
-                "icon": maybe(base.parent / f"{slug}_i.png"),
             })
         rows.sort(key=lambda r: (r["id"] is None, r["id"] or "", r["name"]))
         hats += rows
@@ -100,10 +99,10 @@ def build_data():
         slug = c["art"].removeprefix("cats/")
         cats.append({"key": slug, "id": c["id"], "name": c["name"], "set": c["set"], "desc": c["description"],
                      "price": prices.get(c["id"]), "released": True,
-                     "sprite": uri(ART / "cats" / f"{slug}.png"), "icon": maybe(ART / "cats" / f"{slug}_i.png")})
+                     "sprite": uri(ART / "cats" / f"{slug}.png")})
     for slug, name in UNRELEASED_COLOURS.items():
         cats.append({"key": slug, "id": None, "name": name, "set": "Unreleased", "desc": None, "price": None,
-                     "released": False, "sprite": uri(ART / "cats" / "unreleased" / f"{slug}.png"), "icon": None})
+                     "released": False, "sprite": uri(ART / "cats" / "unreleased" / f"{slug}.png")})
 
     legacy = []
     for tab, p in players.items():

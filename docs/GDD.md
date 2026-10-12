@@ -217,7 +217,6 @@ All of this is in `data/catalog/` with names, flavour text, reveal names and ima
 
 **Gaps to fill before launch:**
 - No flavour text for 9 Basic hats (AB03–AB09, AB11, AB12) or for Calico E–H
-- No icons for AB11, AB12, AD02, Calico E–H, Glass, Meadow or Magma
 - No reveal names for the starter hats, AC19, AC20 or AD02
 
 **Is this enough for launch?** Probably. By the pace math in §2, 30 box hats take a daily player 3+ months to finish. Have the first new set ready about 6–8 weeks after launch. **[Decide]**
@@ -231,7 +230,7 @@ Sources: the main sheet's **Planning** tab (To Do list, one column per set idea)
 | **Birds** ("finish birds hat collection" was on the To Do list) | **11:** Secretary Bird, Great Horned Owl, Flamingo, Swan, Black Swan, Chestnut-backed Chickadee, Black-capped Chickadee, Blackburnian Warbler, Yellow(-rumped) Warbler, Cerulean Warbler (m), Cerulean Warbler (f). The 2023 sheet leaves slot #4 blank. | Hummingbird, Barn Swallow, Peacock, Dove with Olive Crown |
 | **Food** ("finish food hat collection" was on the To Do list) | **5:** Fried Egg, Pancakes, Pancakes Cut (listed as "Eaten" in the sheet), Pancakes Fruit, Pancakes Ombre | Spaghetti, Corn, Yam, Mini Broccoli Clips, Ice Cream, Taiyaki?; "Sunny Side Up" is probably the Fried Egg |
 | **Winter** (the 2023 sheet's name for the 2022 holiday art) | **2:** String Lights Multi, String Lights Warm | Earmuffs |
-| Fruit | **1:** Strawberry (on mannequin and icon only; no separated layer in the folder) | Lime Slice, Lemon Slice, Cherry on Top, Watermelon |
+| Fruit | **1:** Strawberry | Lime Slice, Lemon Slice, Cherry on Top, Watermelon |
 | Water Animals | — | Axolotl, Crab, Shark, Fish, Fish Eating Head |
 | Costume | — | Witch, Halo, Horns, Masquerade, Flame, Knight's Helm |
 | Streetwear | — | Headphones, Headband, Straw Hat, Glasses, Sunglasses, Headband (listed twice) |
@@ -263,10 +262,9 @@ Sources: the main sheet's **Planning** tab (To Do list, one column per set idea)
 
 **Ears behind hoods [Decide].** On a few hoods (bunny, flamingo, both swans) the cat's own ears peek out from behind. The 2022 mannequin previews look the same, so it may be intended; it's just more visible on coloured cats. If you'd rather hide them, add an optional per-hat mask that blanks those cat pixels.
 
-**Gaps** (details in `art/README.md`):
-- Icons for 29 items
+**No icons.** The rebuild shows hats on the mannequin or on a cat wherever 2022 used a 19×23 icon. The old icons stay in `art/` for reference.
 
-**Who draws: you.** You drew all the original art and will draw new sets, so new content moves at the pace of your drawing time. The pipeline should keep everything else out of the way: export a layer and icon per hat → upload in the admin page → fill in names and flavour text → schedule the set. No code changes.
+**Who draws: you.** You drew all the original art and will draw new sets, so new content moves at the pace of your drawing time. The pipeline should keep everything else out of the way: export a layer per hat → upload in the admin page → fill in names and flavour text → schedule the set. No code changes.
 
 **Unreleased art already exists:** 11 Birds, 5 Food, 2 Winter string lights, a Strawberry, 4 extra tabby colours and a few prototype hats (see §6.2 and `art/README.md`). The PSD sources, including the master file `ahhh.psd`, are in `art/source/`.
 
@@ -353,7 +351,7 @@ These came out of playing the vertical slice (`prototype/`). They override the s
   - **Collection:** each set, with progress and rewards, plus a Friendship hats row
 - **Collection shows each hat on the mannequin.** Hats you haven't found show as silhouettes. Reward hats sit inside their set on a gold tile.
 - **Animal Hoods is complete at 18** (the reward hats don't count toward their own set).
-- **The cat card shows the coat and hat icons beside the name,** with no chip under the portrait.
+- **No icons anywhere.** Hats show on the mannequin (Collection, dress-up picker, box history) or on the cat. The cat card's name plate is just the name.
 
 ---
 

@@ -21,10 +21,6 @@ def uri(path):
     return "data:image/png;base64," + base64.b64encode(path.read_bytes()).decode()
 
 
-def maybe(path):
-    return uri(path) if path.exists() else None
-
-
 def build_data():
     hats = {}
     for h in json.loads((CATALOG / "hats.json").read_text()):
@@ -33,11 +29,11 @@ def build_data():
         display, short = REWARD_NAMES.get(h["id"], (h["display_name"], h["display_name"]))
         desc = (h["description"] or "").replace("🎁 Reward.", "").strip() or None
         hats[h["id"]] = {"id": h["id"], "name": h["name"], "display": display, "short": short, "desc": desc,
-                         "layer": uri(ART / f"{h['art']}.png"), "icon": uri(ART / f"{h['art']}_i.png")}
+                         "layer": uri(ART / f"{h['art']}.png")}
     coats = {}
     for c in json.loads((CATALOG / "cat_colours.json").read_text()):
         coats[c["id"]] = {"id": c["id"], "name": c["name"], "desc": c["description"],
-                          "sprite": uri(ART / f"{c['art']}.png"), "icon": maybe(ART / f"{c['art']}_i.png")}
+                          "sprite": uri(ART / f"{c['art']}.png")}
     lines = [l["text"] for l in json.loads((CATALOG / "planned.json").read_text())["cat_flavour_text_suggestions"]]
     # Placeholder special hats: the 2022 test hats from the master PSD, assigned by coat.
     specials = [("cap-red", "Red Cap"), ("clips", "Hair Clips"), ("hood", "Pink Hood"), ("bigger-hood", "Yellow Hood"),
@@ -45,11 +41,11 @@ def build_data():
     for slug, name in specials:
         hats[f"SP-{slug}"] = {"id": f"SP-{slug}", "name": name, "display": name, "short": name,
                               "desc": "Placeholder: a 2022 test hat from the master PSD.", "special": True,
-                              "layer": uri(ART / "extras" / "prototype-hats" / f"{slug}.png"), "icon": None}
+                              "layer": uri(ART / "extras" / "prototype-hats" / f"{slug}.png")}
     order = STARTERS + [c for c in coats if c not in STARTERS]
     special_by_coat = {coat: f"SP-{specials[i % len(specials)][0]}" for i, coat in enumerate(order)}
-    locked = [{"name": "Basic Hats", "icon": uri(ART / "hats/basic/partyhat-blue_i.png")},
-              {"name": "Birds", "icon": uri(ART / "hats/birds/flamingo_i.png")}]
+    locked = [{"name": "Basic Hats", "layer": uri(ART / "hats/basic/partyhat-blue.png")},
+              {"name": "Birds", "layer": uri(ART / "hats/birds/flamingo.png")}]
     return {"hats": hats, "coats": coats, "starters": STARTERS, "lines": lines,
             "mannequin": uri(ART / "mannequin.png"), "lockedBoxes": locked, "specialByCoat": special_by_coat}
 

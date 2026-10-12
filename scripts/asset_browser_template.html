@@ -82,9 +82,6 @@ section { margin-top: 44px; scroll-margin-top: 150px; }
 .sprite { width: calc(60px * var(--z)); height: calc(68px * var(--z)); max-width: 100%; background: var(--cat) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; position: relative; }
 .sprite.bare { background: none; }
 .sprite img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.icon-slot { position: absolute; right: 4px; bottom: 4px; width: 38px; height: 46px; background: var(--surface); border-radius: 4px; display: grid; place-items: center; border: 1.5px solid var(--frame-line); }
-.icon-slot img { width: 38px; height: 46px; }
-.icon-slot.missing { border-style: dashed; background: transparent; font: .55rem/1 var(--font-tag); color: var(--ink); text-align: center; opacity: .75; }
 .name { font-weight: 700; line-height: 1.25; }
 .meta { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; }
 .tag { font: .66rem var(--font-tag); letter-spacing: .04em; color: var(--muted); }
@@ -172,7 +169,7 @@ const h = (tag, attrs = {}, ...kids) => {
 const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
 
 const OBTAIN = { starter: "Starter pick", mystery_box: "Mystery Box", milestone_reward: "Milestone reward", event: "Event" };
-const wearables = [{ key: "mannequin", name: "Mannequin", sprite: DATA.mannequin, icon: DATA.mannequin }, ...DATA.cats];
+const wearables = [{ key: "mannequin", name: "Mannequin", sprite: DATA.mannequin }, ...DATA.cats];
 let wearing = store.get("cnh-wear") || "grey";
 let filter = store.get("cnh-filter") || "all";
 
@@ -188,8 +185,8 @@ function setFilter(f) {
   filter = f; store.set("cnh-filter", f);
   document.querySelectorAll("#filters .chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === f));
   document.querySelectorAll("[data-filterable]").forEach(card => {
-    const rel = card.dataset.released === "1", noIcon = card.dataset.noicon === "1";
-    card.hidden = !(f === "all" || (f === "released" && rel) || (f === "unreleased" && !rel) || (f === "noicon" && noIcon));
+    const rel = card.dataset.released === "1";
+    card.hidden = !(f === "all" || (f === "released" && rel) || (f === "unreleased" && !rel));
   });
   document.querySelectorAll("[data-shelf]").forEach(sec => {
     const any = sec.querySelector("[data-filterable]:not([hidden])");
@@ -200,15 +197,11 @@ function setFilter(f) {
 function sprite(layer, z) {
   return h("div", { class: "sprite", style: z ? `--z:${z}` : null }, layer ? h("img", { src: layer, alt: "", class: "px" }) : null);
 }
-function iconSlot(icon) {
-  return icon ? h("div", { class: "icon-slot" }, h("img", { src: icon, alt: "icon", class: "px" }))
-              : h("div", { class: "icon-slot missing", title: "No icon yet" }, "NO", h("br"), "ICON");
-}
 
 function hatCard(hat) {
   const card = h("button", { class: "card", type: "button", "data-filterable": true, "data-released": hat.released ? "1" : "0",
-    "data-noicon": hat.icon ? "0" : "1", onclick: () => openHat(hat), "aria-label": `${hat.name}, show on every colour` },
-    h("div", { class: "frame" }, sprite(hat.layer), iconSlot(hat.icon)),
+    onclick: () => openHat(hat), "aria-label": `${hat.name}, show on every colour` },
+    h("div", { class: "frame" }, sprite(hat.layer)),
     h("div", { class: "name" }, hat.name),
     h("div", { class: "meta" }, hat.id ? h("span", { class: "id" }, hat.id) : h("span", { class: "tag" }, "NO ID YET"),
       h("span", { class: "tag" }, hat.obtain ? OBTAIN[hat.obtain] : "Unreleased")),
@@ -220,8 +213,8 @@ function hatCard(hat) {
 function colourCard(c) {
   const price = c.price ? `${c.price} 💎 in shop` : null;
   return h("button", { class: "card", type: "button", "data-filterable": true, "data-released": c.released ? "1" : "0",
-    "data-noicon": c.icon ? "0" : "1", onclick: () => { setWear(c.key); }, "aria-label": `${c.name}, wear hats on this colour` },
-    h("div", { class: "frame" }, h("div", { class: "sprite bare" }, h("img", { src: c.sprite, alt: "", class: "px" })), iconSlot(c.icon)),
+    onclick: () => { setWear(c.key); }, "aria-label": `${c.name}, wear hats on this colour` },
+    h("div", { class: "frame" }, h("div", { class: "sprite bare" }, h("img", { src: c.sprite, alt: "", class: "px" }))),
     h("div", { class: "name" }, c.name),
     h("div", { class: "meta" }, c.id ? h("span", { class: "id" }, c.id) : h("span", { class: "tag" }, "NO ID YET"), h("span", { class: "tag" }, c.set)),
     price ? h("div", { class: "desc" }, price) : null,
@@ -239,8 +232,7 @@ function openHat(hat) {
         h("div", { class: "meta" }, hat.id ? h("span", { class: "id" }, hat.id) : null, h("span", { class: "tag" }, set.label), h("span", { class: "tag" }, hat.obtain ? OBTAIN[hat.obtain] : "Unreleased")),
         hat.reveal ? h("p", { class: "desc" }, `Mystery Box line: “…pulls out a ${hat.reveal}!”`) : null,
         hat.desc ? h("p", { class: "desc" }, hat.desc) : null,
-        h("p", { class: "desc" }, `File: art/hats/${hat.key}.png`, hat.icon ? " · has icon" : " · no icon yet"),
-        hat.icon ? h("img", { src: hat.icon, alt: "icon", class: "px", style: "width:57px;height:69px;background:var(--frame);border-radius:4px" }) : null),
+        h("p", { class: "desc" }, `File: art/hats/${hat.key}.png`)),
       h("button", { class: "close", type: "button", onclick: () => $("#dlg").close() }, "Close")),
     h("h3", {}, `On every colour (${wearables.length})`),
     h("div", { class: "allcats" }, wearables.map(c => h("figure", {},
@@ -258,16 +250,15 @@ function shelf(id, title, pill, note, cards) {
 
 function render() {
   const hats = DATA.hats, cats = DATA.cats;
-  const noIcon = hats.filter(x => !x.icon).length + cats.filter(x => !x.icon).length;
   const stats = [
     [hats.length, "hats drawn"], [hats.filter(x => x.released).length, "in the 2022 catalogue"],
     [cats.length, `cat colours (${cats.filter(c => !c.released).length} unreleased)`],
-    [noIcon, "items need an icon"], [DATA.legacy.length, "founders' 2022 art"], [DATA.sources.length, "PSD sources"]];
+[DATA.legacy.length, "founders' 2022 art"], [DATA.sources.length, "PSD sources"]];
   $("#stats").replaceChildren(...stats.map(([n, l]) => h("div", { class: "stat" }, h("b", {}, n), h("span", {}, l))));
 
   $("#swatches").replaceChildren(...wearables.map(c => h("button", { class: "swatch", type: "button", "data-key": c.key, title: c.name,
-    "aria-label": c.name, "aria-pressed": "false", onclick: () => setWear(c.key) }, h("img", { src: c.icon || c.sprite, alt: "", class: "px" }))));
-  $("#filters").replaceChildren(...[["all", "Everything"], ["released", "Released 2022"], ["unreleased", "Drawn, unreleased"], ["noicon", "Needs an icon"]]
+    "aria-label": c.name, "aria-pressed": "false", onclick: () => setWear(c.key) }, h("img", { src: c.sprite, alt: "", class: "px" }))));
+  $("#filters").replaceChildren(...[["all", "Everything"], ["released", "Released 2022"], ["unreleased", "Drawn, unreleased"]]
     .map(([f, l]) => h("button", { class: "chip", type: "button", "data-f": f, "aria-pressed": "false", onclick: () => setFilter(f) }, l)));
 
   const main = $("#main"); main.replaceChildren();

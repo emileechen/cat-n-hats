@@ -33,12 +33,12 @@ Hat sets:
 |---|---|---|
 | `cats/<slug>.png` | 60×68 | Cat colour sprite |
 | `hats/<set>/<slug>.png` | 60×68 | **Hat layer:** hat pixels only, transparent everywhere else, in its wearing position on the shared canvas. The app stacks this on top of a cat. |
-| `<slug>_i.png` | 19×23 | Icon for menus and inventory |
+| `<slug>_i.png` | 19×23 | **Legacy 2022 icon.** The rebuild doesn't use icons; hats show on the mannequin or the cat instead. Kept for reference. |
 | `hats/<set>/<slug>_m.png` | 60×68 | Hat on the mannequin. Only for a hat that doesn't have a layer yet; the app generates these otherwise. |
 
 - Slugs are lowercase words joined with hyphens, item first and then the variant: `partyhat-blue`, `warbler-cerulean-f`.
 - The catalogue links to art by path. In `data/catalog/hats.json`, `"art": "hats/basic/partyhat-blue"` means `art/hats/basic/partyhat-blue.png`.
-- Adding a set: make a new folder under `hats/`, export each hat as a layer plus an icon, then run the checker.
+- Adding a set: make a new folder under `hats/`, export each hat as a layer, then run the checker. No icons needed.
 
 ## Checking
 
@@ -49,7 +49,7 @@ python3 scripts/check_art.py --sheet build/all-hats-on-all-cats.png
 The checker reports:
 - wrong sizes or names
 - catalogue items with no art
-- hats missing a layer or icon
+- hats missing a layer
 - drawn hats that aren't in the catalogue yet
 
 With `--sheet` it also draws every hat layer on every cat colour. It needs Pillow.
@@ -71,10 +71,6 @@ With `--sheet` it also draws every hat layer on every cat colour. It needs Pillo
   - `outfits-old` → `legacy-2022`
   - `*-big.png` portraits → `portraits/<player>.png`
 
-## Known gaps (2026-10-09; run the checker for the current state)
+## Known gaps
 
-**No icon yet:**
-- Jesters A–E, both barrettes
-- 8 birds (all except Swan, Black Swan and Flamingo)
-- all food and winter hats
-- Calico E–H, Glass, Meadow, Magma
+None for drawn hats: every hat has a separated layer. Icons were dropped from the rebuild (2026-10-12), so missing icons are no longer gaps. Run the checker for the current state.

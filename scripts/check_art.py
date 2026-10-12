@@ -5,9 +5,10 @@ Usage:
     python3 scripts/check_art.py --sheet build/all-hats-on-all-cats.png
 
 Rules (see art/README.md):
-    art/cats/<slug>.png       60x68 cat colour      art/cats/<slug>_i.png        19x23 icon
-    art/hats/<set>/<slug>.png 60x68 hat layer       art/hats/<set>/<slug>_i.png  19x23 icon
+    art/cats/<slug>.png          60x68 cat coat
+    art/hats/<set>/<slug>.png    60x68 hat layer
     art/hats/<set>/<slug>_m.png  60x68 hat on mannequin, only for hats that don't have a layer yet
+    <slug>_i.png                 19x23 legacy 2022 icons; the rebuild doesn't use icons, but existing ones are still size-checked
 
 Requires Pillow.
 """
@@ -70,20 +71,16 @@ def main(sheet_path=None):
         if c["art"].removeprefix("cats/") not in cats:
             problems.append(f"catalogue colour {c['id']} {c['name']}: no art at art/{c['art']}.png")
 
-    print("Hats by set (layer / icon):")
+    print("Hats by set:")
     for s, items in hat_sets.items():
         layers = sum("layer" in f for f in items.values())
-        icons = sum("icon" in f for f in items.values())
-        print(f"  {s:18} {len(items):3} hats  {layers:3} layers  {icons:3} icons")
-    print(f"Cat colours: {len(cats)}  ({sum('icon' in f for f in cats.values())} with icons)")
+        print(f"  {s:18} {len(items):3} hats  {layers:3} with layers")
+    print(f"Cat coats: {len(cats)}")
 
     print("\nNeeds a separated hat layer (only the mannequin version exists):")
     for key, f in hats.items():
         if "layer" not in f:
             print(f"  {key}")
-    print("\nMissing icons:")
-    missing = [k for k, f in hats.items() if "icon" not in f] + [f"cats/{k}" for k, f in cats.items() if "icon" not in f]
-    print("  " + ", ".join(missing) if missing else "  none")
     print("\nArt not in the catalogue yet (unreleased):")
     unreleased = [k for k in hats if k not in in_catalog]
     print("  " + ", ".join(unreleased) if unreleased else "  none")

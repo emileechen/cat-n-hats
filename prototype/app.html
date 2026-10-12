@@ -95,8 +95,6 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .catcard { background: var(--surface); border: 3px solid var(--ink-soft); border-radius: 12px; padding: 8px 8px 6px; box-shadow: 0 4px 0 var(--ink-soft); display: grid; gap: 6px; justify-items: stretch; }
 .plate { font: 1rem var(--font-tag); letter-spacing: .06em; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 30px; }
 .plate-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.plate-icons { display: flex; gap: 4px; flex: none; }
-.plate-icons img { width: 19px; height: 23px; object-fit: contain; }
 .frame { background: repeating-linear-gradient(180deg, var(--frame) 0 10px, var(--frame-stripe) 10px 12px); border: 3px solid var(--frame-line); border-radius: 6px; display: grid; place-items: center; padding: 10px 0 6px; overflow: hidden; }
 .quote { text-align: center; font-style: italic; color: var(--muted); }
 
@@ -117,22 +115,21 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .boxcard[aria-checked="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
 .boxcard.locked { cursor: default; border-style: dashed; opacity: .75; }
 .lockicon { width: 78px; height: 72px; display: grid; place-items: center; }
-.lockicon img { width: 57px; height: 69px; filter: brightness(0); opacity: .3; }
+.lockicon img { width: 60px; height: 68px; filter: brightness(0); opacity: .3; }
 :root[data-theme="dark"] .lockicon img { filter: brightness(0) invert(1); opacity: .25; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lockicon img { filter: brightness(0) invert(1); opacity: .25; } }
 .history { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .hrow { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 8px; background: var(--surface-2); border-radius: 10px; }
-.hicon { background: var(--frame); border-radius: 6px; padding: 2px; }
-.hicon img { width: 38px; height: 46px; display: block; }
+.hicon { background: var(--frame); border-radius: 6px; padding: 2px; width: 64px; }
 .hshards { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .idle { animation: idle 2.4s ease-in-out infinite; }
 @keyframes idle { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-4deg); } 90% { transform: rotate(4deg); } 95% { transform: rotate(-2deg); } }
 .progress { display: grid; gap: 6px; }
 .bar { position: relative; height: 14px; background: var(--surface-2); border: 2px solid var(--ink-soft); border-radius: 4px; overflow: visible; }
 .bar .fill { height: 100%; background: var(--good); border-radius: 2px; transition: width .4s steps(8); }
-.bar .mark { position: absolute; top: -9px; width: 26px; height: 30px; transform: translateX(-50%); }
-.bar .mark img { width: 26px; height: 30px; }
-.bar .mark.locked img { filter: grayscale(1); opacity: .55; }
+.bar .mark { position: absolute; top: -8px; min-width: 24px; height: 26px; padding: 0 4px; transform: translateX(-50%); display: grid; place-items: center;
+  font: .72rem var(--font-tag); color: var(--ink); background: var(--reward); border: 2px solid var(--reward-line); border-radius: 5px; }
+.bar .mark.locked { background: var(--surface-2); border-color: var(--line); color: var(--muted); }
 .bar-legend { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
 
 /* onboarding */
@@ -148,20 +145,11 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface-2); border-radius: 10px; padding: 4px; gap: 4px; }
 .seg button { border: 0; background: none; border-radius: 7px; padding: 8px; font-weight: 800; cursor: pointer; color: var(--muted); }
 .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 2px 0 var(--line); }
-.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
-.slot { position: relative; aspect-ratio: 19 / 23; max-width: 100%; background: var(--frame); border: 2px solid var(--frame-line); border-radius: 8px; display: grid; place-items: center; cursor: pointer; padding: 6px; }
-.slot img { width: 100%; height: 100%; object-fit: contain; }
-.slot.missing img { filter: brightness(0); opacity: .22; }
-:root[data-theme="dark"] .slot.missing img { filter: brightness(0) invert(1); opacity: .18; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .slot.missing img { filter: brightness(0) invert(1); opacity: .18; } }
-.slot .count { position: absolute; right: -4px; bottom: -6px; font: .7rem var(--font-tag); background: var(--ink); color: var(--surface); border-radius: 6px; padding: 1px 5px; }
-.slot .new { position: absolute; left: -4px; top: -6px; font: .62rem var(--font-tag); background: var(--gold); color: #fff; border-radius: 6px; padding: 1px 5px; }
-.slot[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
-.slot.nohat { font: .7rem var(--font-tag); color: var(--ink); text-align: center; }
 .wardrobe { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
 .mslot { position: relative; display: grid; gap: 4px; align-content: start; background: var(--frame); border: 2px solid var(--frame-line); border-radius: 8px; padding: 6px 4px 8px; cursor: pointer; text-align: center; min-width: 0; }
-.mslot .fig { width: 100%; aspect-ratio: 60 / 68; position: relative; background: var(--mannequin) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; }
-.mslot .fig img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.fig { width: 100%; aspect-ratio: 60 / 68; position: relative; background: var(--mannequin) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; }
+.fig img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mslot[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
 .mslot.missing .fig img { filter: brightness(0); opacity: .45; }
 :root[data-theme="dark"] .mslot.missing .fig img { filter: brightness(0) invert(1); opacity: .3; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mslot.missing .fig img { filter: brightness(0) invert(1); opacity: .3; } }
@@ -176,9 +164,6 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .fx { position: fixed; inset: 0; pointer-events: none; z-index: 70; }
 .heartpop { position: absolute; color: var(--heart); font-size: 1.6rem; animation: heartpop .9s ease-out forwards; }
 @keyframes heartpop { from { transform: translate(-50%, 0) scale(.6); opacity: 0; } 20% { opacity: 1; } to { transform: translate(-50%, -80px) scale(1.15); opacity: 0; } }
-.crop { --s: 1; display: inline-block; flex: none; width: calc(38px * var(--s)); height: calc(46px * var(--s)); background-image: var(--layer), var(--mannequin); background-size: calc(60px * var(--s)) calc(68px * var(--s)); background-position: calc(-4px * var(--s)) 0; background-repeat: no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; }
-.plate-icons .crop { --s: .5; }
-.slot .crop { --s: 1.5; }
 .badge.heart { color: var(--heart); border-color: var(--heart); }
 .milestone.bond { border-color: var(--bond-line); }
 .boxwith { grid-template-columns: auto 1fr; align-items: center; }
@@ -315,21 +300,11 @@ function sprite(coat, hat, z, extraHatClass = "") {
   return h("div", { class: "sprite", style: `--coat:url("${D.coats[coat].sprite}")${z ? `;--z:${z}` : ""}` },
     hat ? h("img", { src: D.hats[hat].layer, alt: "", class: `px ${extraHatClass}` }) : null);
 }
-function hatIcon(id) {
-  const hat = D.hats[id];
-  return hat.icon ? h("img", { src: hat.icon, alt: hat.display, title: hat.display, class: "px" })
-    : h("span", { class: "crop", role: "img", "aria-label": hat.display, title: hat.display, style: `--layer:url("${hat.layer}")` });
-}
 const allHatIds = () => [...new Set([...Game.POOL, ...Game.MILESTONES.map((m) => m.hat), ...state.cats.map((c) => c.special)])];
 
 function catCard(cat, { z = 4, hat = cat.hat, hatClass = "" } = {}) {
-  const coat = D.coats[cat.coat];
   return h("div", { class: "catcard" },
-    h("div", { class: "plate" },
-      h("span", { class: "plate-name" }, cat.name.toUpperCase()),
-      h("span", { class: "plate-icons" },
-        h("img", { src: coat.icon || coat.sprite, alt: `${coat.name} coat`, title: `${coat.name} coat`, class: "px" }),
-        hat ? hatIcon(hat) : null)),
+    h("div", { class: "plate" }, h("span", { class: "plate-name" }, cat.name.toUpperCase())),
     h("div", { class: "frame" }, sprite(cat.coat, hat, z, hatClass)));
 }
 function progressBar() {
@@ -338,7 +313,7 @@ function progressBar() {
     h("div", { class: "bar", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": total, "aria-valuenow": have, "aria-label": "Animal Hoods collected" },
       h("div", { class: "fill", style: `width:${(have / total) * 100}%` }),
       Game.MILESTONES.map((m) => h("div", { class: `mark ${state.claimed.includes(m.id) ? "" : "locked"}`, style: `left:${(m.threshold / total) * 100}%`, title: `${m.threshold}: ${hatName(m.hat)} + ${m.shards} 💎` },
-        h("img", { src: D.hats[m.hat].icon, alt: "", class: "px" })))),
+        String(m.threshold)))),
     h("div", { class: "bar-legend small" }, h("span", {}, h("b", {}, `${have}`), ` of ${total} Animal Hoods`), h("span", { class: "muted" }, nextMilestoneText(have))));
 }
 function nextMilestoneText(have) {
@@ -482,7 +457,7 @@ function renderBox(view) {
         Object.values(Game.BOXES).map((b) => h("button", { class: "boxcard", type: "button", role: "radio", "aria-checked": String(choice === b.id), onclick: () => { ui.box = b.id; render(); } },
           boxEl(`sm ${choice === b.id ? "idle" : ""}`), h("b", {}, b.name), h("span", { class: "small muted" }, `${Game.uniquePoolHats(state)} of ${b.pool.length} found`))),
         D.lockedBoxes.map((b) => h("div", { class: "boxcard locked", "aria-disabled": "true" },
-          h("div", { class: "lockicon" }, h("img", { src: b.icon, alt: "", class: "px" })), h("b", {}, b.name), h("span", { class: "tag" }, "COMING SOON")))),
+          h("div", { class: "lockicon" }, h("img", { src: b.layer, alt: "", class: "px" })), h("b", {}, b.name), h("span", { class: "tag" }, "COMING SOON")))),
       h("section", { class: "panel boxwith" },
         h("div", { class: "frame" }, sprite(opener.coat, opener.hat, 1)),
         h("div", { style: "display:grid;gap:6px;min-width:0" },
@@ -502,7 +477,7 @@ function historyRow(e) {
   const cat = state.cats.find((c) => c.id === e.cat);
   const box = Game.BOXES[e.box || "animals"];
   return h("li", { class: "hrow" },
-    h("div", { class: "hicon" }, h("img", { src: D.hats[e.hat].icon, alt: "", class: "px" })),
+    h("div", { class: "hicon" }, h("div", { class: "fig" }, h("img", { src: D.hats[e.hat].layer, alt: "", class: "px" }))),
     h("div", { style: "display:grid;gap:2px;min-width:0" },
       h("div", { class: "row", style: "gap:6px" }, h("b", {}, hatName(e.hat)),
         e.isNew ? h("span", { class: "tag new" }, "NEW") : null),
@@ -557,10 +532,11 @@ function openDressSheet(catId) {
         h("button", { class: "btn small", type: "button", onclick: () => close() }, "Done")),
       catCard(cat, { z: 3 }),
       owned.length
-        ? h("div", { class: "slots" },
-            h("button", { class: "slot nohat", type: "button", "aria-pressed": String(!cat.hat), onclick: () => choose(null) }, "NO HAT"),
-            owned.map((id) => h("button", { class: "slot", type: "button", "aria-pressed": String(cat.hat === id), "aria-label": hatName(id), onclick: () => choose(id) },
-              hatIcon(id))))
+        ? h("div", { class: "wardrobe" },
+            h("button", { class: "mslot", type: "button", "aria-pressed": String(!cat.hat), onclick: () => choose(null) },
+              h("div", { class: "fig" }), h("span", { class: "label" }, "No hat")),
+            owned.map((id) => h("button", { class: "mslot", type: "button", "aria-pressed": String(cat.hat === id), onclick: () => choose(id) },
+              h("div", { class: "fig" }, h("img", { src: D.hats[id].layer, alt: "", class: "px" })), h("span", { class: "label" }, hatName(id)))))
         : h("p", { class: "muted" }, "No hats yet. Open today's Mystery Hat Box to find the first one."),
       h("p", { class: "small muted", style: "text-align:center" }, `${owned.length} hats found. Hats are shared by all your cats.`));
   };
