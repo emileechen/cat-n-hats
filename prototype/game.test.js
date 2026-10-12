@@ -5,7 +5,7 @@ const Game = require("./game.js");
 
 const NOW = new Date("2026-10-09T09:00:00").getTime();
 const seq = (...values) => { let i = 0; return () => values[i++ % values.length]; };
-const start = () => Game.newGame({ coat: "*A03", name: "Puff", line: "If I fits, I sits" }, NOW);
+const start = () => Game.newGame({ coat: "*A03", name: "Puff", line: "If I fits, I sits", special: "SP-hood" }, NOW);
 
 test("one box per day; skipping a day brings the next one", () => {
   let s = start();
@@ -75,4 +75,54 @@ test("adopting adds a second cat that can wear the same hats", () => {
   assert.equal(dressed.cats.length, 2);
   assert.equal(dressed.activeCat, cat.id);
   assert.equal(dressed.cats[1].hat, "AC01");
+});
+
+test("the log records which box was opened and which cat checked it", () => {
+  let s = Game.adoptCat(start(), { coat: "*B05", name: "Mochi", line: "ZOOMIES." }, NOW).state;
+  s = Game.openBox(s, NOW, seq(0, 0.5), { box: "animals", cat: "cat-2" }).state;
+  assert.deepEqual(s.log[0], { day: Game.dayKey(NOW), box: "animals", cat: "cat-2", hat: "AC01", isNew: true, shards: 1, milestones: [] });
+  assert.equal(s.cats[1].friendship, Game.FRIENDSHIP.box);
+  assert.equal(s.cats[0].friendship, 0);
+});
+
+test("unknown boxes and cats are rejected", () => {
+  assert.throws(() => Game.openBox(start(), NOW, seq(0, 0), { box: "birds" }));
+  assert.throws(() => Game.openBox(start(), NOW, seq(0, 0), { cat: "cat-9" }));
+});
+
+test("petting gives friendship once per cat per day", () => {
+  let s = start();
+  let out = Game.pet(s, "cat-1", NOW);
+  assert.equal(out.result.gained, 1);
+  s = out.state;
+  out = Game.pet(s, "cat-1", NOW);
+  assert.equal(out.result.gained, 0);
+  assert.equal(out.state.cats[0].friendship, 1);
+  out = Game.pet(Game.skipDay(out.state), "cat-1", NOW);
+  assert.equal(out.result.gained, 1);
+});
+
+test("five hearts unlocks the cat's special hat exactly once, and friendship caps", () => {
+  let s = start();
+  let unlocked = [];
+  for (let day = 0; day < 12; day++) {
+    const petted = Game.pet(s, "cat-1", NOW);
+    s = petted.state; if (petted.result.unlocked) unlocked.push(petted.result.unlocked);
+    const opened = Game.openBox(s, NOW, seq(0, 0));
+    s = opened.state; if (opened.result.friendship.unlocked) unlocked.push(opened.result.friendship.unlocked);
+    s = Game.skipDay(s);
+  }
+  assert.deepEqual(unlocked, ["SP-hood"]);
+  assert.equal(s.hats["SP-hood"], 1);
+  assert.equal(s.cats[0].friendship, Game.MAX_FRIENDSHIP);
+  assert.equal(Game.hearts(s.cats[0]), Game.FRIENDSHIP.hearts);
+});
+
+test("normalize fills friendship fields on old saves", () => {
+  const old = start();
+  for (const k of ["friendship", "lastPet", "specialUnlocked", "special"]) delete old.cats[0][k];
+  const s = Game.normalize(old, (coat) => `SP-${coat}`);
+  assert.equal(s.cats[0].friendship, 0);
+  assert.equal(s.cats[0].special, "SP-*A03");
+  assert.equal(s.cats[0].specialUnlocked, false);
 });

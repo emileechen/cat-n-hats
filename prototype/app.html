@@ -19,6 +19,11 @@
   --gold: #b67a1e;
   --good: #4f7a4a;
   --line: #cbc0ac;
+  --reward: #ecd197;
+  --reward-line: #b98b2e;
+  --heart: #c4486a;
+  --bond: #f1cdd6;
+  --bond-line: #c0647d;
   --scrim: rgb(28 24 20 / .6);
   --font-display: "Pixelify Sans", "Silkscreen", ui-monospace, monospace;
   --font-body: "Nunito", ui-rounded, system-ui, sans-serif;
@@ -29,6 +34,7 @@
     --bg: #1f211c; --surface: #2d2b25; --surface-2: #38342d; --ink: #efe8db; --ink-soft: #c9bda9; --muted: #a99f90;
     --frame: #47465c; --frame-stripe: #4d4c63; --frame-line: #6b6988; --accent: #aeabdb; --accent-ink: #1f1d2b;
     --gold: #e3a955; --good: #93c38a; --line: #46423a; --scrim: rgb(0 0 0 / .65);
+    --reward: #5b4a26; --reward-line: #a8843c; --heart: #f08aa6; --bond: #5a2f3c; --bond-line: #b8667f;
     color-scheme: dark;
   }
 }
@@ -36,6 +42,7 @@
   --bg: #1f211c; --surface: #2d2b25; --surface-2: #38342d; --ink: #efe8db; --ink-soft: #c9bda9; --muted: #a99f90;
   --frame: #47465c; --frame-stripe: #4d4c63; --frame-line: #6b6988; --accent: #aeabdb; --accent-ink: #1f1d2b;
   --gold: #e3a955; --good: #93c38a; --line: #46423a; --scrim: rgb(0 0 0 / .65);
+  --reward: #5b4a26; --reward-line: #a8843c; --heart: #f08aa6; --bond: #5a2f3c; --bond-line: #b8667f;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -57,7 +64,7 @@ p { margin: 0; }
 .tools-btn { font: .7rem var(--font-tag); background: none; border: 2px dashed var(--line); border-radius: 6px; padding: 4px 8px; cursor: pointer; color: var(--muted); }
 main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 16px; align-content: start; }
 .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--surface); border-top: 2px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
-.tabs-inner { max-width: 480px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); }
+.tabs-inner { max-width: 480px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
 .tab { background: none; border: 0; padding: 10px 4px 12px; font: 700 .85rem var(--font-body); color: var(--muted); cursor: pointer; display: grid; justify-items: center; gap: 2px; position: relative; }
 .tab .glyph { font: 1rem var(--font-tag); }
 .tab[aria-current="page"] { color: var(--ink); }
@@ -76,6 +83,7 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .muted { color: var(--muted); }
 .small { font-size: .88rem; }
 .tag { font: .7rem var(--font-tag); letter-spacing: .04em; color: var(--muted); }
+.tag.new { color: var(--gold); }
 
 /* sprites and the cat card */
 .sprite { --z: 4; width: calc(60px * var(--z)); height: calc(68px * var(--z)); max-width: 100%; position: relative; background: var(--coat) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; flex: none; }
@@ -95,6 +103,24 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .box canvas { position: absolute; left: 0; width: 104px; image-rendering: pixelated; }
 .box .lid { top: 0; height: 40px; transform-origin: 50% 100%; }
 .box .body { top: 40px; height: 56px; }
+.box.sm { width: 78px; height: 72px; }
+.box.sm canvas { width: 78px; }
+.box.sm .lid { height: 30px; }
+.box.sm .body { top: 30px; height: 42px; }
+.boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.boxcard { background: var(--surface); border: 3px solid var(--line); border-radius: 12px; padding: 12px 6px 10px; display: grid; justify-items: center; align-content: start; gap: 4px; text-align: center; cursor: pointer; min-width: 0; }
+.boxcard b { font-size: .9rem; line-height: 1.2; }
+.boxcard[aria-checked="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+.boxcard.locked { cursor: default; border-style: dashed; opacity: .75; }
+.lockicon { width: 78px; height: 72px; display: grid; place-items: center; }
+.lockicon img { width: 57px; height: 69px; filter: brightness(0); opacity: .3; }
+:root[data-theme="dark"] .lockicon img { filter: brightness(0) invert(1); opacity: .25; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lockicon img { filter: brightness(0) invert(1); opacity: .25; } }
+.history { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.hrow { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 8px; background: var(--surface-2); border-radius: 10px; }
+.hicon { background: var(--frame); border-radius: 6px; padding: 2px; }
+.hicon img { width: 38px; height: 46px; display: block; }
+.hshards { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .idle { animation: idle 2.4s ease-in-out infinite; }
 @keyframes idle { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-4deg); } 90% { transform: rotate(4deg); } 95% { transform: rotate(-2deg); } }
 .progress { display: grid; gap: 6px; }
@@ -135,6 +161,26 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .mslot.missing .fig img { filter: brightness(0); opacity: .45; }
 :root[data-theme="dark"] .mslot.missing .fig img { filter: brightness(0) invert(1); opacity: .3; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mslot.missing .fig img { filter: brightness(0) invert(1); opacity: .3; } }
+.mslot.reward { background: var(--reward); border-color: var(--reward-line); }
+.mslot.bond { background: var(--bond); border-color: var(--bond-line); }
+.legend.bondlegend i { background: var(--bond); border-color: var(--bond-line); }
+.hearts { display: flex; gap: 4px; font-size: 1.35rem; line-height: 1; color: var(--heart); }
+.hearts .off { color: var(--line); }
+.friend { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+.friend .mslot { width: 92px; cursor: default; }
+.petzone { cursor: pointer; }
+.fx { position: fixed; inset: 0; pointer-events: none; z-index: 70; }
+.heartpop { position: absolute; color: var(--heart); font-size: 1.6rem; animation: heartpop .9s ease-out forwards; }
+@keyframes heartpop { from { transform: translate(-50%, 0) scale(.6); opacity: 0; } 20% { opacity: 1; } to { transform: translate(-50%, -80px) scale(1.15); opacity: 0; } }
+.crop { --s: 1; display: inline-block; flex: none; width: calc(38px * var(--s)); height: calc(46px * var(--s)); background-image: var(--layer), var(--mannequin); background-size: calc(60px * var(--s)) calc(68px * var(--s)); background-position: calc(-4px * var(--s)) 0; background-repeat: no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; }
+.plate-icons .crop { margin-block: -8px; }
+.slot .crop { --s: 1.5; }
+.badge.heart { color: var(--heart); border-color: var(--heart); }
+.milestone.bond { border-color: var(--bond-line); }
+.boxwith { grid-template-columns: auto 1fr; align-items: center; }
+.boxwith .frame { padding: 4px; }
+.legend { display: flex; align-items: center; gap: 8px; }
+.legend i { flex: none; width: 14px; height: 14px; border-radius: 3px; background: var(--reward); border: 2px solid var(--reward-line); }
 .mslot .label { font-size: .74rem; font-weight: 700; line-height: 1.15; color: var(--ink); overflow-wrap: anywhere; }
 .mslot.missing .label { font-family: var(--font-tag); font-weight: 400; color: var(--muted); }
 .mslot .count { position: absolute; right: -4px; top: -6px; font: .7rem var(--font-tag); background: var(--ink); color: var(--surface); border-radius: 6px; padding: 1px 5px; }
@@ -202,8 +248,10 @@ const store = {
   save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {} },
   clear() { try { localStorage.removeItem(KEY); } catch {} },
 };
+const specialFor = (coat) => D.specialByCoat[coat];
 let state = store.load();
-const ui = { screen: "home", pickCoat: null, name: "", resetArmed: false };
+if (state) state = Game.normalize(state, specialFor);
+const ui = { screen: "cats", box: "animals", pickCoat: null, name: "", resetArmed: false };
 
 const $ = (s, el = document) => el.querySelector(s);
 const h = (tag, attrs = {}, ...kids) => {
@@ -263,6 +311,13 @@ function sprite(coat, hat, z, extraHatClass = "") {
   return h("div", { class: "sprite", style: `--coat:url("${D.coats[coat].sprite}")${z ? `;--z:${z}` : ""}` },
     hat ? h("img", { src: D.hats[hat].layer, alt: "", class: `px ${extraHatClass}` }) : null);
 }
+function hatIcon(id) {
+  const hat = D.hats[id];
+  return hat.icon ? h("img", { src: hat.icon, alt: hat.display, title: hat.display, class: "px" })
+    : h("span", { class: "crop", role: "img", "aria-label": hat.display, title: hat.display, style: `--layer:url("${hat.layer}")` });
+}
+const allHatIds = () => [...new Set([...Game.POOL, ...Game.MILESTONES.map((m) => m.hat), ...state.cats.map((c) => c.special)])];
+
 function catCard(cat, { z = 4, hat = cat.hat, hatClass = "" } = {}) {
   const coat = D.coats[cat.coat];
   return h("div", { class: "catcard" },
@@ -270,7 +325,7 @@ function catCard(cat, { z = 4, hat = cat.hat, hatClass = "" } = {}) {
       h("span", { class: "plate-name" }, cat.name.toUpperCase()),
       h("span", { class: "plate-icons" },
         h("img", { src: coat.icon || coat.sprite, alt: `${coat.name} coat`, title: `${coat.name} coat`, class: "px" }),
-        hat ? h("img", { src: D.hats[hat].icon, alt: hatName(hat), title: hatName(hat), class: "px" }) : null)),
+        hat ? hatIcon(hat) : null)),
     h("div", { class: "frame" }, sprite(cat.coat, hat, z, hatClass)));
 }
 function progressBar() {
@@ -321,39 +376,143 @@ function renderOnboarding(view) {
 function adopt() {
   const name = ui.name.trim();
   if (!name) return;
-  commit(Game.newGame({ coat: ui.pickCoat, name, line: pick(D.lines) }, Date.now()));
-  ui.pickCoat = null; ui.name = ""; ui.screen = "home";
+  commit(Game.newGame({ coat: ui.pickCoat, name, line: pick(D.lines), special: specialFor(ui.pickCoat) }, Date.now()));
+  ui.pickCoat = null; ui.name = ""; ui.screen = "box";
   render();
   toast(`${name} is home! Your first box is waiting.`);
 }
 
-function renderHome(view) {
+function renderCats(view) {
   const cat = activeCat();
   const coat = D.coats[cat.coat];
-  if (state.cats.length > 1) view.append(h("div", { style: "display:grid;gap:4px" }, h("span", { class: "tag" }, "YOUR CATS"),
+  const petted = Game.pettedToday(state, cat, Date.now());
+  if (state.cats.length > 1) view.append(h("div", { style: "display:grid;gap:4px" }, h("span", { class: "tag" }, "YOUR CATS · THE FEATURED CAT COMES TO THE BOX"),
     catPickers(cat.id, (id) => commit({ ...state, activeCat: id }))));
-  view.append(catCard(cat),
+  const card = catCard(cat);
+  const frame = $(".frame", card);
+  frame.classList.add("petzone");
+  frame.setAttribute("role", "button"); frame.setAttribute("tabindex", "0"); frame.setAttribute("aria-label", `Pet ${cat.name}`);
+  frame.addEventListener("click", () => doPet(cat.id, frame));
+  frame.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); doPet(cat.id, frame); } });
+  view.append(card,
     h("div", { style: "display:grid;gap:2px;justify-items:center" }, h("p", { class: "quote" }, `“${cat.line}”`),
       h("span", { class: "tag" }, `${coat.name.toUpperCase()} · HOME SINCE ${cat.joined}`)),
     h("div", { class: "row", style: "justify-content:center" },
-      h("button", { class: "btn", type: "button", onclick: () => openDressSheet(cat.id) }, `Dress up ${cat.name}`),
-      h("button", { class: "link small", type: "button", onclick: () => openRename(cat.id) }, "Rename")));
-
-  if (Game.canOpen(state, Date.now())) {
-    view.append(h("section", { class: "panel boxpanel" }, boxEl("idle"),
-      h("div", { style: "display:grid;gap:8px" }, h("h2", {}, "Today's Mystery Hat Box"),
-        h("p", { class: "small muted" }, state.cats.length > 1 ? `${cat.name} is curious. Pick a different cat above to send them instead.` : `${cat.name} is very curious about this box.`),
-        h("button", { class: "btn primary", type: "button", onclick: startReveal }, `Let ${cat.name} open it`))));
-  } else {
-    const last = state.log[state.log.length - 1];
-    view.append(h("section", { class: "panel boxpanel" },
-      h("div", { class: "frame", style: "padding:6px" }, h("img", { src: D.hats[last.hat].icon, alt: "", class: "px", style: "width:57px;height:69px" })),
-      h("div", { style: "display:grid;gap:6px" }, h("h2", {}, "Box opened"),
-        h("p", { class: "small" }, `Today: ${article(hatName(last.hat))} ${hatName(last.hat)}${last.shards ? ` and ${last.shards} 💎` : ""}.`),
-        h("p", { class: "small muted", id: "countdown" }, `Next box in ${fmtCountdown(msUntilMidnight())}`),
-        h("button", { class: "link small", type: "button", style: "justify-self:start", onclick: () => { commit(Game.skipDay(state)); toast("Skipped to tomorrow (prototype)."); } }, "Skip to tomorrow (prototype)"))));
-  }
+      h("button", { class: `btn ${petted ? "" : "primary"}`, type: "button", onclick: () => doPet(cat.id, frame) }, `Pet ${cat.name}`),
+      h("button", { class: "btn", type: "button", onclick: () => openDressSheet(cat.id) }, "Dress up"),
+      h("button", { class: "link small", type: "button", onclick: () => openRename(cat.id) }, "Rename")),
+    friendshipPanel(cat));
   if (state.cats.length === 1) view.append(h("p", { class: "devnote" }, "More cats find their way to you over time. How they arrive is still being designed; in this prototype, use TOOLS → “A new cat arrives”."));
+}
+
+function heartsRow(cat) {
+  const n = Game.hearts(cat);
+  return h("div", { class: "hearts", role: "img", "aria-label": `${n} of ${Game.FRIENDSHIP.hearts} hearts` },
+    Array.from({ length: Game.FRIENDSHIP.hearts }, (_, i) => h("span", { class: i < n ? "" : "off" }, "♥")));
+}
+
+function friendshipPanel(cat) {
+  const petted = Game.pettedToday(state, cat, Date.now());
+  return h("section", { class: "panel friend" },
+    h("div", { style: "display:grid;gap:6px;min-width:0" },
+      h("h3", {}, `Friendship with ${cat.name}`), heartsRow(cat),
+      h("span", { class: "small" }, cat.friendship >= Game.MAX_FRIENDSHIP ? "Best friends!" : `${cat.friendship} / ${Game.MAX_FRIENDSHIP} · ${petted ? "petted today" : "wants pets"}`),
+      h("span", { class: "small muted" }, `Pet once a day (+${Game.FRIENDSHIP.pet}). Open the box together (+${Game.FRIENDSHIP.box}).`)),
+    bondSlot(cat));
+}
+
+function bondSlot(cat) {
+  const id = cat.special, got = cat.specialUnlocked;
+  return h("button", { class: `mslot bond ${got ? "" : "missing"}`, type: "button", onclick: () => openHatSheet(id),
+    "aria-label": got ? `${cat.name}'s special hat: ${hatName(id)}` : `${cat.name}'s special hat, unlocks at ${Game.FRIENDSHIP.hearts} hearts` },
+    h("div", { class: "fig" }, h("img", { src: D.hats[id].layer, alt: "", class: "px" })),
+    h("span", { class: "label" }, got ? hatName(id) : `${cat.name}'s hat`),
+    state.unseen.includes(id) ? h("span", { class: "new" }, "NEW") : null);
+}
+
+function floatHearts(el) {
+  if (REDUCED || !el) return;
+  const r = el.getBoundingClientRect();
+  const fx = h("div", { class: "fx", "aria-hidden": "true" });
+  for (let i = 0; i < 4; i++) fx.append(h("span", { class: "heartpop", style: `left:${r.left + r.width * (0.3 + Math.random() * 0.4)}px;top:${r.top + r.height * 0.35}px;animation-delay:${i * 90}ms` }, "♥"));
+  document.body.append(fx);
+  setTimeout(() => fx.remove(), 1400);
+}
+
+function doPet(catId, el) {
+  const { state: next, result } = Game.pet(state, catId, Date.now());
+  const cat = state.cats.find((c) => c.id === catId);
+  floatHearts(el);
+  commit(next);
+  if (result.unlocked) openSpecialSheet(catId, result.unlocked);
+  else toast(result.gained ? `+${result.gained} friendship with ${cat.name}` : `${cat.name} purrs.`);
+}
+
+function specialCard(cat, id, onWear) {
+  return h("div", { class: "milestone bond fade-in" }, h("h2", {}, `${cat.name} trusts you completely!`),
+    h("p", { class: "small" }, `Five hearts. Here's ${cat.name}'s special hat: the ${hatName(id)}.`),
+    sprite(cat.coat, id, 2.5),
+    h("button", { class: "btn small", type: "button", onclick: (e) => { e.stopPropagation(); onWear(id); } }, `Wear the ${hatName(id)}`));
+}
+
+function openSpecialSheet(catId, id) {
+  const cat = state.cats.find((c) => c.id === catId);
+  const close = overlay(h("div", { class: "sheet", style: "justify-items:center;text-align:center" },
+    specialCard(cat, id, () => { close(); commit(Game.markSeen(Game.wear(state, catId, id), id)); toast(`${cat.name} is wearing the ${hatName(id)}.`); }),
+    h("button", { class: "btn", type: "button", onclick: () => close() }, "Not now")));
+}
+
+function renderBox(view) {
+  const open = Game.canOpen(state, Date.now());
+  const choice = Game.BOXES[ui.box] ? ui.box : "animals";
+  const opener = activeCat();
+  view.append(h("div", { style: "display:grid;gap:4px" }, h("h1", {}, "Mystery Hat Box"),
+    open ? h("p", { class: "muted" }, "One box a day. Pick which set to open.")
+         : h("p", { class: "muted", id: "countdown" }, `Today's box is open. Next box in ${fmtCountdown(msUntilMidnight())}.`)));
+
+  if (open) {
+    view.append(
+      h("div", { class: "boxes", role: "radiogroup", "aria-label": "Which box to open" },
+        Object.values(Game.BOXES).map((b) => h("button", { class: "boxcard", type: "button", role: "radio", "aria-checked": String(choice === b.id), onclick: () => { ui.box = b.id; render(); } },
+          boxEl(`sm ${choice === b.id ? "idle" : ""}`), h("b", {}, b.name), h("span", { class: "small muted" }, `${Game.uniquePoolHats(state)} of ${b.pool.length} found`))),
+        D.lockedBoxes.map((b) => h("div", { class: "boxcard locked", "aria-disabled": "true" },
+          h("div", { class: "lockicon" }, h("img", { src: b.icon, alt: "", class: "px" })), h("b", {}, b.name), h("span", { class: "tag" }, "COMING SOON")))),
+      h("section", { class: "panel boxwith" },
+        h("div", { class: "frame" }, sprite(opener.coat, opener.hat, 1)),
+        h("div", { style: "display:grid;gap:6px;min-width:0" },
+          h("p", { class: "small" }, h("b", {}, opener.name), ` is coming along. Opening a box together: +${Game.FRIENDSHIP.box} friendship.`),
+          state.cats.length > 1 ? h("button", { class: "link small", type: "button", style: "justify-self:start", onclick: () => go("cats") }, "Bring a different cat") : null),
+        h("button", { class: "btn primary", type: "button", style: "grid-column:1 / -1", onclick: () => startReveal(choice) }, `Open the ${Game.BOXES[choice].name} box`)));
+  } else {
+    view.append(h("button", { class: "link small", type: "button", style: "justify-self:start", onclick: () => { commit(Game.skipDay(state)); toast("It's tomorrow. A new box is here."); } }, "Skip to tomorrow (prototype)"));
+  }
+
+  const recent = state.log.slice(-14).reverse();
+  view.append(h("section", { class: "panel" }, h("h2", {}, "Recent boxes"),
+    recent.length ? h("ol", { class: "history" }, recent.map(historyRow)) : h("p", { class: "small muted" }, "Nothing yet. Your first box is waiting.")));
+}
+
+function historyRow(e) {
+  const cat = state.cats.find((c) => c.id === e.cat);
+  const box = Game.BOXES[e.box || "animals"];
+  return h("li", { class: "hrow" },
+    h("div", { class: "hicon" }, h("img", { src: D.hats[e.hat].icon, alt: "", class: "px" })),
+    h("div", { style: "display:grid;gap:2px;min-width:0" },
+      h("div", { class: "row", style: "gap:6px" }, h("b", {}, hatName(e.hat)),
+        e.isNew ? h("span", { class: "tag new" }, "NEW") : null),
+      h("span", { class: "small muted" }, [dayLabel(e.day), cat?.name, `${box.name} box`].filter(Boolean).join(" · ")),
+      (e.milestones || []).map((id) => {
+        const m = Game.MILESTONES.find((x) => x.id === id);
+        return h("span", { class: "small", style: "color:var(--gold);font-weight:800" }, `${m.label}! +${hatName(m.hat)}, +${m.shards} 💎`);
+      })),
+    h("span", { class: "hshards" }, e.shards ? `+${e.shards} 💎` : ""));
+}
+
+function dayLabel(day) {
+  if (day === Game.dayKey(Date.now(), state.dayOffset)) return "Today";
+  if (day === Game.dayKey(Date.now(), state.dayOffset - 1)) return "Yesterday";
+  const [y, m, d] = day.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
 function catPickers(selected, onPick) {
@@ -364,16 +523,21 @@ function catPickers(selected, onPick) {
 function renderCollection(view) {
   const slot = (id) => {
     const n = state.hats[id] || 0;
-    return h("button", { class: `mslot ${n ? "" : "missing"}`, type: "button", onclick: () => openHatSheet(id), "aria-label": n ? `${hatName(id)}, ${n} owned` : "Not found yet" },
+    const reward = Game.MILESTONES.find((m) => m.hat === id);
+    const hint = reward ? `At ${reward.threshold} hoods` : "???";
+    return h("button", { class: `mslot ${n ? "" : "missing"} ${reward ? "reward" : ""}`, type: "button", onclick: () => openHatSheet(id),
+      "aria-label": n ? `${hatName(id)}, ${n} owned${reward ? ", reward" : ""}` : reward ? `Reward, earned at ${reward.threshold} hoods` : "Not found yet" },
       h("div", { class: "fig" }, h("img", { src: D.hats[id].layer, alt: "", class: "px" })),
-      h("span", { class: "label" }, n ? hatName(id) : "???"),
+      h("span", { class: "label" }, n ? hatName(id) : hint),
       n > 1 ? h("span", { class: "count" }, `×${n}`) : null,
       state.unseen.includes(id) ? h("span", { class: "new" }, "NEW") : null);
   };
-  view.append(
-    h("section", { class: "panel" }, h("h2", {}, "Animal Hoods"), progressBar(), h("div", { class: "wardrobe" }, Game.POOL.map(slot))),
-    h("section", { class: "panel" }, h("h3", {}, "Rewards"), h("p", { class: "small muted" }, "Earned by collecting hoods. These never come from the box."),
-      h("div", { class: "wardrobe" }, Game.MILESTONES.map((m) => slot(m.hat)))));
+  view.append(h("section", { class: "panel" }, h("h2", {}, "Animal Hoods"), progressBar(),
+    h("div", { class: "wardrobe" }, [...Game.POOL, ...Game.MILESTONES.map((m) => m.hat)].map(slot)),
+    h("p", { class: "legend small muted" }, h("i", { "aria-hidden": "true" }), "Rewards for set progress.")),
+    h("section", { class: "panel" }, h("h2", {}, "Friendship hats"),
+      h("div", { class: "wardrobe" }, state.cats.map(bondSlot)),
+      h("p", { class: "legend bondlegend small muted" }, h("i", { "aria-hidden": "true" }), `Each cat's own hat, at ${Game.FRIENDSHIP.hearts} hearts.`)));
 }
 
 function openDressSheet(catId) {
@@ -381,7 +545,7 @@ function openDressSheet(catId) {
   const choose = (id) => { commit(Game.wear(state, catId, id)); draw(); };
   const draw = () => {
     const cat = state.cats.find((c) => c.id === catId);
-    const owned = [...Game.POOL, ...Game.MILESTONES.map((m) => m.hat)].filter((id) => state.hats[id]);
+    const owned = allHatIds().filter((id) => state.hats[id]);
     sheet.replaceChildren(
       h("div", { class: "row", style: "justify-content:space-between" }, h("h2", {}, `Dress up ${cat.name}`),
         h("button", { class: "btn small", type: "button", onclick: () => close() }, "Done")),
@@ -390,9 +554,9 @@ function openDressSheet(catId) {
         ? h("div", { class: "slots" },
             h("button", { class: "slot nohat", type: "button", "aria-pressed": String(!cat.hat), onclick: () => choose(null) }, "NO HAT"),
             owned.map((id) => h("button", { class: "slot", type: "button", "aria-pressed": String(cat.hat === id), "aria-label": hatName(id), onclick: () => choose(id) },
-              h("img", { src: D.hats[id].icon, alt: "", class: "px" }))))
+              hatIcon(id))))
         : h("p", { class: "muted" }, "No hats yet. Open today's Mystery Hat Box to find the first one."),
-      h("p", { class: "small muted", style: "text-align:center" }, `${owned.length} of ${Game.POOL.length + Game.MILESTONES.length} hats found. Hats are shared by all your cats.`));
+      h("p", { class: "small muted", style: "text-align:center" }, `${owned.length} hats found. Hats are shared by all your cats.`));
   };
   const close = overlay(sheet);
   draw();
@@ -412,6 +576,7 @@ function openRename(catId) {
 /* ---------- overlays ---------- */
 function overlay(content, { onClose, dismissable = true } = {}) {
   const root = $("#overlay-root");
+  $("#toast-root").replaceChildren();
   const onKey = (e) => { if (e.key === "Escape" && dismissable) close(); };
   const close = () => { document.removeEventListener("keydown", onKey); root.replaceChildren(); onClose?.(); };
   const el = h("div", { class: "overlay", onclick: (e) => { if (dismissable && e.target === el) close(); } }, content);
@@ -420,9 +585,10 @@ function overlay(content, { onClose, dismissable = true } = {}) {
   return close;
 }
 
-async function startReveal() {
+async function startReveal(boxId) {
   const cat = activeCat();
-  const { state: next, result } = Game.openBox(state, Date.now());
+  const boxInfo = Game.BOXES[boxId];
+  const { state: next, result } = Game.openBox(state, Date.now(), Math.random, { box: boxId, cat: cat.id });
   commit(next, { rerender: false });
   const hat = result.hat, name = hatName(hat);
   let skip = false;
@@ -430,7 +596,7 @@ async function startReveal() {
   const box = boxEl("big-box");
   const line = h("p", { class: "line" });
   const stage = h("div", { class: "stage" }, box);
-  const sheet = h("div", { class: "sheet reveal", onclick: () => { skip = true; } }, h("p", { class: "tag" }, "MYSTERY HAT BOX"), stage, line);
+  const sheet = h("div", { class: "sheet reveal", onclick: () => { skip = true; } }, h("p", { class: "tag" }, `${boxInfo.name.toUpperCase()} BOX`), stage, line);
   const close = overlay(sheet, { dismissable: false });
 
   box.classList.add("shake"); await wait(900);
@@ -445,7 +611,8 @@ async function startReveal() {
   const badges = h("div", { class: "badges fade-in" },
     result.isNew ? h("span", { class: "badge new" }, "NEW!") : h("span", { class: "badge" }, `YOU HAVE ${result.count}`),
     result.shards ? h("span", { class: "badge" }, `+${result.shards} 💎`) : null,
-    h("span", { class: "badge" }, `${Game.uniquePoolHats(state)} / ${Game.POOL.length} HOODS`));
+    h("span", { class: "badge" }, `${Game.uniquePoolHats(state)} / ${boxInfo.pool.length} FOUND`),
+    result.friendship.gained ? h("span", { class: "badge heart" }, `+${result.friendship.gained} ♥ ${cat.name.toUpperCase()}`) : null);
   const desc = D.hats[hat].desc ? h("p", { class: "small muted fade-in" }, D.hats[hat].desc) : null;
   sheet.append(badges, desc);
   const finish = (wearHat) => {
@@ -464,6 +631,7 @@ async function startReveal() {
       sprite(cat.coat, m.hat, 2.5),
       h("button", { class: "btn small", type: "button", onclick: (e) => { e.stopPropagation(); finish(m.hat); } }, `Wear the ${hatName(m.hat)}`)));
   }
+  if (result.friendship.unlocked) { await wait(500); sheet.append(specialCard(cat, result.friendship.unlocked, finish)); }
   sheet.append(h("div", { class: "row fade-in", style: "justify-content:center" },
     h("button", { class: "btn primary", type: "button", onclick: (e) => { e.stopPropagation(); finish(hat); } }, "Wear it now"),
     h("button", { class: "btn", type: "button", onclick: (e) => { e.stopPropagation(); finish(null); } }, "Not now")));
@@ -472,6 +640,7 @@ async function startReveal() {
 function openHatSheet(id) {
   const n = state.hats[id] || 0, cat = activeCat(), hat = D.hats[id];
   const reward = Game.MILESTONES.find((m) => m.hat === id);
+  const owner = state.cats.find((c) => c.special === id);
   if (n && state.unseen.includes(id)) commit(Game.markSeen(state, id));
   const close = overlay(h("div", { class: "sheet" },
     n ? catCard(cat, { z: 3, hat: id }) : h("div", { class: "mslot missing", style: "cursor:default;justify-self:center;width:180px" }, h("div", { class: "fig" }, h("img", { src: hat.layer, alt: "", class: "px" }))),
@@ -479,7 +648,8 @@ function openHatSheet(id) {
       h("h2", {}, n ? hat.display : "Not found yet"),
       n ? h("span", { class: "tag" }, `${hat.id} · ${hat.name.toUpperCase()}`) : null,
       n && hat.desc ? h("p", { class: "muted" }, hat.desc) : null,
-      h("p", { class: "small" }, n ? `You have ${n}.` : reward ? `Reward for collecting ${reward.threshold} Animal Hoods.` : "Keep opening boxes. It's in there somewhere.")),
+      h("p", { class: "small" }, n ? `You have ${n}.` : reward ? `Reward for collecting ${reward.threshold} Animal Hoods.`
+        : owner ? `${owner.name}'s special hat. Unlocks at ${Game.FRIENDSHIP.hearts} hearts.` : "Keep opening boxes. It's in there somewhere.")),
     h("div", { class: "row" },
       n && cat.hat !== id ? h("button", { class: "btn primary", type: "button", onclick: () => { close(); commit(Game.wear(state, cat.id, id)); toast(`${cat.name} is wearing the ${hat.display}.`); } }, `Wear on ${cat.name}`) : null,
       n && cat.hat === id ? h("span", { class: "tag" }, `${cat.name.toUpperCase()} IS WEARING THIS`) : null,
@@ -495,16 +665,22 @@ function openTools() {
       h("button", { class: "btn", type: "button", onclick: () => { close(); commit(Game.skipDay(state)); toast("It's tomorrow. A new box is here."); } }, "Skip to tomorrow"),
       h("button", { class: "btn", type: "button", onclick: () => { close(); fastForward(7); } }, "Open the next 7 days of boxes"),
       h("button", { class: "btn", type: "button", onclick: () => {
+        close();
+        const cat = activeCat(), { state: next, result } = Game.addFriendship(state, cat.id, 10);
+        commit(next);
+        if (result.unlocked) openSpecialSheet(cat.id, result.unlocked); else toast(`+10 friendship with ${cat.name}`);
+      } }, `+10 friendship with ${activeCat().name}`),
+      h("button", { class: "btn", type: "button", onclick: () => {
         const coats = Object.keys(D.coats).filter((k) => !owned.has(k));
         if (!coats.length) { toast("Every coat already lives here."); return; }
         const coat = pick(coats), name = pick(NAMES.filter((n) => !state.cats.some((c) => c.name === n)));
         close();
-        commit(Game.adoptCat(state, { coat, name, line: pick(D.lines) }, Date.now()).state);
+        commit(Game.adoptCat(state, { coat, name, line: pick(D.lines), special: specialFor(coat) }, Date.now()).state);
         toast(`${name}, a ${D.coats[coat].name.toLowerCase()} cat, wandered in!`);
       } }, "A new cat arrives"),
       h("button", { class: "btn", type: "button", onclick: (e) => {
         if (!ui.resetArmed) { ui.resetArmed = true; e.target.textContent = "Tap again to erase everything"; return; }
-        ui.resetArmed = false; close(); store.clear(); state = null; ui.screen = "home"; render();
+        ui.resetArmed = false; close(); store.clear(); state = null; ui.screen = "cats"; render();
       } }, "Start over"),
       h("button", { class: "link", type: "button", onclick: () => { ui.resetArmed = false; close(); } }, "Close"))), { onClose: () => { ui.resetArmed = false; } });
 }
@@ -530,16 +706,22 @@ function render() {
   $("#tabs").hidden = onboard; $("#shards").hidden = onboard; $("#tools-btn").hidden = onboard;
   if (onboard) { renderOnboarding(view); return; }
   $("#shards").textContent = `${state.shards} 💎`;
-  const tabs = [["home", "Home", "⌂"], ["collection", "Collection", "▤"]];
+  const tabs = [["cats", "Cats", "♥"], ["box", "Box", "?"], ["collection", "Collection", "▤"]];
   $("#tabs-inner").replaceChildren(...tabs.map(([k, label, glyph]) => h("button", { class: "tab", type: "button", "aria-current": ui.screen === k ? "page" : null, onclick: () => go(k) },
     h("span", { class: "glyph", "aria-hidden": "true" }, glyph), label,
-    k === "home" && Game.canOpen(state, Date.now()) ? h("span", { class: "dot", "aria-label": "Box ready" }) : null,
+    k === "cats" && !Game.pettedToday(state, activeCat(), Date.now()) ? h("span", { class: "dot", "aria-label": "Wants pets" }) : null,
+    k === "box" && Game.canOpen(state, Date.now()) ? h("span", { class: "dot", "aria-label": "Box ready" }) : null,
     k === "collection" && state.unseen.length ? h("span", { class: "dot", "aria-label": "New hats" }) : null)));
-  ({ home: renderHome, collection: renderCollection })[ui.screen](view);
+  ({ cats: renderCats, box: renderBox, collection: renderCollection })[ui.screen](view);
 }
 
 document.documentElement.style.setProperty("--mannequin", `url("${D.mannequin}")`);
 $("#tools-btn").addEventListener("click", openTools);
-setInterval(() => { const el = $("#countdown"); if (el) el.textContent = `Next box in ${fmtCountdown(msUntilMidnight())}`; else if (state && ui.screen === "home" && Game.canOpen(state, Date.now()) && !$(".boxpanel .idle")) render(); }, 30000);
+setInterval(() => {
+  if (!state || ui.screen !== "box") return;
+  if (Game.canOpen(state, Date.now())) { if (!$(".boxcard")) render(); }
+  else { const el = $("#countdown"); if (el) el.textContent = `Today's box is open. Next box in ${fmtCountdown(msUntilMidnight())}.`; }
+}, 30000);
+if (state && Game.canOpen(state, Date.now())) ui.screen = "box";
 render();
 </script>

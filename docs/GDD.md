@@ -335,6 +335,26 @@ Ordered by how much they shape the build. My recommendation is in parentheses.
 11. **Launch content and first new set** *(the existing 38 hats; Birds 6–8 weeks after launch)*
 12. **Event hats:** limited to the year, or returning *(limited)*
 
+## 12. Decisions from the prototype (October 2026)
+
+These came out of playing the vertical slice (`prototype/`). They override the sections above where they conflict. A full rewrite of those sections is still to do.
+
+- **Cats are individuals, not paint.** Each cat has its own coat, which is part of who they are. You adopt your first cat from four who are waiting for a home, and more cats join slowly; how they arrive is still open. Hats are what you collect and swap. This replaces "cat colours as paintbrushes" (§4, §5.1, §5.4) and turns colour rewards and Shop Exclusive colours into cats (§5.3, §5.5, §5.9).
+- **One box per player per day, and the player picks which set's box to open.** Hats are drawn evenly from that set only. New sets arrive as new boxes, and the shared pool no longer slows every set down as it grows (§5.2).
+- **Your featured cat comes to the box.** You choose the featured cat on the Cats tab, and the hat drops onto them. Owning more cats never means more boxes.
+- **Friendship.** Each cat has friendship points.
+  - Pet a cat once a day for +1; more pets are just for fun. Opening the day's box together is +2.
+  - Five hearts (30 points) unlocks **that cat's special hat**: about 10 days for a featured cat you pet daily.
+  - This is what makes choosing a featured cat matter.
+  - Special hats in the prototype are placeholders: the 2022 test hats, assigned by coat. One per coat is up to 24 hats to draw, so the real version might start with the four starter cats. **[Decide]**
+- **Three tabs, one job each:**
+  - **Cats:** your featured cat, pet, dress up, rename, friendship
+  - **Box:** choose a box and see recent pulls (only new hats are labelled)
+  - **Collection:** each set, with progress and rewards, plus a Friendship hats row
+- **Collection shows each hat on the mannequin.** Hats you haven't found show as silhouettes. Reward hats sit inside their set on a gold tile.
+- **Animal Hoods is complete at 18** (the reward hats don't count toward their own set).
+- **The cat card shows the coat and hat icons beside the name,** with no chip under the portrait.
+
 ---
 
 ### Appendix: where the data came from

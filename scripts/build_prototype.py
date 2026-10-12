@@ -39,7 +39,19 @@ def build_data():
         coats[c["id"]] = {"id": c["id"], "name": c["name"], "desc": c["description"],
                           "sprite": uri(ART / f"{c['art']}.png"), "icon": maybe(ART / f"{c['art']}_i.png")}
     lines = [l["text"] for l in json.loads((CATALOG / "planned.json").read_text())["cat_flavour_text_suggestions"]]
-    return {"hats": hats, "coats": coats, "starters": STARTERS, "lines": lines, "mannequin": uri(ART / "mannequin.png")}
+    # Placeholder special hats: the 2022 test hats from the master PSD, assigned by coat.
+    specials = [("cap-red", "Red Cap"), ("clips", "Hair Clips"), ("hood", "Pink Hood"), ("bigger-hood", "Yellow Hood"),
+                ("party-hat", "Red Party Hat"), ("headband", "Headband"), ("pancakes-tall", "Tall Pancakes")]
+    for slug, name in specials:
+        hats[f"SP-{slug}"] = {"id": f"SP-{slug}", "name": name, "display": name, "short": name,
+                              "desc": "Placeholder: a 2022 test hat from the master PSD.", "special": True,
+                              "layer": uri(ART / "extras" / "prototype-hats" / f"{slug}.png"), "icon": None}
+    order = STARTERS + [c for c in coats if c not in STARTERS]
+    special_by_coat = {coat: f"SP-{specials[i % len(specials)][0]}" for i, coat in enumerate(order)}
+    locked = [{"name": "Basic Hats", "icon": uri(ART / "hats/basic/partyhat-blue_i.png")},
+              {"name": "Birds", "icon": uri(ART / "hats/birds/flamingo_i.png")}]
+    return {"hats": hats, "coats": coats, "starters": STARTERS, "lines": lines,
+            "mannequin": uri(ART / "mannequin.png"), "lockedBoxes": locked, "specialByCoat": special_by_coat}
 
 
 def main():
