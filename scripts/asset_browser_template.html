@@ -1,0 +1,323 @@
+<title>Cats &amp; Hats Asset Closet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Nunito:wght@400;600;700&family=Silkscreen&display=swap">
+<style>
+/* Layout: a wardrobe catalogue. A sticky "wear on" rail picks the cat; every set is a shelf of framed portrait cards, like the 2022 player-card mockup. */
+:root {
+  --bg: #e6e8dc;          /* sage paper */
+  --surface: #f3ecdf;     /* card beige */
+  --surface-2: #e9dfcd;
+  --ink: #392e27;         /* outline brown */
+  --muted: #776b5f;
+  --frame: #b4b3c8;       /* portrait lavender */
+  --frame-line: #8f8ca8;
+  --accent: #6c6a9a;
+  --good: #4f7a4a;
+  --warn: #a8641f;
+  --line: #cfc5b2;
+  --font-display: "Pixelify Sans", "Silkscreen", ui-monospace, monospace;
+  --font-body: "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-tag: "Silkscreen", ui-monospace, "SFMono-Regular", monospace;
+  --z: 2;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #22231e; --surface: #2e2c26; --surface-2: #38352e; --ink: #ece5d8; --muted: #a99f90;
+    --frame: #4a4960; --frame-line: #6b6988; --accent: #aeabdb; --good: #8fbf86; --warn: #e0a46a; --line: #45413a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #22231e; --surface: #2e2c26; --surface-2: #38352e; --ink: #ece5d8; --muted: #a99f90;
+  --frame: #4a4960; --frame-line: #6b6988; --accent: #aeabdb; --good: #8fbf86; --warn: #e0a46a; --line: #45413a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font-body); }
+main, header { min-width: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 64px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.05; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.05rem; }
+p { margin: 0; }
+.lede { color: var(--muted); max-width: 62ch; margin-top: 8px; }
+img.px, .px { image-rendering: pixelated; image-rendering: crisp-edges; }
+
+/* summary */
+.stats { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 18px; font-variant-numeric: tabular-nums; }
+.stat b { font-family: var(--font-display); font-weight: 500; font-size: 1.35rem; display: block; line-height: 1.1; }
+.stat span { color: var(--muted); font-size: .82rem; }
+
+/* sticky rail */
+.rail { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 2px solid var(--line);
+  margin-inline: -16px; padding: 10px 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 20px; }
+.rail-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.rail-label { font-family: var(--font-tag); font-size: .72rem; letter-spacing: .06em; color: var(--muted); flex: none; width: 64px; }
+.swatches { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; min-width: 0; scrollbar-width: thin; }
+.swatch { flex: none; width: 42px; height: 48px; border: 2px solid transparent; border-radius: 6px; background: var(--surface); cursor: pointer; padding: 2px; display: grid; place-items: center; }
+.swatch img { width: 38px; height: 44px; object-fit: contain; }
+.swatch[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); }
+.swatch:focus-visible, .chip:focus-visible, .card:focus-visible, .jump a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 600 .82rem var(--font-body); color: var(--ink); background: var(--surface); border: 2px solid var(--line); border-radius: 999px; padding: 3px 12px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.wearing { font-size: .82rem; color: var(--muted); }
+.jump { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .85rem; }
+.jump a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+/* sections */
+section { margin-top: 44px; scroll-margin-top: 150px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.sec-note { color: var(--muted); font-size: .9rem; margin-top: 4px; max-width: 70ch; }
+.pill { font: .68rem var(--font-tag); letter-spacing: .05em; padding: 2px 8px; border-radius: 4px; border: 1.5px solid currentColor; }
+.pill.rel { color: var(--good); } .pill.unrel { color: var(--warn); }
+.group-title { margin-top: 30px; padding-top: 10px; border-top: 2px dashed var(--line); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 14px; }
+.card { background: var(--surface); border: 2px solid var(--line); border-radius: 8px; padding: 8px; display: grid; gap: 6px; align-content: start; text-align: left; color: inherit; font: inherit; cursor: pointer; min-width: 0; }
+.card:hover { border-color: var(--frame-line); }
+.frame { background: var(--frame); border: 2px solid var(--frame-line); border-radius: 4px; display: grid; place-items: center; padding: 6px 0; position: relative; }
+.sprite { width: calc(60px * var(--z)); height: calc(68px * var(--z)); max-width: 100%; background: var(--cat) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; position: relative; }
+.sprite.bare { background: none; }
+.sprite img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.icon-slot { position: absolute; right: 4px; bottom: 4px; width: 38px; height: 46px; background: var(--surface); border-radius: 4px; display: grid; place-items: center; border: 1.5px solid var(--frame-line); }
+.icon-slot img { width: 38px; height: 46px; }
+.icon-slot.missing { border-style: dashed; background: transparent; font: .55rem/1 var(--font-tag); color: var(--ink); text-align: center; opacity: .75; }
+.name { font-weight: 700; line-height: 1.25; }
+.meta { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; }
+.tag { font: .66rem var(--font-tag); letter-spacing: .04em; color: var(--muted); }
+.id { font: .7rem var(--font-tag); background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
+.desc { color: var(--muted); font-size: .82rem; line-height: 1.35; }
+.badge-warn { font: .62rem var(--font-tag); color: var(--warn); }
+
+/* founders */
+.founders { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-top: 14px; }
+.founder { background: var(--surface); border: 2px solid var(--line); border-radius: 8px; padding: 10px; display: grid; grid-template-columns: auto 1fr; gap: 10px; min-width: 0; }
+.founder .frame { padding: 4px; }
+.founder .frame img { width: 120px; height: 136px; }
+.outfits { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.outfit { display: grid; justify-items: center; font: .6rem var(--font-tag); color: var(--muted); }
+.outfit img { width: 60px; height: 68px; background: var(--frame); border-radius: 3px; }
+
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 14px; }
+.shot { background: var(--surface); border: 2px solid var(--line); border-radius: 8px; padding: 8px; display: grid; gap: 6px; min-width: 0; }
+.shot img { width: 100%; height: auto; background: var(--frame); border-radius: 4px; }
+.shot figcaption { font-size: .82rem; color: var(--muted); }
+figure { margin: 0; }
+
+.table-wrap { overflow-x: auto; margin-top: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1.5px solid var(--line); vertical-align: top; }
+th { font: .72rem var(--font-tag); letter-spacing: .05em; color: var(--muted); }
+td code { font: .85rem var(--font-tag); }
+.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* dialog */
+dialog { border: 2px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); padding: 0; width: min(980px, calc(100vw - 24px)); max-height: calc(100vh - 32px); }
+dialog::backdrop { background: rgb(20 18 15 / .55); }
+.dlg { padding: 16px; display: grid; gap: 14px; }
+.dlg-top { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: start; }
+.dlg-top .frame { padding: 8px; }
+.close { font: 700 .9rem var(--font-body); background: var(--surface-2); color: var(--ink); border: 2px solid var(--line); border-radius: 6px; padding: 4px 12px; cursor: pointer; }
+.allcats { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.allcats figure { display: grid; justify-items: center; gap: 2px; background: var(--frame); border-radius: 4px; padding: 4px 2px; }
+.allcats figcaption { font-size: .7rem; text-align: center; color: var(--ink); }
+.empty { color: var(--muted); font-style: italic; margin-top: 10px; }
+@media (max-width: 560px) {
+  :root { --z: 2; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rail-label { width: auto; }
+  .dlg-top { grid-template-columns: 1fr; }
+  .founder { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card { transition: border-color .15s, transform .15s; }
+  .card:hover { transform: translateY(-2px); }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Cats &amp; Hats Asset Closet</h1>
+    <p class="lede">Everything drawn so far, read straight from the project's <code>art/</code> folder and catalogue. Pick a cat colour to try every hat on it, or tap a hat to see it on every colour at once.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="rail" role="region" aria-label="Preview controls">
+    <div class="rail-row"><span class="rail-label">WEAR ON</span><div class="swatches" id="swatches" role="group" aria-label="Cat colour for previews"></div></div>
+    <div class="rail-row" style="flex-wrap:wrap"><span class="rail-label">SHOW</span><div class="chips" id="filters" role="group" aria-label="Filter"></div><span class="wearing" id="wearing"></span></div>
+    <nav class="jump" id="jump" aria-label="Jump to section"></nav>
+  </div>
+
+  <main id="main"></main>
+</div>
+
+<dialog id="dlg" aria-label="Hat details"><div class="dlg" id="dlg-body"></div></dialog>
+
+<script>
+const DATA = /*__DATA__*/null;
+const $ = (s, el = document) => el.querySelector(s);
+const h = (tag, attrs = {}, ...kids) => {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v; else if (k === "style") el.style.cssText = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const k of kids.flat()) if (k != null && k !== false) el.append(k.nodeType ? k : String(k));
+  return el;
+};
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+
+const OBTAIN = { starter: "Starter pick", mystery_box: "Mystery Box", milestone_reward: "Milestone reward", event: "Event" };
+const wearables = [{ key: "mannequin", name: "Mannequin", sprite: DATA.mannequin, icon: DATA.mannequin }, ...DATA.cats];
+let wearing = store.get("cnh-wear") || "grey";
+let filter = store.get("cnh-filter") || "all";
+
+function setWear(key) {
+  const c = wearables.find(w => w.key === key) || wearables[0];
+  wearing = c.key; store.set("cnh-wear", c.key);
+  document.documentElement.style.setProperty("--cat", `url("${c.sprite}")`);
+  document.querySelectorAll(".swatch").forEach(b => b.setAttribute("aria-pressed", b.dataset.key === c.key));
+  $("#wearing").textContent = `Wearing on: ${c.name}`;
+}
+
+function setFilter(f) {
+  filter = f; store.set("cnh-filter", f);
+  document.querySelectorAll("#filters .chip").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === f));
+  document.querySelectorAll("[data-filterable]").forEach(card => {
+    const rel = card.dataset.released === "1", noIcon = card.dataset.noicon === "1";
+    card.hidden = !(f === "all" || (f === "released" && rel) || (f === "unreleased" && !rel) || (f === "noicon" && noIcon));
+  });
+  document.querySelectorAll("[data-shelf]").forEach(sec => {
+    const any = sec.querySelector("[data-filterable]:not([hidden])");
+    sec.hidden = !any;
+  });
+}
+
+function sprite(layer, z) {
+  return h("div", { class: "sprite", style: z ? `--z:${z}` : null }, layer ? h("img", { src: layer, alt: "", class: "px" }) : null);
+}
+function iconSlot(icon) {
+  return icon ? h("div", { class: "icon-slot" }, h("img", { src: icon, alt: "icon", class: "px" }))
+              : h("div", { class: "icon-slot missing", title: "No icon yet" }, "NO", h("br"), "ICON");
+}
+
+function hatCard(hat) {
+  const card = h("button", { class: "card", type: "button", "data-filterable": true, "data-released": hat.released ? "1" : "0",
+    "data-noicon": hat.icon ? "0" : "1", onclick: () => openHat(hat), "aria-label": `${hat.name}, show on every colour` },
+    h("div", { class: "frame" }, sprite(hat.layer), iconSlot(hat.icon)),
+    h("div", { class: "name" }, hat.name),
+    h("div", { class: "meta" }, hat.id ? h("span", { class: "id" }, hat.id) : h("span", { class: "tag" }, "NO ID YET"),
+      h("span", { class: "tag" }, hat.obtain ? OBTAIN[hat.obtain] : "Unreleased")),
+    hat.reveal && hat.reveal !== hat.name ? h("div", { class: "desc" }, `Box: “${hat.reveal}”`) : null,
+    hat.desc ? h("div", { class: "desc" }, hat.desc) : null);
+  return card;
+}
+
+function colourCard(c) {
+  const price = c.price ? `${c.price} 💎 in shop` : null;
+  return h("button", { class: "card", type: "button", "data-filterable": true, "data-released": c.released ? "1" : "0",
+    "data-noicon": c.icon ? "0" : "1", onclick: () => { setWear(c.key); }, "aria-label": `${c.name}, wear hats on this colour` },
+    h("div", { class: "frame" }, h("div", { class: "sprite bare" }, h("img", { src: c.sprite, alt: "", class: "px" })), iconSlot(c.icon)),
+    h("div", { class: "name" }, c.name),
+    h("div", { class: "meta" }, c.id ? h("span", { class: "id" }, c.id) : h("span", { class: "tag" }, "NO ID YET"), h("span", { class: "tag" }, c.set)),
+    price ? h("div", { class: "desc" }, price) : null,
+    c.desc ? h("div", { class: "desc" }, c.desc) : null);
+}
+
+function openHat(hat) {
+  const body = $("#dlg-body"); body.replaceChildren();
+  const set = DATA.sets.find(s => s.key === hat.set);
+  body.append(
+    h("div", { class: "dlg-top" },
+      h("div", { class: "frame" }, sprite(hat.layer, 4)),
+      h("div", { style: "display:grid;gap:6px;min-width:0" },
+        h("h2", {}, hat.name),
+        h("div", { class: "meta" }, hat.id ? h("span", { class: "id" }, hat.id) : null, h("span", { class: "tag" }, set.label), h("span", { class: "tag" }, hat.obtain ? OBTAIN[hat.obtain] : "Unreleased")),
+        hat.reveal ? h("p", { class: "desc" }, `Mystery Box line: “…pulls out a ${hat.reveal}!”`) : null,
+        hat.desc ? h("p", { class: "desc" }, hat.desc) : null,
+        h("p", { class: "desc" }, `File: art/hats/${hat.key}.png`, hat.icon ? " · has icon" : " · no icon yet"),
+        hat.icon ? h("img", { src: hat.icon, alt: "icon", class: "px", style: "width:57px;height:69px;background:var(--frame);border-radius:4px" }) : null),
+      h("button", { class: "close", type: "button", onclick: () => $("#dlg").close() }, "Close")),
+    h("h3", {}, `On every colour (${wearables.length})`),
+    h("div", { class: "allcats" }, wearables.map(c => h("figure", {},
+      h("div", { class: "sprite", style: `--z:1.5;background-image:url("${c.sprite}")` }, h("img", { src: hat.layer, alt: "", class: "px" })),
+      h("figcaption", {}, c.name)))));
+  $("#dlg").showModal();
+}
+
+function shelf(id, title, pill, note, cards) {
+  return h("section", { id, "data-shelf": true },
+    h("div", { class: "sec-head" }, h("h2", {}, title), pill),
+    note ? h("p", { class: "sec-note" }, note) : null,
+    h("div", { class: "grid" }, cards));
+}
+
+function render() {
+  const hats = DATA.hats, cats = DATA.cats;
+  const noIcon = hats.filter(x => !x.icon).length + cats.filter(x => !x.icon).length;
+  const stats = [
+    [hats.length, "hats drawn"], [hats.filter(x => x.released).length, "in the 2022 catalogue"],
+    [cats.length, `cat colours (${cats.filter(c => !c.released).length} unreleased)`],
+    [noIcon, "items need an icon"], [DATA.legacy.length, "founders' 2022 art"], [DATA.sources.length, "PSD sources"]];
+  $("#stats").replaceChildren(...stats.map(([n, l]) => h("div", { class: "stat" }, h("b", {}, n), h("span", {}, l))));
+
+  $("#swatches").replaceChildren(...wearables.map(c => h("button", { class: "swatch", type: "button", "data-key": c.key, title: c.name,
+    "aria-label": c.name, "aria-pressed": "false", onclick: () => setWear(c.key) }, h("img", { src: c.icon || c.sprite, alt: "", class: "px" }))));
+  $("#filters").replaceChildren(...[["all", "Everything"], ["released", "Released 2022"], ["unreleased", "Drawn, unreleased"], ["noicon", "Needs an icon"]]
+    .map(([f, l]) => h("button", { class: "chip", type: "button", "data-f": f, "aria-pressed": "false", onclick: () => setFilter(f) }, l)));
+
+  const main = $("#main"); main.replaceChildren();
+  const jumps = [];
+  main.append(h("h2", { class: "group-title", id: "hats" }, "Hats"));
+  for (const s of DATA.sets) {
+    const id = `set-${s.key}`; jumps.push([id, s.label]);
+    main.append(shelf(id, s.label, h("span", { class: `pill ${s.released ? "rel" : "unrel"}` }, s.released ? "RELEASED 2022" : "DRAWN · UNRELEASED"),
+      s.note, hats.filter(x => x.set === s.key).map(hatCard)));
+  }
+  jumps.push(["colours", "Cat colours"]);
+  main.append(shelf("colours", "Cat colours", null, "Tap a colour to wear every hat on it. The four full tabbies are in the master PSD but were never released.", cats.map(colourCard)));
+
+  jumps.push(["extras", "Prototypes"]);
+  main.append(h("section", { id: "extras" },
+    h("div", { class: "sec-head" }, h("h2", {}, "Prototypes & experiments"), h("span", { class: "pill unrel" }, "FROM THE PSD")),
+    h("p", { class: "sec-note" }, "Test hats from the master PSD's “test” and “nah” groups, open-eyed cat experiments, and two dark hood silhouettes that look like “not collected yet” placeholders."),
+    h("div", { class: "grid" },
+      DATA.prototypes.map(p => h("div", { class: "card", style: "cursor:default" }, h("div", { class: "frame" }, sprite(p.img)), h("div", { class: "name" }, p.caption))),
+      DATA.variants.map(p => h("div", { class: "card", style: "cursor:default" }, h("div", { class: "frame" }, h("div", { class: "sprite bare" }, h("img", { src: p.img, alt: "", class: "px" }))), h("div", { class: "name" }, p.caption))),
+      DATA.silhouettes.map(p => h("div", { class: "card", style: "cursor:default" }, h("div", { class: "frame" }, h("div", { class: "sprite bare" }, h("img", { src: p.img, alt: "", class: "px" }))), h("div", { class: "name" }, `${p.caption} silhouette`)))),
+    h("figure", { class: "shot", style: "margin-top:14px;max-width:700px" },
+      h("img", { src: DATA.mockup, alt: "2022 mockup of player cards: framed cat portrait, name, colour and hat icons", class: "px" }),
+      h("figcaption", {}, "2022 UI mockup (cats and hats.psd): player cards with a framed portrait, the cat's name, and colour + hat icons."))));
+
+  jumps.push(["founders", "Founders"]);
+  main.append(h("section", { id: "founders" },
+    h("div", { class: "sec-head" }, h("h2", {}, "Founders' 2022 art"), h("span", { class: "pill rel" }, `${DATA.legacy.length} PLAYERS`)),
+    h("p", { class: "sec-note" }, "Hand-made portraits and dated looks from the original game. Look 000 is the day they joined; 001 and 002 are the two Fashion Shows."),
+    h("div", { class: "founders" }, DATA.legacy.map(p => h("article", { class: "founder" },
+      h("div", { class: "frame" }, h("img", { src: p.portrait, alt: `${p.cat}, ${p.player}'s cat`, class: "px" })),
+      h("div", { style: "min-width:0" }, h("h3", {}, p.cat || "—"), h("div", { class: "tag" }, p.player),
+        h("div", { class: "outfits" }, p.outfits.map(o => h("div", { class: "outfit" }, h("img", { src: o.img, alt: "", class: "px" }), o.date || "")))))))));
+
+  jumps.push(["promo", "2022 announcements"]);
+  main.append(h("section", { id: "promo" },
+    h("div", { class: "sec-head" }, h("h2", {}, "2022 announcement images")),
+    h("div", { class: "gallery" }, DATA.promo.map(p => h("figure", { class: "shot" }, h("img", { src: p.img, alt: p.caption, class: "px" }), h("figcaption", {}, p.caption))))));
+
+  jumps.push(["sources", "Source files"]);
+  main.append(h("section", { id: "sources" },
+    h("div", { class: "sec-head" }, h("h2", {}, "Source files"), h("span", { class: "tag" }, "art/source/")),
+    h("div", { class: "table-wrap" }, h("table", {},
+      h("thead", {}, h("tr", {}, h("th", {}, "FILE"), h("th", {}, "SIZE"), h("th", {}, "WHAT'S IN IT"))),
+      h("tbody", {}, DATA.sources.map(s => h("tr", {}, h("td", {}, h("code", {}, s.name)), h("td", { class: "num" }, `${s.kb} KB`), h("td", {}, s.about))))))));
+
+  $("#jump").replaceChildren(...jumps.map(([id, l]) => h("a", { href: `#${id}` }, l)));
+}
+
+render();
+setWear(wearing);
+setFilter(filter);
+</script>

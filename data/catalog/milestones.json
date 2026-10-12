@@ -1,0 +1,71 @@
+[
+  {
+    "set": "Basic",
+    "threshold": 6,
+    "label": "50%",
+    "rewards": [
+      {
+        "type": "colour_choice",
+        "pool": "Basic"
+      },
+      {
+        "type": "shards",
+        "amount": 50
+      }
+    ],
+    "source": "Hat Brochure: 'Collecting 6 Hats (50%) -- Choice of Basic paintbrush & 50 shards'",
+    "awarded_in_history": 5
+  },
+  {
+    "set": "Basic",
+    "threshold": 12,
+    "label": "100%",
+    "rewards": [
+      {
+        "type": "undecided",
+        "note": "brochure shows '?'"
+      },
+      {
+        "type": "shards",
+        "amount": 200
+      }
+    ],
+    "source": "Hat Brochure: 'Collecting 12 Hats (100%) -- ? & 200 shards'",
+    "awarded_in_history": 0
+  },
+  {
+    "set": "Animals",
+    "threshold": 9,
+    "label": "50%",
+    "rewards": [
+      {
+        "type": "hat",
+        "id": "AC19"
+      },
+      {
+        "type": "shards",
+        "amount": 50
+      }
+    ],
+    "source": "Hat Brochure: 'Collecting 9 Hats (50%) -- Exclusive hat & 50 shards'",
+    "awarded_in_history": 6
+  },
+  {
+    "set": "Animals",
+    "threshold": 19,
+    "label": "100%",
+    "rewards": [
+      {
+        "type": "hat",
+        "id": "AC20"
+      },
+      {
+        "type": "shards",
+        "amount": 200
+      }
+    ],
+    "source": "Hat Brochure: 'Collecting 19 Hats (100%) -- Exclusive hat & 200 shards'",
+    "awarded_in_history": 0,
+    "issue": "Only 18 Animals hats are in the box pool. 19 only works if AC19 (the 50% reward) counts. Either that is intended or the threshold should be 18."
+  }
+]

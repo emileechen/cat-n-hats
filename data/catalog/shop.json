@@ -1,0 +1,58 @@
+[
+  {
+    "type": "cat",
+    "item_id": "*B01",
+    "name": "Tabby, Grey",
+    "cost_shards": 25,
+    "available_flag": true
+  },
+  {
+    "type": "cat",
+    "item_id": "*B02",
+    "name": "Tabby, Brown",
+    "cost_shards": 25,
+    "available_flag": false
+  },
+  {
+    "type": "cat",
+    "item_id": "*B03",
+    "name": "Tabby, Orange",
+    "cost_shards": 25,
+    "available_flag": false
+  },
+  {
+    "type": "cat",
+    "item_id": "*B04",
+    "name": "Tabby, Torbie",
+    "cost_shards": 25,
+    "available_flag": false
+  },
+  {
+    "type": "cat",
+    "item_id": "*C01",
+    "name": "Galaxy",
+    "cost_shards": 200,
+    "available_flag": false
+  },
+  {
+    "type": "cat",
+    "item_id": "*C02",
+    "name": "Glass",
+    "cost_shards": 200,
+    "available_flag": false
+  },
+  {
+    "type": "cat",
+    "item_id": "*C03",
+    "name": "Meadow",
+    "cost_shards": 200,
+    "available_flag": false
+  },
+  {
+    "type": "cat",
+    "item_id": "*C04",
+    "name": "Magma",
+    "cost_shards": 200,
+    "available_flag": false
+  }
+]

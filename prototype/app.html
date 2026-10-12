@@ -1,0 +1,546 @@
+<title>Cats &amp; Hats Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500&family=Nunito:wght@400;600;700;800&family=Silkscreen&display=swap">
+<style>
+/* Layout: a phone-width app column. Sticky header, one view at a time, bottom tab bar. The cat card copies the 2022 player-card mockup. */
+:root {
+  --bg: #dfe3d0;
+  --surface: #f4ecdd;
+  --surface-2: #e8ddc8;
+  --ink: #3a2f28;
+  --ink-soft: #5b4b3f;
+  --muted: #786c60;
+  --frame: #b4b3c8;
+  --frame-stripe: #a9a8bf;
+  --frame-line: #8f8ca8;
+  --accent: #5f5c93;
+  --accent-ink: #fbf7ef;
+  --gold: #b67a1e;
+  --good: #4f7a4a;
+  --line: #cbc0ac;
+  --scrim: rgb(28 24 20 / .6);
+  --font-display: "Pixelify Sans", "Silkscreen", ui-monospace, monospace;
+  --font-body: "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-tag: "Silkscreen", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1f211c; --surface: #2d2b25; --surface-2: #38342d; --ink: #efe8db; --ink-soft: #c9bda9; --muted: #a99f90;
+    --frame: #47465c; --frame-stripe: #4d4c63; --frame-line: #6b6988; --accent: #aeabdb; --accent-ink: #1f1d2b;
+    --gold: #e3a955; --good: #93c38a; --line: #46423a; --scrim: rgb(0 0 0 / .65);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1f211c; --surface: #2d2b25; --surface-2: #38342d; --ink: #efe8db; --ink-soft: #c9bda9; --muted: #a99f90;
+  --frame: #47465c; --frame-stripe: #4d4c63; --frame-line: #6b6988; --accent: #aeabdb; --accent-ink: #1f1d2b;
+  --gold: #e3a955; --good: #93c38a; --line: #46423a; --scrim: rgb(0 0 0 / .65);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.45 var(--font-body); -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; margin: 0; text-wrap: balance; }
+h1 { font-size: 1.7rem; line-height: 1.1; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.05rem; }
+p { margin: 0; }
+.px { image-rendering: pixelated; image-rendering: crisp-edges; }
+.app { max-width: 480px; margin: 0 auto; min-height: 100%; display: flex; flex-direction: column; }
+
+/* header + tabs */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 2px solid var(--line); }
+.brand { font-family: var(--font-display); font-size: 1.15rem; flex: 1; }
+.pill { font: 700 .9rem var(--font-body); background: var(--surface); border: 2px solid var(--line); border-radius: 999px; padding: 2px 10px; font-variant-numeric: tabular-nums; }
+.tools-btn { font: .7rem var(--font-tag); background: none; border: 2px dashed var(--line); border-radius: 6px; padding: 4px 8px; cursor: pointer; color: var(--muted); }
+main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 16px; align-content: start; }
+.tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--surface); border-top: 2px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.tabs-inner { max-width: 480px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); }
+.tab { background: none; border: 0; padding: 10px 4px 12px; font: 700 .85rem var(--font-body); color: var(--muted); cursor: pointer; display: grid; justify-items: center; gap: 2px; position: relative; }
+.tab .glyph { font: 1rem var(--font-tag); }
+.tab[aria-current="page"] { color: var(--ink); }
+.tab[aria-current="page"]::after { content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; background: var(--accent); border-radius: 0 0 3px 3px; }
+.dot { position: absolute; top: 8px; right: calc(50% - 26px); width: 9px; height: 9px; border-radius: 50%; background: var(--gold); }
+
+/* buttons */
+.btn { border: 2px solid var(--ink-soft); background: var(--surface); border-radius: 8px; padding: 10px 16px; font-weight: 800; cursor: pointer; box-shadow: 0 3px 0 var(--ink-soft); transition: transform .08s, box-shadow .08s; }
+.btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink-soft); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--ink-soft); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.btn.small { padding: 6px 12px; font-size: .9rem; }
+.link { background: none; border: 0; color: var(--accent); font-weight: 700; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.muted { color: var(--muted); }
+.small { font-size: .88rem; }
+.tag { font: .7rem var(--font-tag); letter-spacing: .04em; color: var(--muted); }
+
+/* sprites and the cat card */
+.sprite { --z: 4; width: calc(60px * var(--z)); height: calc(68px * var(--z)); max-width: 100%; position: relative; background: var(--coat) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; flex: none; }
+.sprite img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.catcard { background: var(--surface); border: 3px solid var(--ink-soft); border-radius: 12px; padding: 8px 8px 6px; box-shadow: 0 4px 0 var(--ink-soft); display: grid; gap: 6px; justify-items: stretch; }
+.plate { font: 1rem var(--font-tag); text-align: center; letter-spacing: .06em; }
+.frame { background: repeating-linear-gradient(180deg, var(--frame) 0 10px, var(--frame-stripe) 10px 12px); border: 3px solid var(--frame-line); border-radius: 6px; display: grid; place-items: center; padding: 10px 0 6px; overflow: hidden; }
+.iconbar { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border-radius: 999px; padding: 3px 10px 3px 4px; justify-self: center; max-width: 100%; }
+.iconbar img { width: 32px; height: 38px; }
+.iconbar .none { width: 32px; height: 38px; display: grid; place-items: center; font: .55rem var(--font-tag); color: var(--muted); border: 1.5px dashed var(--line); border-radius: 4px; }
+.iconbar span { font-weight: 700; font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.quote { text-align: center; font-style: italic; color: var(--muted); }
+
+/* panels */
+.panel { background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 10px; }
+.boxpanel { grid-template-columns: auto 1fr; align-items: center; gap: 14px; }
+.box { position: relative; width: 104px; height: 96px; flex: none; }
+.box canvas { position: absolute; left: 0; width: 104px; image-rendering: pixelated; }
+.box .lid { top: 0; height: 40px; transform-origin: 50% 100%; }
+.box .body { top: 40px; height: 56px; }
+.idle { animation: idle 2.4s ease-in-out infinite; }
+@keyframes idle { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-4deg); } 90% { transform: rotate(4deg); } 95% { transform: rotate(-2deg); } }
+.progress { display: grid; gap: 6px; }
+.bar { position: relative; height: 14px; background: var(--surface-2); border: 2px solid var(--ink-soft); border-radius: 4px; overflow: visible; }
+.bar .fill { height: 100%; background: var(--good); border-radius: 2px; transition: width .4s steps(8); }
+.bar .mark { position: absolute; top: -9px; width: 26px; height: 30px; transform: translateX(-50%); }
+.bar .mark img { width: 26px; height: 30px; }
+.bar .mark.locked img { filter: grayscale(1); opacity: .55; }
+.bar-legend { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+
+/* onboarding */
+.coats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.coat { background: var(--surface); border: 3px solid var(--line); border-radius: 12px; padding: 8px; display: grid; gap: 4px; text-align: left; cursor: pointer; }
+.coat .frame { padding: 6px 0 2px; }
+.coat .sprite { --z: 2; }
+.coat[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+.field { display: grid; gap: 6px; }
+.field input { font: 700 1.1rem var(--font-body); padding: 10px 12px; border-radius: 8px; border: 2px solid var(--ink-soft); background: var(--surface); color: var(--ink); }
+
+/* closet */
+.seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface-2); border-radius: 10px; padding: 4px; gap: 4px; }
+.seg button { border: 0; background: none; border-radius: 7px; padding: 8px; font-weight: 800; cursor: pointer; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 2px 0 var(--line); }
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
+.slot { position: relative; aspect-ratio: 19 / 23; max-width: 100%; background: var(--frame); border: 2px solid var(--frame-line); border-radius: 8px; display: grid; place-items: center; cursor: pointer; padding: 6px; }
+.slot img { width: 100%; height: 100%; object-fit: contain; }
+.slot.missing img { filter: brightness(0); opacity: .22; }
+:root[data-theme="dark"] .slot.missing img { filter: brightness(0) invert(1); opacity: .18; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .slot.missing img { filter: brightness(0) invert(1); opacity: .18; } }
+.slot .count { position: absolute; right: -4px; bottom: -6px; font: .7rem var(--font-tag); background: var(--ink); color: var(--surface); border-radius: 6px; padding: 1px 5px; }
+.slot .new { position: absolute; left: -4px; top: -6px; font: .62rem var(--font-tag); background: var(--gold); color: #fff; border-radius: 6px; padding: 1px 5px; }
+.slot[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+.slot.nohat { font: .7rem var(--font-tag); color: var(--ink); text-align: center; }
+.wardrobe { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+.mslot { position: relative; display: grid; gap: 4px; align-content: start; background: var(--frame); border: 2px solid var(--frame-line); border-radius: 8px; padding: 6px 4px 8px; cursor: pointer; text-align: center; min-width: 0; }
+.mslot .fig { width: 100%; aspect-ratio: 60 / 68; position: relative; background: var(--mannequin) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; }
+.mslot .fig img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mslot.missing .fig img { filter: brightness(0); opacity: .45; }
+:root[data-theme="dark"] .mslot.missing .fig img { filter: brightness(0) invert(1); opacity: .3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mslot.missing .fig img { filter: brightness(0) invert(1); opacity: .3; } }
+.mslot .label { font-size: .74rem; font-weight: 700; line-height: 1.15; color: var(--ink); overflow-wrap: anywhere; }
+.mslot.missing .label { font-family: var(--font-tag); font-weight: 400; color: var(--muted); }
+.mslot .count { position: absolute; right: -4px; top: -6px; font: .7rem var(--font-tag); background: var(--ink); color: var(--surface); border-radius: 6px; padding: 1px 5px; }
+.mslot .new { position: absolute; left: -4px; top: -6px; font: .62rem var(--font-tag); background: var(--gold); color: #fff; border-radius: 6px; padding: 1px 5px; }
+.cats { display: grid; gap: 12px; }
+.catrow { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 10px; }
+.catrow .frame { padding: 4px; }
+.catrow .sprite { --z: 1.5; }
+.pickers { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; }
+.picker { flex: none; background: var(--frame); border: 2px solid var(--frame-line); border-radius: 8px; padding: 4px; cursor: pointer; display: grid; justify-items: center; gap: 2px; font: .62rem var(--font-tag); }
+.picker .sprite { --z: 1; }
+.picker[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+
+/* overlay + sheets */
+.overlay { position: fixed; inset: 0; z-index: 50; background: var(--scrim); display: grid; align-items: end; justify-items: center; }
+.sheet { width: min(480px, 100%); max-height: calc(100% - 24px - env(safe-area-inset-top, 0px)); overflow-y: auto; background: var(--bg); border-radius: 16px 16px 0 0; padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 14px; }
+.reveal { min-height: min(640px, 100%); align-content: start; justify-items: center; text-align: center; }
+.reveal .line { font-weight: 700; min-height: 3em; max-width: 34ch; }
+.reveal .stage { min-height: 120px; display: grid; place-items: center; }
+.big-box { transform: scale(1.5); margin: 24px 0; }
+.shake { animation: shake .9s steps(10) both; }
+@keyframes shake { 0%, 100% { transform: scale(1.5) rotate(0); } 20% { transform: scale(1.5) rotate(-7deg); } 40% { transform: scale(1.5) rotate(7deg); } 60% { transform: scale(1.5) rotate(-5deg); } 80% { transform: scale(1.5) rotate(4deg); } }
+.pop .lid { animation: lid .45s steps(6) forwards; }
+@keyframes lid { to { transform: translate(18px, -46px) rotate(24deg); opacity: 0; } }
+.drop { animation: drop .55s steps(7) both; }
+@keyframes drop { from { transform: translateY(-38%); opacity: 0; } 60% { opacity: 1; } to { transform: translateY(0); } }
+.badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.badge { font: .75rem var(--font-tag); padding: 3px 8px; border-radius: 6px; background: var(--surface); border: 2px solid var(--ink-soft); }
+.badge.new { background: var(--gold); color: #fff; border-color: var(--gold); }
+.milestone { background: var(--surface); border: 3px solid var(--gold); border-radius: 12px; padding: 12px; display: grid; justify-items: center; gap: 6px; width: 100%; }
+.milestone .sprite { --z: 2.5; }
+.fade-in { animation: fade .35s ease-out both; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } }
+.toast { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 60; background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 10px; font-weight: 700; max-width: calc(100% - 32px); text-align: center; box-shadow: 0 4px 0 rgb(0 0 0 / .2); }
+.devnote { font-size: .82rem; color: var(--muted); border-left: 3px dashed var(--line); padding-left: 10px; }
+@media (prefers-reduced-motion: reduce) {
+  .idle, .shake, .pop .lid, .drop, .fade-in { animation: none !important; }
+  .bar .fill, .btn { transition: none; }
+}
+</style>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">Cats &amp; Hats</div>
+    <span class="pill" id="shards" hidden></span>
+    <button class="tools-btn" type="button" id="tools-btn" hidden>TOOLS</button>
+  </header>
+  <main id="view" aria-live="polite"></main>
+  <nav class="tabs" id="tabs" hidden aria-label="Sections"><div class="tabs-inner" id="tabs-inner"></div></nav>
+</div>
+<div id="overlay-root"></div>
+<div id="toast-root"></div>
+
+<script>
+/*__GAME__*/
+</script>
+<script>
+const D = /*__DATA__*/null;
+const KEY = "cnh-slice-v1";
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const NAMES = ["Mochi", "Biscuit", "Pebble", "Juniper", "Olive", "Tofu", "Pumpkin", "Miso", "Clementine", "Waffles", "Beans", "Pudding", "Sesame", "Figaro", "Marble", "Dumpling", "Pickles", "Basil"];
+
+const store = {
+  load() { try { const s = JSON.parse(localStorage.getItem(KEY)); return s && s.v === Game.SAVE_VERSION ? s : null; } catch { return null; } },
+  save(s) { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {} },
+  clear() { try { localStorage.removeItem(KEY); } catch {} },
+};
+let state = store.load();
+const ui = { screen: "home", pickCoat: null, name: "", resetArmed: false };
+
+const $ = (s, el = document) => el.querySelector(s);
+const h = (tag, attrs = {}, ...kids) => {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v; else if (k === "style") el.style.cssText = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const k of kids.flat()) if (k != null && k !== false) el.append(k.nodeType ? k : String(k));
+  return el;
+};
+const sleep = (ms) => new Promise((r) => setTimeout(r, REDUCED ? 0 : ms));
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const article = (w) => /^[aeiou]/i.test(w) ? "an" : "a";
+const hatName = (id) => D.hats[id].display;
+const activeCat = () => state.cats.find((c) => c.id === state.activeCat) || state.cats[0];
+
+function commit(next, { rerender = true } = {}) {
+  state = next;
+  store.save(state);
+  if (rerender) render();
+}
+
+function toast(msg) {
+  const root = $("#toast-root");
+  root.replaceChildren(h("div", { class: "toast fade-in", role: "status" }, msg));
+  clearTimeout(toast.t);
+  toast.t = setTimeout(() => root.replaceChildren(), 2800);
+}
+
+/* ---------- pixel box (placeholder art, drawn in code) ---------- */
+function drawBox(lidCanvas, bodyCanvas) {
+  const C = { o: "#3a2f28", lid: "#e6c48f", box: "#d4a96c", shade: "#b5864d", rib: "#8e8bb0", ribS: "#6c6a9a", q: "#fff6e6" };
+  const paint = (cv, w, hgt, fn) => { cv.width = w; cv.height = hgt; const x = cv.getContext("2d"); fn((c, X, Y, W = 1, H = 1) => { x.fillStyle = c; x.fillRect(X, Y, W, H); }); };
+  paint(lidCanvas, 26, 10, (r) => {
+    r(C.o, 7, 0, 4, 1); r(C.o, 15, 0, 4, 1); r(C.o, 6, 1, 1, 3); r(C.o, 11, 1, 1, 3); r(C.o, 14, 1, 1, 3); r(C.o, 19, 1, 1, 3);
+    r(C.rib, 7, 1, 4, 3); r(C.rib, 15, 1, 4, 3); r(C.ribS, 9, 2, 2, 2); r(C.ribS, 15, 2, 2, 2); r(C.o, 12, 2, 2, 3); r(C.ribS, 12, 3, 2, 2);
+    r(C.o, 1, 5, 24, 1); r(C.o, 1, 9, 24, 1); r(C.o, 1, 5, 1, 5); r(C.o, 24, 5, 1, 5);
+    r(C.lid, 2, 6, 22, 3); r(C.shade, 2, 8, 22, 1); r(C.rib, 12, 6, 2, 3);
+  });
+  paint(bodyCanvas, 26, 14, (r) => {
+    r(C.o, 2, 0, 1, 14); r(C.o, 23, 0, 1, 14); r(C.o, 2, 13, 22, 1);
+    r(C.box, 3, 0, 20, 13); r(C.shade, 3, 11, 20, 2); r(C.shade, 21, 0, 2, 13); r(C.rib, 12, 0, 2, 13); r(C.ribS, 13, 0, 1, 13);
+    const q = (X) => { r(C.q, X, 3, 3, 1); r(C.q, X + 2, 4, 1, 1); r(C.q, X + 1, 5, 2, 1); r(C.q, X + 1, 7, 1, 1); };
+    q(6); q(16);
+  });
+}
+function boxEl(extra = "") {
+  const lid = h("canvas", { class: "lid", "aria-hidden": "true" }), body = h("canvas", { class: "body", "aria-hidden": "true" });
+  drawBox(lid, body);
+  return h("div", { class: `box ${extra}`, role: "img", "aria-label": "Mystery Hat Box" }, lid, body);
+}
+
+/* ---------- shared pieces ---------- */
+function sprite(coat, hat, z, extraHatClass = "") {
+  return h("div", { class: "sprite", style: `--coat:url("${D.coats[coat].sprite}")${z ? `;--z:${z}` : ""}` },
+    hat ? h("img", { src: D.hats[hat].layer, alt: "", class: `px ${extraHatClass}` }) : null);
+}
+function catCard(cat, { z = 4, hat = cat.hat, hatClass = "" } = {}) {
+  const coat = D.coats[cat.coat];
+  return h("div", { class: "catcard" },
+    h("div", { class: "plate" }, cat.name.toUpperCase()),
+    h("div", { class: "frame" }, sprite(cat.coat, hat, z, hatClass)),
+    h("div", { class: "iconbar" },
+      h("img", { src: coat.icon || coat.sprite, alt: `${coat.name} coat`, class: "px" }),
+      hat ? h("img", { src: D.hats[hat].icon, alt: "", class: "px" }) : h("div", { class: "none" }, "NO", h("br"), "HAT"),
+      h("span", {}, hat ? hatName(hat) : "No hat")));
+}
+function progressBar() {
+  const have = Game.uniquePoolHats(state), total = Game.POOL.length;
+  return h("div", { class: "progress" },
+    h("div", { class: "bar", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": total, "aria-valuenow": have, "aria-label": "Animal Hoods collected" },
+      h("div", { class: "fill", style: `width:${(have / total) * 100}%` }),
+      Game.MILESTONES.map((m) => h("div", { class: `mark ${state.claimed.includes(m.id) ? "" : "locked"}`, style: `left:${(m.threshold / total) * 100}%`, title: `${m.threshold}: ${hatName(m.hat)} + ${m.shards} 💎` },
+        h("img", { src: D.hats[m.hat].icon, alt: "", class: "px" })))),
+    h("div", { class: "bar-legend small" }, h("span", {}, h("b", {}, `${have}`), ` of ${total} Animal Hoods`), h("span", { class: "muted" }, nextMilestoneText(have))));
+}
+function nextMilestoneText(have) {
+  const m = Game.MILESTONES.find((x) => !state.claimed.includes(x.id));
+  return m ? `${m.threshold - have} more for ${D.hats[m.hat].short}` : "Set complete!";
+}
+function msUntilMidnight() { const n = new Date(), m = new Date(n); m.setHours(24, 0, 0, 0); return m - n; }
+function fmtCountdown(ms) { const m = Math.ceil(ms / 60000); return `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, "0")}m`; }
+
+/* ---------- screens ---------- */
+function renderOnboarding(view) {
+  if (!ui.pickCoat) {
+    view.append(
+      h("div", { style: "display:grid;gap:6px" }, h("h1", {}, "Four cats are looking for a home."),
+        h("p", { class: "muted" }, "Pick the one who's coming home with you. You'll collect hats for them. A lot of hats.")),
+      h("div", { class: "coats" }, D.starters.map((id) => {
+        const c = D.coats[id];
+        return h("button", { class: "coat", type: "button", "aria-pressed": "false", onclick: () => { ui.pickCoat = id; render(); } },
+          h("div", { class: "frame" }, sprite(id, null, 2)), h("b", {}, c.name), h("span", { class: "small muted" }, c.desc));
+      })));
+    return;
+  }
+  const preview = { name: ui.name || "…", coat: ui.pickCoat, hat: null };
+  const card = catCard(preview, { z: 3 });
+  const go = h("button", { class: "btn primary", type: "button", disabled: !ui.name.trim(), onclick: adopt }, `Bring ${ui.name.trim() || "them"} home`);
+  const input = h("input", { id: "cat-name", maxlength: "20", autocomplete: "off", value: ui.name, placeholder: "Type a name",
+    oninput: (e) => { ui.name = e.target.value; $(".plate", card).textContent = (ui.name || "…").toUpperCase(); go.disabled = !ui.name.trim(); go.textContent = `Bring ${ui.name.trim() || "them"} home`; },
+    onkeydown: (e) => { if (e.key === "Enter" && ui.name.trim()) adopt(); } });
+  view.append(
+    h("div", { style: "display:grid;gap:6px" }, h("h1", {}, "What's their name?"), h("p", { class: "muted" }, D.coats[ui.pickCoat].desc)),
+    card,
+    h("label", { class: "field", for: "cat-name" }, h("span", { class: "tag" }, "NAME"), input),
+    h("div", { class: "row" },
+      h("button", { class: "btn small", type: "button", onclick: () => { ui.name = pick(NAMES); render(); } }, "Suggest a name"),
+      h("button", { class: "link", type: "button", onclick: () => { ui.pickCoat = null; render(); } }, "Pick a different cat")),
+    go);
+  setTimeout(() => input.focus(), 0);
+}
+function adopt() {
+  const name = ui.name.trim();
+  if (!name) return;
+  commit(Game.newGame({ coat: ui.pickCoat, name, line: pick(D.lines) }, Date.now()));
+  ui.pickCoat = null; ui.name = ""; ui.screen = "home";
+  render();
+  toast(`${name} is home! Your first box is waiting.`);
+}
+
+function renderHome(view) {
+  const cat = activeCat();
+  const coat = D.coats[cat.coat];
+  if (state.cats.length > 1) view.append(h("div", { style: "display:grid;gap:4px" }, h("span", { class: "tag" }, "YOUR CATS"),
+    catPickers(cat.id, (id) => commit({ ...state, activeCat: id }))));
+  view.append(catCard(cat),
+    h("div", { style: "display:grid;gap:2px;justify-items:center" }, h("p", { class: "quote" }, `“${cat.line}”`),
+      h("span", { class: "tag" }, `${coat.name.toUpperCase()} · HOME SINCE ${cat.joined}`)),
+    h("div", { class: "row", style: "justify-content:center" },
+      h("button", { class: "btn", type: "button", onclick: () => openDressSheet(cat.id) }, `Dress up ${cat.name}`),
+      h("button", { class: "link small", type: "button", onclick: () => openRename(cat.id) }, "Rename")));
+
+  if (Game.canOpen(state, Date.now())) {
+    view.append(h("section", { class: "panel boxpanel" }, boxEl("idle"),
+      h("div", { style: "display:grid;gap:8px" }, h("h2", {}, "Today's Mystery Hat Box"),
+        h("p", { class: "small muted" }, state.cats.length > 1 ? `${cat.name} is curious. Pick a different cat above to send them instead.` : `${cat.name} is very curious about this box.`),
+        h("button", { class: "btn primary", type: "button", onclick: startReveal }, `Let ${cat.name} open it`))));
+  } else {
+    const last = state.log[state.log.length - 1];
+    view.append(h("section", { class: "panel boxpanel" },
+      h("div", { class: "frame", style: "padding:6px" }, h("img", { src: D.hats[last.hat].icon, alt: "", class: "px", style: "width:57px;height:69px" })),
+      h("div", { style: "display:grid;gap:6px" }, h("h2", {}, "Box opened"),
+        h("p", { class: "small" }, `Today: ${article(hatName(last.hat))} ${hatName(last.hat)}${last.shards ? ` and ${last.shards} 💎` : ""}.`),
+        h("p", { class: "small muted", id: "countdown" }, `Next box in ${fmtCountdown(msUntilMidnight())}`),
+        h("button", { class: "link small", type: "button", style: "justify-self:start", onclick: () => { commit(Game.skipDay(state)); toast("Skipped to tomorrow (prototype)."); } }, "Skip to tomorrow (prototype)"))));
+  }
+  if (state.cats.length === 1) view.append(h("p", { class: "devnote" }, "More cats find their way to you over time. How they arrive is still being designed; in this prototype, use TOOLS → “A new cat arrives”."));
+}
+
+function catPickers(selected, onPick) {
+  return h("div", { class: "pickers", role: "group", "aria-label": "Choose a cat" }, state.cats.map((c) =>
+    h("button", { class: "picker", type: "button", "aria-pressed": String(c.id === selected), onclick: () => onPick(c.id) }, sprite(c.coat, c.hat, 1), c.name)));
+}
+
+function renderCollection(view) {
+  const slot = (id) => {
+    const n = state.hats[id] || 0;
+    return h("button", { class: `mslot ${n ? "" : "missing"}`, type: "button", onclick: () => openHatSheet(id), "aria-label": n ? `${hatName(id)}, ${n} owned` : "Not found yet" },
+      h("div", { class: "fig" }, h("img", { src: D.hats[id].layer, alt: "", class: "px" })),
+      h("span", { class: "label" }, n ? hatName(id) : "???"),
+      n > 1 ? h("span", { class: "count" }, `×${n}`) : null,
+      state.unseen.includes(id) ? h("span", { class: "new" }, "NEW") : null);
+  };
+  view.append(
+    h("section", { class: "panel" }, h("h2", {}, "Animal Hoods"), progressBar(), h("div", { class: "wardrobe" }, Game.POOL.map(slot))),
+    h("section", { class: "panel" }, h("h3", {}, "Rewards"), h("p", { class: "small muted" }, "Earned by collecting hoods. These never come from the box."),
+      h("div", { class: "wardrobe" }, Game.MILESTONES.map((m) => slot(m.hat)))));
+}
+
+function openDressSheet(catId) {
+  const sheet = h("div", { class: "sheet" });
+  const choose = (id) => { commit(Game.wear(state, catId, id)); draw(); };
+  const draw = () => {
+    const cat = state.cats.find((c) => c.id === catId);
+    const owned = [...Game.POOL, ...Game.MILESTONES.map((m) => m.hat)].filter((id) => state.hats[id]);
+    sheet.replaceChildren(
+      h("div", { class: "row", style: "justify-content:space-between" }, h("h2", {}, `Dress up ${cat.name}`),
+        h("button", { class: "btn small", type: "button", onclick: () => close() }, "Done")),
+      catCard(cat, { z: 3 }),
+      owned.length
+        ? h("div", { class: "slots" },
+            h("button", { class: "slot nohat", type: "button", "aria-pressed": String(!cat.hat), onclick: () => choose(null) }, "NO HAT"),
+            owned.map((id) => h("button", { class: "slot", type: "button", "aria-pressed": String(cat.hat === id), "aria-label": hatName(id), onclick: () => choose(id) },
+              h("img", { src: D.hats[id].icon, alt: "", class: "px" }))))
+        : h("p", { class: "muted" }, "No hats yet. Open today's Mystery Hat Box to find the first one."),
+      h("p", { class: "small muted", style: "text-align:center" }, `${owned.length} of ${Game.POOL.length + Game.MILESTONES.length} hats found. Hats are shared by all your cats.`));
+  };
+  const close = overlay(sheet);
+  draw();
+}
+
+function openRename(catId) {
+  const cat = state.cats.find((c) => c.id === catId);
+  const input = h("input", { id: "rename-input", value: cat.name, maxlength: "20", autocomplete: "off" });
+  const close = overlay(h("form", { class: "sheet", onsubmit: (e) => { e.preventDefault(); close(); commit(Game.renameCat(state, catId, input.value)); } },
+    h("h2", {}, `Rename ${cat.name}`),
+    h("label", { class: "field", for: "rename-input" }, h("span", { class: "tag" }, "NAME"), input),
+    h("div", { class: "row" }, h("button", { class: "btn primary", type: "submit" }, "Save"),
+      h("button", { class: "link", type: "button", onclick: () => close() }, "Cancel"))));
+  setTimeout(() => input.select(), 0);
+}
+
+/* ---------- overlays ---------- */
+function overlay(content, { onClose, dismissable = true } = {}) {
+  const root = $("#overlay-root");
+  const onKey = (e) => { if (e.key === "Escape" && dismissable) close(); };
+  const close = () => { document.removeEventListener("keydown", onKey); root.replaceChildren(); onClose?.(); };
+  const el = h("div", { class: "overlay", onclick: (e) => { if (dismissable && e.target === el) close(); } }, content);
+  root.replaceChildren(el);
+  document.addEventListener("keydown", onKey);
+  return close;
+}
+
+async function startReveal() {
+  const cat = activeCat();
+  const { state: next, result } = Game.openBox(state, Date.now());
+  commit(next, { rerender: false });
+  const hat = result.hat, name = hatName(hat);
+  let skip = false;
+  const wait = (ms) => skip ? Promise.resolve() : sleep(ms);
+  const box = boxEl("big-box");
+  const line = h("p", { class: "line" });
+  const stage = h("div", { class: "stage" }, box);
+  const sheet = h("div", { class: "sheet reveal", onclick: () => { skip = true; } }, h("p", { class: "tag" }, "MYSTERY HAT BOX"), stage, line);
+  const close = overlay(sheet, { dismissable: false });
+
+  box.classList.add("shake"); await wait(900);
+  box.classList.add("pop"); await wait(450);
+  line.textContent = `${cat.name} reaches into the box and pulls out`;
+  for (let i = 0; i < 9 && !skip; i++) { line.textContent += "."; await wait(90); }
+  if (skip) line.textContent = `${cat.name} reaches into the box and pulls out.........`;
+  line.textContent += ` ${article(name)} ${name}!`;
+  await wait(250);
+
+  stage.replaceChildren(catCard({ ...cat }, { z: 3, hat, hatClass: REDUCED ? "" : "drop" }));
+  const badges = h("div", { class: "badges fade-in" },
+    result.isNew ? h("span", { class: "badge new" }, "NEW!") : h("span", { class: "badge" }, `YOU HAVE ${result.count}`),
+    result.shards ? h("span", { class: "badge" }, `+${result.shards} 💎`) : null,
+    h("span", { class: "badge" }, `${Game.uniquePoolHats(state)} / ${Game.POOL.length} HOODS`));
+  const desc = D.hats[hat].desc ? h("p", { class: "small muted fade-in" }, D.hats[hat].desc) : null;
+  sheet.append(badges, desc);
+  const finish = (wearHat) => {
+    close();
+    if (wearHat) {
+      let s = Game.wear(state, cat.id, wearHat);
+      s = Game.markSeen(s, wearHat);
+      commit(s);
+      toast(`${cat.name} is wearing the ${hatName(wearHat)}.`);
+    } else render();
+  };
+  for (const m of result.milestones) {
+    await wait(500);
+    sheet.append(h("div", { class: "milestone fade-in" }, h("h2", {}, `${m.label}!`),
+      h("p", { class: "small" }, `You've found ${m.threshold} Animal Hoods. Here's ${article(hatName(m.hat))} ${hatName(m.hat)} and ${m.shards} 💎.`),
+      sprite(cat.coat, m.hat, 2.5),
+      h("button", { class: "btn small", type: "button", onclick: (e) => { e.stopPropagation(); finish(m.hat); } }, `Wear the ${hatName(m.hat)}`)));
+  }
+  sheet.append(h("div", { class: "row fade-in", style: "justify-content:center" },
+    h("button", { class: "btn primary", type: "button", onclick: (e) => { e.stopPropagation(); finish(hat); } }, "Wear it now"),
+    h("button", { class: "btn", type: "button", onclick: (e) => { e.stopPropagation(); finish(null); } }, "Not now")));
+}
+
+function openHatSheet(id) {
+  const n = state.hats[id] || 0, cat = activeCat(), hat = D.hats[id];
+  const reward = Game.MILESTONES.find((m) => m.hat === id);
+  if (n && state.unseen.includes(id)) commit(Game.markSeen(state, id));
+  const close = overlay(h("div", { class: "sheet" },
+    n ? catCard(cat, { z: 3, hat: id }) : h("div", { class: "mslot missing", style: "cursor:default;justify-self:center;width:180px" }, h("div", { class: "fig" }, h("img", { src: hat.layer, alt: "", class: "px" }))),
+    h("div", { style: "display:grid;gap:4px" },
+      h("h2", {}, n ? hat.display : "Not found yet"),
+      n ? h("span", { class: "tag" }, `${hat.id} · ${hat.name.toUpperCase()}`) : null,
+      n && hat.desc ? h("p", { class: "muted" }, hat.desc) : null,
+      h("p", { class: "small" }, n ? `You have ${n}.` : reward ? `Reward for collecting ${reward.threshold} Animal Hoods.` : "Keep opening boxes. It's in there somewhere.")),
+    h("div", { class: "row" },
+      n && cat.hat !== id ? h("button", { class: "btn primary", type: "button", onclick: () => { close(); commit(Game.wear(state, cat.id, id)); toast(`${cat.name} is wearing the ${hat.display}.`); } }, `Wear on ${cat.name}`) : null,
+      n && cat.hat === id ? h("span", { class: "tag" }, `${cat.name.toUpperCase()} IS WEARING THIS`) : null,
+      h("button", { class: "btn", type: "button", onclick: () => close() }, "Close"))));
+}
+
+function openTools() {
+  const owned = new Set(state.cats.map((c) => c.coat));
+  const close = overlay(h("div", { class: "sheet" },
+    h("h2", {}, "Prototype tools"),
+    h("p", { class: "small muted" }, `Simulated days ahead: ${state.dayOffset}. These exist only to test the slice.`),
+    h("div", { style: "display:grid;gap:10px" },
+      h("button", { class: "btn", type: "button", onclick: () => { close(); commit(Game.skipDay(state)); toast("It's tomorrow. A new box is here."); } }, "Skip to tomorrow"),
+      h("button", { class: "btn", type: "button", onclick: () => { close(); fastForward(7); } }, "Open the next 7 days of boxes"),
+      h("button", { class: "btn", type: "button", onclick: () => {
+        const coats = Object.keys(D.coats).filter((k) => !owned.has(k));
+        if (!coats.length) { toast("Every coat already lives here."); return; }
+        const coat = pick(coats), name = pick(NAMES.filter((n) => !state.cats.some((c) => c.name === n)));
+        close();
+        commit(Game.adoptCat(state, { coat, name, line: pick(D.lines) }, Date.now()).state);
+        toast(`${name}, a ${D.coats[coat].name.toLowerCase()} cat, wandered in!`);
+      } }, "A new cat arrives"),
+      h("button", { class: "btn", type: "button", onclick: (e) => {
+        if (!ui.resetArmed) { ui.resetArmed = true; e.target.textContent = "Tap again to erase everything"; return; }
+        ui.resetArmed = false; close(); store.clear(); state = null; ui.screen = "home"; render();
+      } }, "Start over"),
+      h("button", { class: "link", type: "button", onclick: () => { ui.resetArmed = false; close(); } }, "Close"))), { onClose: () => { ui.resetArmed = false; } });
+}
+
+function fastForward(days) {
+  let s = state, newHats = 0, shards = 0, ms = [];
+  for (let i = 0; i < days; i++) {
+    if (!Game.canOpen(s, Date.now())) s = Game.skipDay(s);
+    const out = Game.openBox(s, Date.now());
+    s = out.state; newHats += out.result.isNew ? 1 : 0; shards += out.result.shards; ms.push(...out.result.milestones);
+  }
+  commit(s);
+  toast(`${days} boxes: ${newHats} new hood${newHats === 1 ? "" : "s"}, +${shards} 💎${ms.length ? ` · ${ms.map((m) => m.label).join(", ")}!` : ""}`);
+}
+
+/* ---------- shell ---------- */
+function go(screen) { ui.screen = screen; render(); window.scrollTo(0, 0); }
+
+function render() {
+  const view = $("#view");
+  view.replaceChildren();
+  const onboard = !state;
+  $("#tabs").hidden = onboard; $("#shards").hidden = onboard; $("#tools-btn").hidden = onboard;
+  if (onboard) { renderOnboarding(view); return; }
+  $("#shards").textContent = `${state.shards} 💎`;
+  const tabs = [["home", "Home", "⌂"], ["collection", "Collection", "▤"]];
+  $("#tabs-inner").replaceChildren(...tabs.map(([k, label, glyph]) => h("button", { class: "tab", type: "button", "aria-current": ui.screen === k ? "page" : null, onclick: () => go(k) },
+    h("span", { class: "glyph", "aria-hidden": "true" }, glyph), label,
+    k === "home" && Game.canOpen(state, Date.now()) ? h("span", { class: "dot", "aria-label": "Box ready" }) : null,
+    k === "collection" && state.unseen.length ? h("span", { class: "dot", "aria-label": "New hats" }) : null)));
+  ({ home: renderHome, collection: renderCollection })[ui.screen](view);
+}
+
+document.documentElement.style.setProperty("--mannequin", `url("${D.mannequin}")`);
+$("#tools-btn").addEventListener("click", openTools);
+setInterval(() => { const el = $("#countdown"); if (el) el.textContent = `Next box in ${fmtCountdown(msUntilMidnight())}`; else if (state && ui.screen === "home" && Game.canOpen(state, Date.now()) && !$(".boxpanel .idle")) render(); }, 30000);
+render();
+</script>

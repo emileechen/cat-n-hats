@@ -1,0 +1,1073 @@
+{
+  "Aralie": {
+    "tab": "Aralie",
+    "cat_name": "Sylvie",
+    "portrait_url": "https://i.postimg.cc/nhjVf0b3/aralie-big.pngg",
+    "current_outfit": {
+      "colour": "*A03",
+      "hat": "AC16"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/LshrLMm2/aralie-000.png",
+        "colour": "*A03",
+        "hat": "AA02"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/HspQ6CgQ/aralie-001.png",
+        "colour": "*A03",
+        "hat": "AC16"
+      },
+      {
+        "date": "2022-04-04",
+        "image_url": "https://i.postimg.cc/ZRv9sfy5/aralie-002.png",
+        "colour": "*B04",
+        "hat": "AC18"
+      }
+    ],
+    "recorded": {
+      "shards": 101,
+      "colours": [
+        "*A03",
+        "*B04",
+        "*B08"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB03": 1,
+        "AB06": 1,
+        "AB08": 1,
+        "AB11": 1,
+        "AC04": 1,
+        "AC05": 1,
+        "AC07": 1,
+        "AC08": 1,
+        "AC10": 2,
+        "AC12": 1,
+        "AC13": 2,
+        "AC14": 1,
+        "AC15": 1,
+        "AC16": 1,
+        "AC17": 1,
+        "AC18": 1,
+        "AC19": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 101,
+      "colours": [
+        "*B04",
+        "*B08"
+      ],
+      "hats": {
+        "AB03": 1,
+        "AB06": 1,
+        "AB08": 1,
+        "AB11": 1,
+        "AC04": 1,
+        "AC05": 1,
+        "AC07": 1,
+        "AC08": 1,
+        "AC09": 1,
+        "AC10": 2,
+        "AC12": 1,
+        "AC13": 2,
+        "AC14": 1,
+        "AC15": 1,
+        "AC16": 1,
+        "AC17": 1,
+        "AC18": 1,
+        "AC19": 1
+      }
+    },
+    "discrepancies": [
+      "AA02: closet 1 vs ledger 0",
+      "AC09: closet 0 vs ledger 1",
+      "colours: closet ['*A03', '*B04', '*B08'] vs ledger ['*B04', '*B08']"
+    ]
+  },
+  "Ember": {
+    "tab": "Ember",
+    "cat_name": "Niko",
+    "portrait_url": "https://i.postimg.cc/R0XYWX6k/ember-big.png",
+    "current_outfit": {
+      "colour": "*A03",
+      "hat": "AA02"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/FKWrBxyX/ember-000.png",
+        "colour": "*A03",
+        "hat": "AA02"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/YqbQVyrT/ember-001.png",
+        "colour": "*A03",
+        "hat": "AC14"
+      }
+    ],
+    "recorded": {
+      "shards": 18,
+      "colours": [
+        "*A03",
+        "*B03"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB12": 1,
+        "AC02": 1,
+        "AC08": 1,
+        "AC11": 1,
+        "AC12": 1,
+        "AC13": 1,
+        "AC14": 1,
+        "AC16": 1,
+        "AC18": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 18,
+      "colours": [
+        "*A03",
+        "*B03"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB12": 1,
+        "AC02": 1,
+        "AC08": 1,
+        "AC11": 1,
+        "AC12": 1,
+        "AC13": 1,
+        "AC14": 1,
+        "AC16": 1,
+        "AC18": 1
+      }
+    },
+    "discrepancies": []
+  },
+  "Luv007": {
+    "tab": "Luv007",
+    "cat_name": "Jumanji",
+    "portrait_url": "https://i.postimg.cc/ydCXLBz0/luv007-big.png",
+    "current_outfit": {
+      "colour": "*A02",
+      "hat": "AA04"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/wTWZmTdF/luv007-000.png",
+        "colour": null,
+        "hat": "AA04"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/dQR2RVzs/luv007-001.png",
+        "colour": null,
+        "hat": "AC17"
+      },
+      {
+        "date": "2022-04-04",
+        "image_url": "https://i.postimg.cc/QCMzrThC/luv007-002.png",
+        "colour": "*B04",
+        "hat": "AC18"
+      }
+    ],
+    "recorded": {
+      "shards": 88,
+      "colours": [
+        "*A02",
+        "*B04",
+        "*B05"
+      ],
+      "hats": {
+        "AA04": 1,
+        "AB01": 1,
+        "AB02": 1,
+        "AB06": 1,
+        "AB08": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC04": 1,
+        "AC07": 1,
+        "AC09": 1,
+        "AC10": 2,
+        "AC13": 1,
+        "AC16": 1,
+        "AC17": 1,
+        "AC18": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD02": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 88,
+      "colours": [
+        "*A02",
+        "*B04",
+        "*B05"
+      ],
+      "hats": {
+        "AA04": 1,
+        "AB01": 1,
+        "AB02": 1,
+        "AB03": 1,
+        "AB06": 1,
+        "AB08": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC04": 1,
+        "AC07": 1,
+        "AC09": 1,
+        "AC10": 2,
+        "AC13": 1,
+        "AC16": 1,
+        "AC17": 1,
+        "AC18": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD05": 1
+      }
+    },
+    "discrepancies": [
+      "AB03: closet 0 vs ledger 1",
+      "AD02: closet 1 vs ledger 0",
+      "AD05: closet 0 vs ledger 1"
+    ]
+  },
+  "Pinkshadow": {
+    "tab": "Pinkshadow",
+    "cat_name": "Sophy",
+    "portrait_url": "https://i.postimg.cc/3N29FR6M/pinkshadow-big.png",
+    "current_outfit": {
+      "colour": "*A01",
+      "hat": "AA02"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/mDN62TwY/pinkshadow-000.png",
+        "colour": "*A01",
+        "hat": "AA02"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/YCcJv87B/pinkshadow-001.png",
+        "colour": "*A01",
+        "hat": "AA02"
+      },
+      {
+        "date": "2022-04-04",
+        "image_url": "https://i.postimg.cc/MKfCZNhY/pinkshadow-002.png",
+        "colour": "*B04",
+        "hat": "AB02"
+      }
+    ],
+    "recorded": {
+      "shards": 83,
+      "colours": [
+        "*A01",
+        "*B03",
+        "*B04",
+        "*B05"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB01": 1,
+        "AB02": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 1,
+        "AB07": 1,
+        "AB08": 1,
+        "AB11": 1,
+        "AB12": 1,
+        "AC01": 1,
+        "AC04": 1,
+        "AC05": 1,
+        "AC13": 1,
+        "AC15": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 83,
+      "colours": [
+        "*A01",
+        "*B03",
+        "*B04",
+        "*B05"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB01": 2,
+        "AB02": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 1,
+        "AB07": 1,
+        "AB08": 1,
+        "AB11": 1,
+        "AB12": 1,
+        "AC04": 1,
+        "AC05": 1,
+        "AC13": 1,
+        "AC15": 1
+      }
+    },
+    "discrepancies": [
+      "AB01: closet 1 vs ledger 2",
+      "AC01: closet 1 vs ledger 0"
+    ]
+  },
+  "Ryuukokoro": {
+    "tab": "Ryuukokoro",
+    "cat_name": "Magic",
+    "portrait_url": "https://i.postimg.cc/02R56nPc/ryuukokoro-big.png",
+    "current_outfit": {
+      "colour": "*A01",
+      "hat": "AA02"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-19",
+        "image_url": "https://i.postimg.cc/D0vpSRjt/ryuukokoro-000.png",
+        "colour": "*A01",
+        "hat": "AA02"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/wjnR8CS4/ryuukokoro-001.png",
+        "colour": "*A01",
+        "hat": "AC17"
+      },
+      {
+        "date": "2022-04-04",
+        "image_url": "https://i.postimg.cc/mDwmgNwR/ryuukokoro-002.png",
+        "colour": "*A01",
+        "hat": "AC18"
+      }
+    ],
+    "recorded": {
+      "shards": 140,
+      "colours": [
+        "*A01",
+        "*B01",
+        "*B03",
+        "*B08"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB01": 1,
+        "AB02": 1,
+        "AB03": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB11": 1,
+        "AB12": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC07": 1,
+        "AC08": 1,
+        "AC09": 1,
+        "AC10": 1,
+        "AC14": 1,
+        "AC15": 1,
+        "AC16": 1,
+        "AC17": 1,
+        "AC18": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD02": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 140,
+      "colours": [
+        "*A01",
+        "*B01",
+        "*B03",
+        "*B08"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB01": 1,
+        "AB02": 1,
+        "AB03": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 1,
+        "AB11": 1,
+        "AB12": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC07": 1,
+        "AC09": 1,
+        "AC10": 1,
+        "AC14": 1,
+        "AC15": 1,
+        "AC16": 1,
+        "AC17": 1,
+        "AC18": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD08": 1
+      }
+    },
+    "discrepancies": [
+      "AB06: closet 0 vs ledger 1",
+      "AC08: closet 1 vs ledger 0",
+      "AD02: closet 1 vs ledger 0",
+      "AD08: closet 0 vs ledger 1"
+    ]
+  },
+  "Saturnalia": {
+    "tab": "Saturnalia",
+    "cat_name": "Puff",
+    "portrait_url": "https://i.postimg.cc/T3nfFMLT/saturnalia-big.png",
+    "current_outfit": {
+      "colour": "*A03",
+      "hat": "AA03"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/BvFVkTPw/saturnalia-000.png",
+        "colour": "*A03",
+        "hat": "AA03"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/9fTRWx2m/saturnalia-001.png",
+        "colour": "*A03",
+        "hat": "AB06"
+      },
+      {
+        "date": "2022-04-04",
+        "image_url": "https://i.postimg.cc/dQ8pZr5b/saturnalia-002.png",
+        "colour": "*A03",
+        "hat": "AD01"
+      }
+    ],
+    "recorded": {
+      "shards": 85,
+      "colours": [
+        "*A03",
+        "*B02",
+        "*B04",
+        "*B07"
+      ],
+      "hats": {
+        "AA03": 1,
+        "AB01": 1,
+        "AB03": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 2,
+        "AB07": 1,
+        "AB08": 1,
+        "AB09": 1,
+        "AB10": 1,
+        "AB12": 1,
+        "AC01": 2,
+        "AC03": 1,
+        "AC05": 2,
+        "AC09": 1,
+        "AC12": 1,
+        "AC13": 1,
+        "AC15": 1,
+        "AD01": 1,
+        "AD02": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 85,
+      "colours": [
+        "*A03",
+        "*B02",
+        "*B04",
+        "*B07"
+      ],
+      "hats": {
+        "AA03": 1,
+        "AB01": 1,
+        "AB03": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 2,
+        "AB07": 1,
+        "AB08": 1,
+        "AB09": 1,
+        "AB10": 1,
+        "AB12": 1,
+        "AC01": 2,
+        "AC03": 1,
+        "AC05": 2,
+        "AC09": 1,
+        "AC12": 1,
+        "AC13": 1,
+        "AC15": 1,
+        "AD01": 1,
+        "AD02": 1
+      }
+    },
+    "discrepancies": []
+  },
+  "SeaCrest": {
+    "tab": "SeaCrest",
+    "cat_name": "Nia",
+    "portrait_url": "https://i.postimg.cc/4x2rc4ps/seacrest-big.png",
+    "current_outfit": {
+      "colour": "*A02",
+      "hat": "AA02"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/cL2zF9Cn/seacrest-000.png",
+        "colour": "*A02",
+        "hat": "AA02"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/hjBJh949/seacrest-001.png",
+        "colour": "*A02",
+        "hat": "AC12"
+      },
+      {
+        "date": "2022-04-03",
+        "image_url": "https://i.postimg.cc/1tBQ6dSj/seacrest-002.png",
+        "colour": "*B01",
+        "hat": "AB06"
+      }
+    ],
+    "recorded": {
+      "shards": 137,
+      "colours": [
+        "*A02",
+        "*B01",
+        "*B08",
+        "*B12"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB01": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 1,
+        "AB07": 2,
+        "AB08": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC06": 1,
+        "AC07": 1,
+        "AC08": 1,
+        "AC09": 1,
+        "AC10": 2,
+        "AC11": 1,
+        "AC12": 2,
+        "AC13": 1,
+        "AC14": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD02": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 137,
+      "colours": [
+        "*A02",
+        "*B01",
+        "*B08",
+        "*B12"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB01": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 1,
+        "AB07": 2,
+        "AB08": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC06": 1,
+        "AC07": 1,
+        "AC08": 1,
+        "AC09": 1,
+        "AC10": 2,
+        "AC11": 1,
+        "AC12": 2,
+        "AC13": 1,
+        "AC14": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD06": 1
+      }
+    },
+    "discrepancies": [
+      "AD02: closet 1 vs ledger 0",
+      "AD06: closet 0 vs ledger 1"
+    ]
+  },
+  "Silvanon": {
+    "tab": "Silvanon",
+    "cat_name": "Grant",
+    "portrait_url": "https://i.postimg.cc/ZKKVdTcQ/silvanon-big.png",
+    "current_outfit": {
+      "colour": "*A03",
+      "hat": "AA04"
+    },
+    "outfits": [],
+    "recorded": {
+      "shards": 26,
+      "colours": [],
+      "hats": {
+        "AA04": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 1,
+        "AB12": 1,
+        "AC01": 1,
+        "AC12": 1,
+        "AC15": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 26,
+      "colours": [
+        "*A03"
+      ],
+      "hats": {
+        "AA04": 1,
+        "AB04": 1,
+        "AB05": 1,
+        "AB06": 1,
+        "AB12": 1,
+        "AC01": 1,
+        "AC12": 1,
+        "AC15": 1
+      }
+    },
+    "discrepancies": [
+      "colours: closet [] vs ledger ['*A03']"
+    ]
+  },
+  "Springacres": {
+    "tab": "Springacres",
+    "cat_name": "Copurrnicus",
+    "portrait_url": "https://i.postimg.cc/kMsh0XD9/springacres-big.png",
+    "current_outfit": {
+      "colour": "*A04",
+      "hat": "AA01"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/X7p9RkrJ/springacres-000.png",
+        "colour": "*A04",
+        "hat": "AA01"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/fLDLMD5C/springacres-001.png",
+        "colour": "*A04",
+        "hat": "AC10"
+      },
+      {
+        "date": "2022-04-03",
+        "image_url": "https://i.postimg.cc/xTkwT8X7/springacres-002.png",
+        "colour": "*B04",
+        "hat": "AC13"
+      }
+    ],
+    "recorded": {
+      "shards": 30,
+      "colours": [
+        "*A04",
+        "*B03",
+        "*B04"
+      ],
+      "hats": {
+        "AA01": 1,
+        "AB02": 1,
+        "AB04": 1,
+        "AB08": 1,
+        "AB09": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC04": 1,
+        "AC08": 1,
+        "AC10": 2,
+        "AC12": 1,
+        "AC13": 1,
+        "AD01": 1,
+        "AD02": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 49,
+      "colours": [
+        "*A04",
+        "*B03",
+        "*B04"
+      ],
+      "hats": {
+        "AA01": 1,
+        "AB04": 1,
+        "AB08": 1,
+        "AB09": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC04": 1,
+        "AC08": 1,
+        "AC10": 2,
+        "AC12": 1,
+        "AC13": 1,
+        "AD01": 1,
+        "AD04": 1
+      }
+    },
+    "discrepancies": [
+      "AB02: closet 1 vs ledger 0",
+      "AD02: closet 1 vs ledger 0",
+      "AD04: closet 0 vs ledger 1",
+      "shards: closet 30 vs ledger 49"
+    ]
+  },
+  "Laviee": {
+    "tab": "Laviee",
+    "cat_name": "Noodle",
+    "portrait_url": "https://i.postimg.cc/3R08Xr3g/laviee-big.png",
+    "current_outfit": {
+      "colour": "*A01",
+      "hat": "AC10"
+    },
+    "outfits": [],
+    "recorded": {
+      "shards": 0,
+      "colours": [],
+      "hats": {
+        "AC10": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 0,
+      "colours": [],
+      "hats": {}
+    },
+    "discrepancies": [
+      "AC10: closet 1 vs ledger 0"
+    ]
+  },
+  "Sunshine Warrior": {
+    "tab": "Sunshine Warrior",
+    "cat_name": "Pam",
+    "portrait_url": "https://i.postimg.cc/rwPj8DLX/sunshinewarrior-big.png",
+    "current_outfit": {
+      "colour": "*A02",
+      "hat": "AA02"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/9Q9ZMXtH/sunshinewarrior-000.png",
+        "colour": "*A02",
+        "hat": "AA02"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/W3843CHv/sunshinewarrior-001.png",
+        "colour": "*A02",
+        "hat": "AC09"
+      }
+    ],
+    "recorded": {
+      "shards": 18,
+      "colours": [
+        "*A02",
+        "*B03"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB02": 1,
+        "AB06": 1,
+        "AB12": 1,
+        "AC02": 1,
+        "AC04": 1,
+        "AC06": 1,
+        "AC09": 1,
+        "AC11": 1,
+        "AC16": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 18,
+      "colours": [
+        "*A02",
+        "*B03"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB02": 1,
+        "AB06": 1,
+        "AB12": 1,
+        "AC02": 1,
+        "AC04": 1,
+        "AC06": 1,
+        "AC09": 1,
+        "AC11": 1,
+        "AC16": 1
+      }
+    },
+    "discrepancies": []
+  },
+  "Wildfilly94": {
+    "tab": "Wildfilly94",
+    "cat_name": "Edward",
+    "portrait_url": "https://i.postimg.cc/R0t74GRK/wildfilly94-big.png",
+    "current_outfit": {
+      "colour": "*A02",
+      "hat": "AA04"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/sDq5sGWJ/wildfilly94-000.png",
+        "colour": "*A02",
+        "hat": "AA04"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/N0hFP1HW/wildfilly94-001.png",
+        "colour": "*A02",
+        "hat": "AC07"
+      }
+    ],
+    "recorded": {
+      "shards": 17,
+      "colours": [
+        "*A02",
+        "*B03"
+      ],
+      "hats": {
+        "AA04": 1,
+        "AB08": 1,
+        "AB10": 1,
+        "AC02": 1,
+        "AC03": 1,
+        "AC07": 1,
+        "AC13": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 17,
+      "colours": [
+        "*A02",
+        "*B03"
+      ],
+      "hats": {
+        "AA04": 1,
+        "AB08": 1,
+        "AB10": 1,
+        "AC03": 1,
+        "AC07": 1,
+        "AC13": 1
+      }
+    },
+    "discrepancies": [
+      "AC02: closet 1 vs ledger 0"
+    ]
+  },
+  "XLostxDestinyX": {
+    "tab": "XLostxDestinyX",
+    "cat_name": "Belle",
+    "portrait_url": "https://i.postimg.cc/85WkWQcR/xlostxdestinyx-big.png",
+    "current_outfit": {
+      "colour": "*A02",
+      "hat": "AA02"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/Y0VWgW2Q/xlostxdestinyx-000.png",
+        "colour": "*A02",
+        "hat": "AA02"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/Wbz6PXHG/xlostxdestinyx-001.png",
+        "colour": "*A02",
+        "hat": "AC14"
+      },
+      {
+        "date": "2022-04-04",
+        "image_url": "https://i.postimg.cc/mD5m03yr/xlostxdestinyx-002.png",
+        "colour": "*B04",
+        "hat": "AC16"
+      }
+    ],
+    "recorded": {
+      "shards": 90,
+      "colours": [
+        "*A02",
+        "*B04",
+        "*B08"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB02": 1,
+        "AB04": 3,
+        "AB05": 1,
+        "AB12": 1,
+        "AC01": 2,
+        "AC03": 1,
+        "AC07": 3,
+        "AC11": 1,
+        "AC13": 1,
+        "AC14": 1,
+        "AC15": 1,
+        "AC16": 1,
+        "AC17": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD02": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 90,
+      "colours": [
+        "*A02",
+        "*B04",
+        "*B08"
+      ],
+      "hats": {
+        "AA02": 1,
+        "AB01": 1,
+        "AB02": 1,
+        "AB04": 3,
+        "AB05": 1,
+        "AB12": 1,
+        "AC01": 1,
+        "AC03": 1,
+        "AC07": 3,
+        "AC11": 1,
+        "AC13": 1,
+        "AC14": 1,
+        "AC15": 1,
+        "AC16": 1,
+        "AC17": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD03": 1
+      }
+    },
+    "discrepancies": [
+      "AB01: closet 0 vs ledger 1",
+      "AC01: closet 2 vs ledger 1",
+      "AD02: closet 1 vs ledger 0",
+      "AD03: closet 0 vs ledger 1"
+    ]
+  },
+  "YLO": {
+    "tab": "YLO",
+    "cat_name": "Adriaan",
+    "portrait_url": "https://i.postimg.cc/DzhdRwKv/ylo-big.png",
+    "current_outfit": {
+      "colour": "*A01",
+      "hat": "AA03"
+    },
+    "outfits": [
+      {
+        "date": "2022-03-17",
+        "image_url": "https://i.postimg.cc/TPXmW8CL/ylo-000.png",
+        "colour": "*A01",
+        "hat": "AA03"
+      },
+      {
+        "date": "2022-03-27",
+        "image_url": "https://i.postimg.cc/FKjzt7b1/ylo-001.png",
+        "colour": "*A01",
+        "hat": "AC06"
+      },
+      {
+        "date": "2022-04-04",
+        "image_url": "https://i.postimg.cc/6QkTVSjR/ylo-002.png",
+        "colour": "*B02",
+        "hat": "AB05"
+      }
+    ],
+    "recorded": {
+      "shards": 139,
+      "colours": [
+        "*A01",
+        "*B02",
+        "*B06",
+        "*B09"
+      ],
+      "hats": {
+        "AA03": 1,
+        "AB01": 1,
+        "AB03": 1,
+        "AB04": 1,
+        "AB05": 2,
+        "AB06": 1,
+        "AB08": 1,
+        "AC03": 1,
+        "AC05": 1,
+        "AC06": 1,
+        "AC07": 1,
+        "AC08": 2,
+        "AC10": 2,
+        "AC11": 1,
+        "AC13": 1,
+        "AC14": 1,
+        "AC18": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD02": 1
+      }
+    },
+    "from_ledger": {
+      "shards": 139,
+      "colours": [
+        "*A01",
+        "*B02",
+        "*B06",
+        "*B09"
+      ],
+      "hats": {
+        "AA03": 1,
+        "AB01": 1,
+        "AB03": 1,
+        "AB04": 1,
+        "AB05": 2,
+        "AB06": 1,
+        "AB08": 1,
+        "AC03": 1,
+        "AC05": 1,
+        "AC06": 1,
+        "AC07": 1,
+        "AC08": 2,
+        "AC10": 1,
+        "AC11": 1,
+        "AC13": 1,
+        "AC14": 1,
+        "AC18": 1,
+        "AC19": 1,
+        "AD01": 1,
+        "AD07": 1
+      }
+    },
+    "discrepancies": [
+      "AC10: closet 2 vs ledger 1",
+      "AD02: closet 1 vs ledger 0",
+      "AD07: closet 0 vs ledger 1"
+    ]
+  }
+}

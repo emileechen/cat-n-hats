@@ -1,0 +1,252 @@
+{
+  "todo": [
+    "basic cat colours: colour point",
+    "fashion show",
+    "finish birds hat collection",
+    "finish food hat collection",
+    "which hat collection is up next?"
+  ],
+  "planning_tab_sets": {
+    "uncatagorized": [],
+    "shard shop": [],
+    "fruit": [
+      "Lime Slice",
+      "Lemon Slice",
+      "cherry on top",
+      "watermelon"
+    ],
+    "drinks": [
+      "Tea Bag Tag"
+    ],
+    "food": [
+      "Sunny Side Up",
+      "Spaghetti",
+      "Corn",
+      "Yam",
+      "mini broccoli clips",
+      "ice cream",
+      "taiyaki?"
+    ],
+    "water animals": [
+      "axolotl",
+      "crab",
+      "shark",
+      "fish",
+      "fish eating head"
+    ],
+    "Costume": [
+      "Witch",
+      "Halo",
+      "Horns",
+      "Masquerade",
+      "Flame",
+      "knight's helm"
+    ],
+    "wigs": [],
+    "streetwear": [
+      "Headphones",
+      "Headband",
+      "Straw Hat",
+      "Glasses",
+      "sunglasses",
+      "headband"
+    ],
+    "winter": [
+      "Earmuffs"
+    ],
+    "cottagecore": [
+      "Flower petal hat",
+      "Flower Crown"
+    ],
+    "animals pt 2": [
+      "pastel pink racoon"
+    ],
+    "birds": [
+      "dove with olive crown"
+    ]
+  },
+  "cat_flavour_text_suggestions": [
+    {
+      "by": "Silv",
+      "text": "Cat loaf extraordinaire"
+    },
+    {
+      "by": "Silv",
+      "text": "Your early morning alarm clock"
+    },
+    {
+      "by": "Silv",
+      "text": "Wants in, no, out!  Wait, maybe in"
+    },
+    {
+      "by": "Silv",
+      "text": "The monster under your bed"
+    },
+    {
+      "by": "Silv",
+      "text": "Zoom, zoom, zoomies!"
+    },
+    {
+      "by": "Silv",
+      "text": "If I fits, I sits"
+    },
+    {
+      "by": "Silv",
+      "text": "Wants exactly two and a half pets"
+    },
+    {
+      "by": "Silv",
+      "text": "The perfect pillow is your face"
+    },
+    {
+      "by": "Silv",
+      "text": "The perfect pillow is whatever you're working on right now"
+    },
+    {
+      "by": "Silv",
+      "text": "Purr machine"
+    },
+    {
+      "by": "Silv",
+      "text": "All your foods are belong to us"
+    },
+    {
+      "by": "Silv",
+      "text": "Boss of the whole wide world"
+    },
+    {
+      "by": "Silv",
+      "text": "Curiosity incarnate"
+    },
+    {
+      "by": "Silv",
+      "text": "Only knows how to climb up"
+    },
+    {
+      "by": "Silv",
+      "text": "Ghost in the attic"
+    },
+    {
+      "by": "Silv",
+      "text": "Every day is lazy day"
+    },
+    {
+      "by": "Silv",
+      "text": "Currently training for the Olympics."
+    },
+    {
+      "by": "Spring",
+      "text": "The perfect pillow is your arm"
+    },
+    {
+      "by": "Spring",
+      "text": "The perfect pillow is your chest"
+    },
+    {
+      "by": "Spring",
+      "text": "The perfect pillow is wherever you were going to sit next"
+    },
+    {
+      "by": "Spring",
+      "text": "All your furniture are belong to us"
+    },
+    {
+      "by": "Spring",
+      "text": "I KILL FEET!"
+    },
+    {
+      "by": "Spring",
+      "text": "The perfect pillow is right next to you"
+    },
+    {
+      "by": "Spring",
+      "text": "BATHS ARE EVIL"
+    },
+    {
+      "by": "Spring",
+      "text": "Nail clippers?  No, torture device!"
+    }
+  ],
+  "hats_tab_unreleased": [
+    {
+      "set": "Food",
+      "name": "Fried Egg"
+    },
+    {
+      "set": "Food",
+      "name": "Pancakes"
+    },
+    {
+      "set": "Food",
+      "name": "Pancakes, Fruit"
+    },
+    {
+      "set": "Food",
+      "name": "Pancakes, Eaten"
+    },
+    {
+      "set": "Food",
+      "name": "Pancakes, Ombre"
+    },
+    {
+      "set": "Fruit",
+      "name": "Strawberry"
+    },
+    {
+      "set": "Birds",
+      "name": "Flamingo"
+    },
+    {
+      "set": "Birds",
+      "name": "Swan"
+    },
+    {
+      "set": "Birds",
+      "name": "Black Swan"
+    },
+    {
+      "set": "Birds",
+      "name": "Secretary"
+    },
+    {
+      "set": "Birds",
+      "name": "Great Horned Owl"
+    },
+    {
+      "set": "Birds",
+      "name": "Black-capped Chickadee"
+    },
+    {
+      "set": "Birds",
+      "name": "Chestnut-backed Chickadee"
+    },
+    {
+      "set": "Birds",
+      "name": "Cerulean Warbler (m)"
+    },
+    {
+      "set": "Birds",
+      "name": "Cerulean Warbler (f)"
+    },
+    {
+      "set": "Birds",
+      "name": "Yellow-rumped Warbler"
+    },
+    {
+      "set": "Birds",
+      "name": "Blackburnian Warbler"
+    },
+    {
+      "set": "Birds",
+      "name": "Hummingbird"
+    },
+    {
+      "set": "Birds",
+      "name": "Barn Swallow"
+    },
+    {
+      "set": "Birds",
+      "name": "Peacock"
+    }
+  ]
+}

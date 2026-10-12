@@ -1,0 +1,202 @@
+[
+  {
+    "id": "*A01",
+    "name": "Black",
+    "set": "Starter",
+    "description": "Your typical house panther.",
+    "obtain": "starter",
+    "art": "cats/black",
+    "image_url": "https://i.postimg.cc/8581pQVw/black.png",
+    "icon_url": "https://i.postimg.cc/13tRMrH0/black-i.png"
+  },
+  {
+    "id": "*A02",
+    "name": "White",
+    "set": "Starter",
+    "description": "Likes to nap on blankets.",
+    "obtain": "starter",
+    "art": "cats/white",
+    "image_url": "https://i.postimg.cc/3w08Qrzd/white.png",
+    "icon_url": "https://i.postimg.cc/tRZp3j4B/white-i.png"
+  },
+  {
+    "id": "*A03",
+    "name": "Grey",
+    "set": "Starter",
+    "description": "Very playful.",
+    "obtain": "starter",
+    "art": "cats/grey",
+    "image_url": "https://i.postimg.cc/zGczQHts/grey.png",
+    "icon_url": "https://i.postimg.cc/mr6dbKMn/grey-i.png"
+  },
+  {
+    "id": "*A04",
+    "name": "Orange",
+    "set": "Starter",
+    "description": "Extremely food motivated.",
+    "obtain": "starter",
+    "art": "cats/orange",
+    "image_url": "https://i.postimg.cc/JnbRt6r8/orange.png",
+    "icon_url": "https://i.postimg.cc/vTFSGcfH/orange-i.png"
+  },
+  {
+    "id": "*B01",
+    "name": "Tabby, Grey",
+    "set": "Basic",
+    "description": "Likes to push things off tables.",
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/tabby-grey",
+    "image_url": "https://i.postimg.cc/q7KbKLmF/tabby-grey.png",
+    "icon_url": "https://i.postimg.cc/gJPMHZQ2/tabby-grey-i.png"
+  },
+  {
+    "id": "*B02",
+    "name": "Tabby, Brown",
+    "set": "Basic",
+    "description": "Will climb anything, people included.",
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/tabby-brown",
+    "image_url": "https://i.postimg.cc/x1MDHVjZ/tabby-brown.png",
+    "icon_url": "https://i.postimg.cc/fT6QJRsX/tabby-brown-i.png"
+  },
+  {
+    "id": "*B03",
+    "name": "Tabby, Orange",
+    "set": "Basic",
+    "description": "Never stops meowing.",
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/tabby-orange",
+    "image_url": "https://i.postimg.cc/257scdZF/tabby-orange.png",
+    "icon_url": "https://i.postimg.cc/9MxvVW1D/tabby-orange-i.png"
+  },
+  {
+    "id": "*B04",
+    "name": "Tabby, Torbie",
+    "set": "Basic",
+    "description": "Loves you... when they feel like it!",
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/tabby-torbie",
+    "image_url": "https://i.postimg.cc/BZ70fCwm/tabby-torbie.png",
+    "icon_url": "https://i.postimg.cc/9F4jmq6C/tabby-torbie-i.png"
+  },
+  {
+    "id": "*B05",
+    "name": "Calico, A",
+    "set": "Basic",
+    "description": "ZOOMIES.",
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/calico-a",
+    "image_url": "https://i.postimg.cc/157rKpKC/calico-a.png",
+    "icon_url": "https://i.postimg.cc/jSG6ptmy/calico-a-i.png"
+  },
+  {
+    "id": "*B06",
+    "name": "Calico, B",
+    "set": "Basic",
+    "description": "Likes to nap upside down.",
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/calico-b",
+    "image_url": "https://i.postimg.cc/KYB7FChw/calico-b.png",
+    "icon_url": "https://i.postimg.cc/Bn8c7XYq/calico-b-i.png"
+  },
+  {
+    "id": "*B07",
+    "name": "Calico, C",
+    "set": "Basic",
+    "description": "Likes sunny windowsills.",
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/calico-c",
+    "image_url": "https://i.postimg.cc/SsGWY8sG/calico-c.png",
+    "icon_url": "https://i.postimg.cc/nrcq4z9f/calico-c-i.png"
+  },
+  {
+    "id": "*B08",
+    "name": "Calico, D",
+    "set": "Basic",
+    "description": "Prefers chicken over salmon.",
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/calico-d",
+    "image_url": "https://i.postimg.cc/pTvfdk2T/calico-d.png",
+    "icon_url": "https://i.postimg.cc/kG1KfmW6/calico-d-i.png"
+  },
+  {
+    "id": "*B09",
+    "name": "Calico, E",
+    "set": "Basic",
+    "description": null,
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/calico-e",
+    "image_url": "https://i.postimg.cc/85BKWgmW/calico-e.png",
+    "icon_url": null
+  },
+  {
+    "id": "*B10",
+    "name": "Calico, F",
+    "set": "Basic",
+    "description": null,
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/calico-f",
+    "image_url": "https://i.postimg.cc/QC86JYfz/calico-f.png",
+    "icon_url": null
+  },
+  {
+    "id": "*B11",
+    "name": "Calico, G",
+    "set": "Basic",
+    "description": null,
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/calico-g",
+    "image_url": "https://i.postimg.cc/Ssp1JxCk/calico-g.png",
+    "icon_url": null
+  },
+  {
+    "id": "*B12",
+    "name": "Calico, H",
+    "set": "Basic",
+    "description": null,
+    "obtain": "basic_reward_or_shop",
+    "art": "cats/calico-h",
+    "image_url": "https://i.postimg.cc/FKSnrLfT/calico-h.png",
+    "icon_url": null
+  },
+  {
+    "id": "*C01",
+    "name": "Galaxy",
+    "set": "Shop Exclusive",
+    "description": "Twinkles.",
+    "obtain": "shop_exclusive",
+    "art": "cats/galaxy",
+    "image_url": "https://i.postimg.cc/JzvYtgQJ/galaxy.png",
+    "icon_url": "https://i.postimg.cc/P5PFXh1T/galaxy-i.png"
+  },
+  {
+    "id": "*C02",
+    "name": "Glass",
+    "set": "Shop Exclusive",
+    "description": "Tinkles.",
+    "obtain": "shop_exclusive",
+    "art": "cats/glass",
+    "image_url": "https://i.postimg.cc/8kXzS7gb/glass.png",
+    "icon_url": null
+  },
+  {
+    "id": "*C03",
+    "name": "Meadow",
+    "set": "Shop Exclusive",
+    "description": "Smells like fresh grass.",
+    "obtain": "shop_exclusive",
+    "art": "cats/meadow",
+    "image_url": "https://i.postimg.cc/4NKNNXJR/meadow.png",
+    "icon_url": null
+  },
+  {
+    "id": "*C04",
+    "name": "Magma",
+    "set": "Shop Exclusive",
+    "description": "Hot, hot, HOT!",
+    "obtain": "shop_exclusive",
+    "art": "cats/magma",
+    "image_url": "https://i.postimg.cc/gj7zqTH7/magma.png",
+    "icon_url": null
+  }
+]

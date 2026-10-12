@@ -1,0 +1,10 @@
+# generated pages and previews (rebuild with the scripts in scripts/)
+build/
+
+# OS / tooling
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+.venv/
+venv/
