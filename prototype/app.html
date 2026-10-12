@@ -81,12 +81,11 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .sprite { --z: 4; width: calc(60px * var(--z)); height: calc(68px * var(--z)); max-width: 100%; position: relative; background: var(--coat) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; flex: none; }
 .sprite img { position: absolute; inset: 0; width: 100%; height: 100%; }
 .catcard { background: var(--surface); border: 3px solid var(--ink-soft); border-radius: 12px; padding: 8px 8px 6px; box-shadow: 0 4px 0 var(--ink-soft); display: grid; gap: 6px; justify-items: stretch; }
-.plate { font: 1rem var(--font-tag); text-align: center; letter-spacing: .06em; }
+.plate { font: 1rem var(--font-tag); letter-spacing: .06em; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 30px; }
+.plate-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.plate-icons { display: flex; gap: 2px; flex: none; }
+.plate-icons img { width: 38px; height: 46px; object-fit: contain; margin-block: -8px; }
 .frame { background: repeating-linear-gradient(180deg, var(--frame) 0 10px, var(--frame-stripe) 10px 12px); border: 3px solid var(--frame-line); border-radius: 6px; display: grid; place-items: center; padding: 10px 0 6px; overflow: hidden; }
-.iconbar { display: flex; align-items: center; gap: 8px; background: var(--surface-2); border-radius: 999px; padding: 3px 10px 3px 4px; justify-self: center; max-width: 100%; }
-.iconbar img { width: 32px; height: 38px; }
-.iconbar .none { width: 32px; height: 38px; display: grid; place-items: center; font: .55rem var(--font-tag); color: var(--muted); border: 1.5px dashed var(--line); border-radius: 4px; }
-.iconbar span { font-weight: 700; font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .quote { text-align: center; font-style: italic; color: var(--muted); }
 
 /* panels */
@@ -267,12 +266,12 @@ function sprite(coat, hat, z, extraHatClass = "") {
 function catCard(cat, { z = 4, hat = cat.hat, hatClass = "" } = {}) {
   const coat = D.coats[cat.coat];
   return h("div", { class: "catcard" },
-    h("div", { class: "plate" }, cat.name.toUpperCase()),
-    h("div", { class: "frame" }, sprite(cat.coat, hat, z, hatClass)),
-    h("div", { class: "iconbar" },
-      h("img", { src: coat.icon || coat.sprite, alt: `${coat.name} coat`, class: "px" }),
-      hat ? h("img", { src: D.hats[hat].icon, alt: "", class: "px" }) : h("div", { class: "none" }, "NO", h("br"), "HAT"),
-      h("span", {}, hat ? hatName(hat) : "No hat")));
+    h("div", { class: "plate" },
+      h("span", { class: "plate-name" }, cat.name.toUpperCase()),
+      h("span", { class: "plate-icons" },
+        h("img", { src: coat.icon || coat.sprite, alt: `${coat.name} coat`, title: `${coat.name} coat`, class: "px" }),
+        hat ? h("img", { src: D.hats[hat].icon, alt: hatName(hat), title: hatName(hat), class: "px" }) : null)),
+    h("div", { class: "frame" }, sprite(cat.coat, hat, z, hatClass)));
 }
 function progressBar() {
   const have = Game.uniquePoolHats(state), total = Game.POOL.length;
@@ -307,7 +306,7 @@ function renderOnboarding(view) {
   const card = catCard(preview, { z: 3 });
   const go = h("button", { class: "btn primary", type: "button", disabled: !ui.name.trim(), onclick: adopt }, `Bring ${ui.name.trim() || "them"} home`);
   const input = h("input", { id: "cat-name", maxlength: "20", autocomplete: "off", value: ui.name, placeholder: "Type a name",
-    oninput: (e) => { ui.name = e.target.value; $(".plate", card).textContent = (ui.name || "…").toUpperCase(); go.disabled = !ui.name.trim(); go.textContent = `Bring ${ui.name.trim() || "them"} home`; },
+    oninput: (e) => { ui.name = e.target.value; $(".plate-name", card).textContent = (ui.name || "…").toUpperCase(); go.disabled = !ui.name.trim(); go.textContent = `Bring ${ui.name.trim() || "them"} home`; },
     onkeydown: (e) => { if (e.key === "Enter" && ui.name.trim()) adopt(); } });
   view.append(
     h("div", { style: "display:grid;gap:6px" }, h("h1", {}, "What's their name?"), h("p", { class: "muted" }, D.coats[ui.pickCoat].desc)),
