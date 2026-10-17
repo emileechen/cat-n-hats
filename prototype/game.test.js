@@ -73,7 +73,9 @@ test("adopting adds a second cat that can wear the same hats", () => {
   const { state, cat } = Game.adoptCat(s, { coat: "*B05", name: "Mochi", line: "ZOOMIES." }, NOW);
   const dressed = Game.wear(state, cat.id, "AC01");
   assert.equal(dressed.cats.length, 2);
-  assert.equal(dressed.activeCat, cat.id);
+  assert.equal(dressed.activeCat, "cat-1"); // dressing a cat doesn't change who's featured
+  assert.equal(Game.feature(dressed, cat.id).activeCat, cat.id);
+  assert.throws(() => Game.feature(dressed, "cat-9"));
   assert.equal(dressed.cats[1].hat, "AC01");
 });
 
@@ -125,4 +127,52 @@ test("normalize fills friendship fields on old saves", () => {
   assert.equal(s.cats[0].friendship, 0);
   assert.equal(s.cats[0].special, "SP-*A03");
   assert.equal(s.cats[0].specialUnlocked, false);
+});
+
+test("the Classics box draws only Classics hats, and its rewards are its own", () => {
+  let s = start();
+  const fired = [];
+  for (let i = 0; i < 12; i++) {
+    const out = Game.openBox(s, NOW, seq((i + 0.5) / 12, 0), { box: "basic" });
+    assert.match(out.result.hat, /^AB/);
+    fired.push(...out.result.milestones.map((m) => m.id));
+    s = Game.skipDay(out.state);
+  }
+  assert.deepEqual(fired, ["basic-6", "basic-12"]);
+  assert.equal(s.shards, 250);
+  assert.equal(Game.uniquePoolHats(s, "basic"), 12);
+  assert.equal(Game.uniquePoolHats(s, "animals"), 0);
+  assert.ok(!s.claimed.includes("animals-9"));
+});
+
+const withHats = (hats, shards = 0) => ({ ...start(), hats, shards });
+
+test("box hats are never for sale", () => {
+  const s = withHats({}, 500);
+  assert.throws(() => Game.buyHat(s, "AC01"));
+  assert.throws(() => Game.buyHat(s, "AB01"));
+  for (const box of Object.values(Game.BOXES)) assert.ok(box.pool.every((id) => !Game.SHOP.prices[id]));
+});
+
+test("selling duplicates keeps one copy of each", () => {
+  const s = withHats({ AC01: 3, AC02: 1, AB05: 2 }, 0);
+  const one = Game.sellDuplicates(s, "AB05");
+  assert.equal(one.state.hats.AB05, 1);
+  assert.equal(one.result.shards, 2);
+  const all = Game.sellDuplicates(s);
+  assert.deepEqual(all.state.hats, { AC01: 1, AC02: 1, AB05: 1 });
+  assert.equal(all.result.sold, 3);
+  assert.equal(all.state.shards, 6);
+});
+
+test("special cats cost 200 shards, once each, and arrive with their own friendship track", () => {
+  const s = withHats({}, 250);
+  assert.throws(() => Game.adoptFromShop(s, { coat: "*B05", name: "Mochi", line: "", special: "SP-x" }, NOW));
+  assert.throws(() => Game.adoptFromShop({ ...s, shards: 199 }, { coat: "*C01", name: "Nova", line: "", special: "SP-x" }, NOW));
+  const { state, cat } = Game.adoptFromShop(s, { coat: "*C01", name: "Nova", line: "Twinkles.", special: "SP-x" }, NOW);
+  assert.equal(state.shards, 50);
+  assert.equal(state.cats.length, 2);
+  assert.equal(cat.friendship, 0);
+  assert.equal(cat.special, "SP-x");
+  assert.throws(() => Game.adoptFromShop({ ...state, shards: 500 }, { coat: "*C01", name: "Nova 2", line: "", special: "SP-x" }, NOW));
 });

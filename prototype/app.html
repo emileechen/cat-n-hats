@@ -61,10 +61,12 @@ p { margin: 0; }
 .top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 2px solid var(--line); }
 .brand { font-family: var(--font-display); font-size: 1.15rem; flex: 1; }
 .pill { font: 700 .9rem var(--font-body); background: var(--surface); border: 2px solid var(--line); border-radius: 999px; padding: 2px 10px; font-variant-numeric: tabular-nums; }
+.featured-pill { cursor: pointer; color: var(--ink); max-width: 9.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.star { color: var(--gold); }
 .tools-btn { font: .7rem var(--font-tag); background: none; border: 2px dashed var(--line); border-radius: 6px; padding: 4px 8px; cursor: pointer; color: var(--muted); }
 main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 16px; align-content: start; }
 .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--surface); border-top: 2px solid var(--line); padding-bottom: env(safe-area-inset-bottom, 0px); }
-.tabs-inner { max-width: 480px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+.tabs-inner { max-width: 480px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
 .tab { background: none; border: 0; padding: 10px 4px 12px; font: 700 .85rem var(--font-body); color: var(--muted); cursor: pointer; display: grid; justify-items: center; gap: 2px; position: relative; }
 .tab .glyph { font: 1rem var(--font-tag); }
 .tab[aria-current="page"] { color: var(--ink); }
@@ -84,6 +86,8 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .small { font-size: .88rem; }
 .tag { font: .7rem var(--font-tag); letter-spacing: .04em; color: var(--muted); }
 .tag.new { color: var(--gold); }
+.price { font: .74rem var(--font-tag); color: var(--gold); }
+.price.short { color: var(--muted); }
 .taglink { font: inherit; letter-spacing: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .btn.done, .btn.done[disabled] { opacity: 1; cursor: default; background: var(--surface-2); color: var(--muted); border-color: var(--line); box-shadow: 0 3px 0 var(--line); }
@@ -145,7 +149,8 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface-2); border-radius: 10px; padding: 4px; gap: 4px; }
 .seg button { border: 0; background: none; border-radius: 7px; padding: 8px; font-weight: 800; cursor: pointer; color: var(--muted); }
 .seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 2px 0 var(--line); }
-.wardrobe { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+/* Sets are sized in multiples of 4, so the grid is always 4 across. */
+.wardrobe { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .mslot { position: relative; display: grid; gap: 4px; align-content: start; background: var(--frame); border: 2px solid var(--frame-line); border-radius: 8px; padding: 6px 4px 8px; cursor: pointer; text-align: center; min-width: 0; }
 .fig { width: 100%; aspect-ratio: 60 / 68; position: relative; background: var(--mannequin) center / 100% 100% no-repeat; image-rendering: pixelated; image-rendering: crisp-edges; }
 .fig img { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -156,10 +161,11 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .mslot.reward { background: var(--reward); border-color: var(--reward-line); }
 .mslot.bond { background: var(--bond); border-color: var(--bond-line); }
 .legend.bondlegend i { background: var(--bond); border-color: var(--bond-line); }
-.hearts { display: flex; gap: 4px; font-size: 1.35rem; line-height: 1; color: var(--heart); }
-.hearts .off { color: var(--line); }
-.friend { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
-.friend .mslot { width: 92px; cursor: default; }
+.hearts { display: flex; gap: 5px; }
+/* Pixel hearts, 6 rows tall: each friendship point fills one row from the bottom. */
+.hearts .heart { width: 21px; height: 18px; background: linear-gradient(to top, var(--heart) var(--fill), var(--line) var(--fill));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%207%206'%20shape-rendering='crispEdges'%3E%3Crect%20x='1'%20y='0'%20width='2'%20height='1'/%3E%3Crect%20x='4'%20y='0'%20width='2'%20height='1'/%3E%3Crect%20x='0'%20y='1'%20width='7'%20height='2'/%3E%3Crect%20x='1'%20y='3'%20width='5'%20height='1'/%3E%3Crect%20x='2'%20y='4'%20width='3'%20height='1'/%3E%3Crect%20x='3'%20y='5'%20width='1'%20height='1'/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%207%206'%20shape-rendering='crispEdges'%3E%3Crect%20x='1'%20y='0'%20width='2'%20height='1'/%3E%3Crect%20x='4'%20y='0'%20width='2'%20height='1'/%3E%3Crect%20x='0'%20y='1'%20width='7'%20height='2'/%3E%3Crect%20x='1'%20y='3'%20width='5'%20height='1'/%3E%3Crect%20x='2'%20y='4'%20width='3'%20height='1'/%3E%3Crect%20x='3'%20y='5'%20width='1'%20height='1'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.friendrow { display: flex; align-items: center; justify-content: center; gap: 10px; justify-self: center; background: none; border: 0; padding: 4px 8px; cursor: pointer; color: var(--ink); font-variant-numeric: tabular-nums; }
 .petzone { cursor: pointer; }
 .fx { position: fixed; inset: 0; pointer-events: none; z-index: 70; }
 .heartpop { position: absolute; color: var(--heart); font-size: 1.6rem; animation: heartpop .9s ease-out forwards; }
@@ -170,7 +176,7 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .boxwith .frame { padding: 4px; }
 .legend { display: flex; align-items: center; gap: 8px; }
 .legend i { flex: none; width: 14px; height: 14px; border-radius: 3px; background: var(--reward); border: 2px solid var(--reward-line); }
-.mslot .label { font-size: .74rem; font-weight: 700; line-height: 1.15; color: var(--ink); overflow-wrap: anywhere; }
+.mslot .label { font-size: .7rem; font-weight: 700; line-height: 1.15; color: var(--ink); overflow-wrap: anywhere; }
 .mslot.missing .label { font-family: var(--font-tag); font-weight: 400; color: var(--muted); }
 .mslot .count { position: absolute; right: -4px; top: -6px; font: .7rem var(--font-tag); background: var(--ink); color: var(--surface); border-radius: 6px; padding: 1px 5px; }
 .mslot .new { position: absolute; left: -4px; top: -6px; font: .62rem var(--font-tag); background: var(--gold); color: #fff; border-radius: 6px; padding: 1px 5px; }
@@ -182,6 +188,8 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 .picker { flex: none; background: var(--frame); border: 2px solid var(--frame-line); border-radius: 8px; padding: 4px; cursor: pointer; display: grid; justify-items: center; gap: 2px; font: .62rem var(--font-tag); }
 .picker .sprite { --z: 1; }
 .picker[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent); }
+.picker { position: relative; }
+.picker .star { position: absolute; top: 3px; right: 5px; font-size: .9rem; line-height: 1; }
 
 /* overlay + sheets */
 .overlay { position: fixed; inset: 0; z-index: 50; background: var(--scrim); display: grid; align-items: end; justify-items: center; }
@@ -214,6 +222,7 @@ main { flex: 1; padding-inline: 16px; padding-block: 16px calc(96px + env(safe-a
 <div class="app">
   <header class="top">
     <div class="brand">Cats &amp; Hats</div>
+    <button class="pill featured-pill" type="button" id="featured" hidden></button>
     <span class="pill" id="shards" hidden></span>
     <button class="tools-btn" type="button" id="tools-btn" hidden>TOOLS</button>
   </header>
@@ -240,7 +249,7 @@ const store = {
 const specialFor = (coat) => D.specialByCoat[coat];
 let state = store.load();
 if (state) state = Game.normalize(state, specialFor);
-const ui = { screen: "cats", box: "animals", pickCoat: null, name: "", resetArmed: false };
+const ui = { screen: "cats", box: "animals", viewCat: null, pickCoat: null, name: "", resetArmed: false, sellArmed: false };
 
 const $ = (s, el = document) => el.querySelector(s);
 const h = (tag, attrs = {}, ...kids) => {
@@ -255,9 +264,10 @@ const h = (tag, attrs = {}, ...kids) => {
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, REDUCED ? 0 : ms));
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-const article = (w) => /^[aeiou]/i.test(w) ? "an" : "a";
+const article = (w) => /^(uni|use|eu)/i.test(w) ? "a" : /^[aeiou]/i.test(w) ? "an" : "a";
 const hatName = (id) => D.hats[id].display;
 const activeCat = () => state.cats.find((c) => c.id === state.activeCat) || state.cats[0];
+const viewedCat = () => state.cats.find((c) => c.id === ui.viewCat) || activeCat();
 
 function commit(next, { rerender = true } = {}) {
   state = next;
@@ -300,25 +310,29 @@ function sprite(coat, hat, z, extraHatClass = "") {
   return h("div", { class: "sprite", style: `--coat:url("${D.coats[coat].sprite}")${z ? `;--z:${z}` : ""}` },
     hat ? h("img", { src: D.hats[hat].layer, alt: "", class: `px ${extraHatClass}` }) : null);
 }
-const allHatIds = () => [...new Set([...Game.POOL, ...Game.MILESTONES.map((m) => m.hat), ...state.cats.map((c) => c.special)])];
+const allHatIds = () => [...new Set([...Object.values(Game.SETS).flatMap((set) => set.pool), ...Game.MILESTONES.map((m) => m.hat).filter(Boolean), ...state.cats.map((c) => c.special)])];
+const NOUN = { animals: "hoods", basic: "hats" };
+const rewardText = (m) => m.hat ? `${hatName(m.hat)} + ${m.shards} 💎` : `${m.shards} 💎`;
 
 function catCard(cat, { z = 4, hat = cat.hat, hatClass = "" } = {}) {
   return h("div", { class: "catcard" },
     h("div", { class: "plate" }, h("span", { class: "plate-name" }, cat.name.toUpperCase())),
     h("div", { class: "frame" }, sprite(cat.coat, hat, z, hatClass)));
 }
-function progressBar() {
-  const have = Game.uniquePoolHats(state), total = Game.POOL.length;
+function progressBar(boxId) {
+  const box = Game.SETS[boxId], have = Game.uniquePoolHats(state, boxId), total = box.pool.length;
   return h("div", { class: "progress" },
-    h("div", { class: "bar", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": total, "aria-valuenow": have, "aria-label": "Animal Hoods collected" },
+    h("div", { class: "bar", role: "progressbar", "aria-valuemin": 0, "aria-valuemax": total, "aria-valuenow": have, "aria-label": `${box.name} collected` },
       h("div", { class: "fill", style: `width:${(have / total) * 100}%` }),
-      Game.MILESTONES.map((m) => h("div", { class: `mark ${state.claimed.includes(m.id) ? "" : "locked"}`, style: `left:${(m.threshold / total) * 100}%`, title: `${m.threshold}: ${hatName(m.hat)} + ${m.shards} 💎` },
+      Game.MILESTONES.filter((m) => m.box === boxId).map((m) => h("div", { class: `mark ${state.claimed.includes(m.id) ? "" : "locked"}`, style: `left:${(m.threshold / total) * 100}%`, title: `${m.threshold}: ${rewardText(m)}` },
         String(m.threshold)))),
-    h("div", { class: "bar-legend small" }, h("span", {}, h("b", {}, `${have}`), ` of ${total} Animal Hoods`), h("span", { class: "muted" }, nextMilestoneText(have))));
+    h("div", { class: "bar-legend small" }, h("span", {}, h("b", {}, `${have}`), ` of ${total} ${box.name}`), h("span", { class: "muted" }, nextMilestoneText(boxId, have))));
 }
-function nextMilestoneText(have) {
-  const m = Game.MILESTONES.find((x) => !state.claimed.includes(x.id));
-  return m ? `${m.threshold - have} more for ${D.hats[m.hat].short}` : "Set complete!";
+function nextMilestoneText(boxId, have) {
+  const set = Game.SETS[boxId];
+  if (!Game.MILESTONES.some((x) => x.box === boxId)) return set.source === "shop" ? "Sold in the shop" : "";
+  const m = Game.MILESTONES.find((x) => x.box === boxId && !state.claimed.includes(x.id));
+  return m ? `${m.threshold - have} more for ${m.hat ? D.hats[m.hat].short : `${m.shards} 💎`}` : "Set complete!";
 }
 function msUntilMidnight() { const n = new Date(), m = new Date(n); m.setHours(24, 0, 0, 0); return m - n; }
 function fmtCountdown(ms) { const m = Math.ceil(ms / 60000); return `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, "0")}m`; }
@@ -362,11 +376,12 @@ function adopt() {
 }
 
 function renderCats(view) {
-  const cat = activeCat();
+  const cat = viewedCat();
+  const featured = cat.id === state.activeCat;
   const coat = D.coats[cat.coat];
   const petted = Game.pettedToday(state, cat, Date.now());
-  if (state.cats.length > 1) view.append(h("div", { style: "display:grid;gap:4px" }, h("span", { class: "tag" }, "YOUR CATS · THE FEATURED CAT COMES TO THE BOX"),
-    catPickers(cat.id, (id) => commit({ ...state, activeCat: id }))));
+  if (state.cats.length > 1) view.append(h("div", { style: "display:grid;gap:4px" }, h("span", { class: "tag" }, "YOUR CATS"),
+    catPickers(cat.id, (id) => { ui.viewCat = id; render(); })));
   const card = catCard(cat);
   const frame = $(".frame", card);
   frame.classList.add("petzone");
@@ -377,29 +392,35 @@ function renderCats(view) {
     h("div", { style: "display:grid;gap:2px;justify-items:center" }, h("p", { class: "quote" }, `“${cat.line}”`),
       h("span", { class: "tag" }, `${coat.name.toUpperCase()} · ADOPTED ${dayLabel(cat.joined).toUpperCase()} · `,
         h("button", { class: "taglink", type: "button", onclick: () => openRename(cat.id) }, "RENAME"))),
+    friendshipRow(cat),
     h("div", { class: "actions" },
       petted
         ? h("button", { class: "btn done", type: "button", disabled: true }, h("span", { class: "heart", "aria-hidden": "true" }, "♥ "), "Petted today")
         : h("button", { class: "btn primary", type: "button", onclick: () => doPet(cat.id, frame) }, `Pet ${cat.name}`),
       h("button", { class: "btn", type: "button", onclick: () => openDressSheet(cat.id) }, "Dress up")),
-    friendshipPanel(cat));
-  if (state.cats.length === 1) view.append(h("p", { class: "devnote" }, "More cats find their way to you over time. How they arrive is still being designed; in this prototype, use TOOLS → “A new cat arrives”."));
+    state.cats.length < 2 ? null : featured
+      ? h("button", { class: "btn done", type: "button", disabled: true }, h("span", { class: "star", "aria-hidden": "true" }, "★ "), `${cat.name} is your featured cat`)
+      : h("button", { class: "btn", type: "button", onclick: () => { commit(Game.feature(state, cat.id)); toast(`${cat.name} will come to the box with you.`); } },
+          h("span", { class: "star", "aria-hidden": "true" }, "★ "), `Make ${cat.name} your featured cat`));
+  if (state.cats.length === 1) view.append(h("p", { class: "devnote" }, "Want another cat? Special cats can be adopted in the Shop. How everyday cats arrive is still being designed; for testing, use TOOLS → “A new cat arrives”."));
 }
 
 function heartsRow(cat) {
-  const n = Game.hearts(cat);
-  return h("div", { class: "hearts", role: "img", "aria-label": `${n} of ${Game.FRIENDSHIP.hearts} hearts` },
-    Array.from({ length: Game.FRIENDSHIP.hearts }, (_, i) => h("span", { class: i < n ? "" : "off" }, "♥")));
+  const per = Game.FRIENDSHIP.perHeart;
+  return h("div", { class: "hearts", role: "img", "aria-label": `${Game.hearts(cat)} of ${Game.FRIENDSHIP.hearts} hearts, ${cat.friendship} of ${Game.MAX_FRIENDSHIP} friendship` },
+    Array.from({ length: Game.FRIENDSHIP.hearts }, (_, i) => {
+      const rows = Math.max(0, Math.min(per, cat.friendship - i * per));
+      return h("span", { class: "heart", style: `--fill:${(rows / per) * 100}%` });
+    }));
 }
 
-function friendshipPanel(cat) {
-  const petted = Game.pettedToday(state, cat, Date.now());
-  return h("section", { class: "panel friend" },
-    h("div", { style: "display:grid;gap:6px;min-width:0" },
-      h("h3", {}, `Friendship with ${cat.name}`), heartsRow(cat),
-      h("span", { class: "small" }, cat.friendship >= Game.MAX_FRIENDSHIP ? "Best friends!" : `${cat.friendship} / ${Game.MAX_FRIENDSHIP} · ${petted ? "petted today" : "wants pets"}`),
-      h("span", { class: "small muted" }, `Pet once a day (+${Game.FRIENDSHIP.pet}). Open the box together (+${Game.FRIENDSHIP.box}).`)),
-    bondSlot(cat));
+function friendshipRow(cat) {
+  const best = cat.friendship >= Game.MAX_FRIENDSHIP, F = Game.FRIENDSHIP;
+  const explain = best ? `${cat.name} trusts you completely. Their special hat is the ${hatName(cat.special)}.`
+    : `Pet ${cat.name} once a day (+${F.pet}) and open the box together (+${F.box}). At ${F.hearts} hearts, ${cat.name}'s special hat unlocks.`;
+  return h("button", { class: "friendrow", type: "button", title: explain, onclick: () => toast(explain) },
+    heartsRow(cat),
+    h("span", { class: "small" }, best ? `Best friends · ${hatName(cat.special)}` : `${cat.friendship}/${Game.MAX_FRIENDSHIP}`));
 }
 
 function bondSlot(cat) {
@@ -455,7 +476,7 @@ function renderBox(view) {
     view.append(
       h("div", { class: "boxes", role: "radiogroup", "aria-label": "Which box to open" },
         Object.values(Game.BOXES).map((b) => h("button", { class: "boxcard", type: "button", role: "radio", "aria-checked": String(choice === b.id), onclick: () => { ui.box = b.id; render(); } },
-          boxEl(`sm ${choice === b.id ? "idle" : ""}`), h("b", {}, b.name), h("span", { class: "small muted" }, `${Game.uniquePoolHats(state)} of ${b.pool.length} found`))),
+          boxEl(`sm ${choice === b.id ? "idle" : ""}`), h("b", {}, b.name), h("span", { class: "small muted" }, `${Game.uniquePoolHats(state, b.id)} of ${b.pool.length} found`))),
         D.lockedBoxes.map((b) => h("div", { class: "boxcard locked", "aria-disabled": "true" },
           h("div", { class: "lockicon" }, h("img", { src: b.layer, alt: "", class: "px" })), h("b", {}, b.name), h("span", { class: "tag" }, "COMING SOON")))),
       h("section", { class: "panel boxwith" },
@@ -484,7 +505,7 @@ function historyRow(e) {
       h("span", { class: "small muted" }, [dayLabel(e.day), cat?.name, `${box.name} box`].filter(Boolean).join(" · ")),
       (e.milestones || []).map((id) => {
         const m = Game.MILESTONES.find((x) => x.id === id);
-        return h("span", { class: "small", style: "color:var(--gold);font-weight:800" }, `${m.label}! +${hatName(m.hat)}, +${m.shards} 💎`);
+        return h("span", { class: "small", style: "color:var(--gold);font-weight:800" }, `${m.label}! ${m.hat ? `+${hatName(m.hat)}, ` : ""}+${m.shards} 💎`);
       })),
     h("span", { class: "hshards" }, e.shards ? `+${e.shards} 💎` : ""));
 }
@@ -498,27 +519,145 @@ function dayLabel(day) {
 
 function catPickers(selected, onPick) {
   return h("div", { class: "pickers", role: "group", "aria-label": "Choose a cat" }, state.cats.map((c) =>
-    h("button", { class: "picker", type: "button", "aria-pressed": String(c.id === selected), onclick: () => onPick(c.id) }, sprite(c.coat, c.hat, 1), c.name)));
+    h("button", { class: "picker", type: "button", "aria-pressed": String(c.id === selected), "aria-label": c.id === state.activeCat ? `${c.name}, featured` : c.name, onclick: () => onPick(c.id) },
+      sprite(c.coat, c.hat, 1), c.name, c.id === state.activeCat ? h("span", { class: "star", "aria-hidden": "true" }, "★") : null)));
 }
 
 function renderCollection(view) {
   const slot = (id) => {
     const n = state.hats[id] || 0;
     const reward = Game.MILESTONES.find((m) => m.hat === id);
-    const hint = reward ? `At ${reward.threshold} hoods` : "???";
+    const hint = reward ? `At ${reward.threshold} ${NOUN[reward.box]}` : Game.SHOP.prices[id] ? "In the shop" : "???";
     return h("button", { class: `mslot ${n ? "" : "missing"} ${reward ? "reward" : ""}`, type: "button", onclick: () => openHatSheet(id),
-      "aria-label": n ? `${hatName(id)}, ${n} owned${reward ? ", reward" : ""}` : reward ? `Reward, earned at ${reward.threshold} hoods` : "Not found yet" },
+      "aria-label": n ? `${hatName(id)}, ${n} owned${reward ? ", reward" : ""}` : reward ? `Reward, earned at ${reward.threshold} ${NOUN[reward.box]}` : "Not found yet" },
       h("div", { class: "fig" }, h("img", { src: D.hats[id].layer, alt: "", class: "px" })),
       h("span", { class: "label" }, n ? hatName(id) : hint),
       n > 1 ? h("span", { class: "count" }, `×${n}`) : null,
       state.unseen.includes(id) ? h("span", { class: "new" }, "NEW") : null);
   };
-  view.append(h("section", { class: "panel" }, h("h2", {}, "Animal Hoods"), progressBar(),
-    h("div", { class: "wardrobe" }, [...Game.POOL, ...Game.MILESTONES.map((m) => m.hat)].map(slot)),
-    h("p", { class: "legend small muted" }, h("i", { "aria-hidden": "true" }), "Rewarded for set progress")),
+  view.append(...Object.values(Game.SETS).map((b) => {
+    const rewards = Game.MILESTONES.filter((m) => m.box === b.id && m.hat).map((m) => m.hat);
+    const undrawn = Game.MILESTONES.filter((m) => m.box === b.id && !m.hat && m.threshold === b.pool.length);
+    return h("section", { class: "panel" }, h("h2", {}, b.name), progressBar(b.id),
+      h("div", { class: "wardrobe" }, [...b.pool, ...rewards].map(slot),
+        undrawn.map(() => h("div", { class: "mslot reward missing", style: "cursor:default", title: "This set's completion hat hasn't been drawn yet" },
+          h("div", { class: "fig" }), h("span", { class: "label" }, "Not drawn yet")))),
+      rewards.length || undrawn.length ? h("p", { class: "legend small muted" }, h("i", { "aria-hidden": "true" }), "Rewarded for set progress") : null);
+  }),
     h("section", { class: "panel" }, h("h2", {}, "Friendship hats"),
       h("div", { class: "wardrobe" }, state.cats.map(bondSlot)),
       h("p", { class: "legend bondlegend small muted" }, h("i", { "aria-hidden": "true" }), `Rewarded at ${Game.FRIENDSHIP.hearts} friendship hearts`)));
+}
+
+function renderShop(view) {
+  view.append(h("div", { style: "display:grid;gap:4px" }, h("h1", {}, "Shop"),
+    h("p", { class: "muted" }, "Shards to spare? Treat your cats to something nice.")));
+  view.append(h("section", { class: "panel" },
+    h("div", { class: "row", style: "justify-content:space-between" }, h("h2", {}, "Adopt"), h("span", { class: "tag" }, "SPECIAL CATS")),
+    h("div", { class: "wardrobe" }, Object.entries(Game.SHOP.cats).map(([coat, price]) => {
+      const home = state.cats.find((c) => c.coat === coat);
+      return h("button", { class: "mslot", type: "button", disabled: !!home, style: home ? "cursor:default;opacity:.75" : null, onclick: () => openAdoptSheet(coat) },
+        h("div", { class: "fig", style: `background-image:url("${D.coats[coat].sprite}")` }),
+        h("span", { class: "label" }, D.coats[coat].name),
+        home ? h("span", { class: "tag" }, `HOME: ${home.name.toUpperCase()}`) : h("span", { class: `price ${state.shards >= price ? "" : "short"}` }, `${price} 💎`));
+    }))));
+  for (const set of Object.values(Game.SETS).filter((x) => x.source === "shop")) {
+    view.append(h("section", { class: "panel" },
+      h("div", { class: "row", style: "justify-content:space-between" }, h("h2", {}, set.name),
+        h("span", { class: "tag" }, `${Game.uniquePoolHats(state, set.id)} / ${set.pool.length} OWNED`)),
+      h("div", { class: "wardrobe" }, set.pool.map((id) => {
+        const owned = !!state.hats[id], price = Game.SHOP.prices[id];
+        return h("button", { class: "mslot", type: "button", disabled: owned, style: owned ? "cursor:default;opacity:.7" : null, onclick: () => openBuySheet(id) },
+          h("div", { class: "fig" }, h("img", { src: D.hats[id].layer, alt: "", class: "px" })),
+          h("span", { class: "label" }, hatName(id)),
+          owned ? h("span", { class: "tag" }, "OWNED") : h("span", { class: `price ${state.shards >= price ? "" : "short"}` }, `${price} 💎`));
+      }))));
+  }
+  const dups = allHatIds().filter((id) => (state.hats[id] || 0) > 1);
+  const spares = dups.reduce((n, id) => n + state.hats[id] - 1, 0);
+  view.append(h("section", { class: "panel" },
+    h("h2", {}, "Sell duplicates"),
+    h("p", { class: "small muted" }, `${Game.SHOP.sellPrice} 💎 each. You always keep one.`),
+    dups.length
+      ? [h("ol", { class: "history" }, dups.map((id) => h("li", { class: "hrow" },
+          h("div", { class: "hicon" }, h("div", { class: "fig" }, h("img", { src: D.hats[id].layer, alt: "", class: "px" }))),
+          h("div", { style: "display:grid;gap:2px;min-width:0" }, h("b", {}, hatName(id)), h("span", { class: "small muted" }, `${state.hats[id] - 1} spare`)),
+          h("button", { class: "btn small", type: "button", onclick: () => sell(id) }, `Sell +${(state.hats[id] - 1) * Game.SHOP.sellPrice} 💎`)))),
+        h("button", { class: "btn", type: "button", onclick: (e) => sellAll(e.currentTarget, spares) }, `Sell all ${spares} spare${spares === 1 ? "" : "s"} for ${spares * Game.SHOP.sellPrice} 💎`)]
+      : h("p", { class: "small" }, "No spares right now. Duplicates from your boxes show up here.")));
+  view.append(h("p", { class: "devnote" }, "Shop-only hat sets can be added here later. Box hats are never for sale."));
+}
+
+function openAdoptSheet(coat) {
+  const c = D.coats[coat], price = Game.SHOP.cats[coat], afford = state.shards >= price;
+  let name = "";
+  const preview = { name: "…", coat, hat: null };
+  const card = catCard(preview, { z: 3 });
+  const adoptBtn = h("button", { class: "btn primary", type: "button", disabled: true, onclick: () => adoptSpecial(coat, name) }, `Adopt for ${price} 💎`);
+  const input = h("input", { id: "adopt-name", maxlength: "20", autocomplete: "off", placeholder: "Name them", disabled: !afford,
+    oninput: (e) => { name = e.target.value; $(".plate-name", card).textContent = (name || "…").toUpperCase(); adoptBtn.disabled = !afford || !name.trim(); },
+    onkeydown: (e) => { if (e.key === "Enter" && afford && name.trim()) adoptSpecial(coat, name); } });
+  const close = overlay(h("div", { class: "sheet", style: "text-align:center;justify-items:center" },
+    card,
+    h("h2", {}, c.name),
+    h("p", { class: "muted" }, c.desc),
+    h("p", { class: "small" }, afford ? `${price} 💎 · you have ${state.shards} 💎` : `${price} 💎 · you need ${price - state.shards} more`),
+    h("label", { class: "field", for: "adopt-name", style: "width:100%;text-align:left" }, h("span", { class: "tag" }, "NAME"), input),
+    h("div", { class: "row", style: "justify-content:center" },
+      h("button", { class: "btn small", type: "button", disabled: !afford, onclick: () => {
+        name = pick(NAMES.filter((n) => !state.cats.some((x) => x.name === n))); input.value = name; input.dispatchEvent(new Event("input"));
+      } }, "Suggest a name"),
+      adoptBtn, h("button", { class: "btn", type: "button", onclick: () => close() }, "Not now"))));
+  openAdoptSheet.close = close;
+  if (afford) setTimeout(() => input.focus(), 0);
+}
+
+function adoptSpecial(coat, name) {
+  name = name.trim();
+  if (!name) return;
+  openAdoptSheet.close?.();
+  const { state: next, cat } = Game.adoptFromShop(state, { coat, name, line: pick(D.lines), special: specialFor(coat) }, Date.now());
+  commit({ ...next, activeCat: cat.id }, { rerender: false });
+  ui.viewCat = cat.id;
+  go("cats");
+  toast(`Welcome home, ${cat.name}!`);
+}
+
+function openBuySheet(id) {
+  const cat = activeCat(), price = Game.SHOP.prices[id], afford = state.shards >= price;
+  const close = overlay(h("div", { class: "sheet", style: "text-align:center;justify-items:center" },
+    catCard(cat, { z: 3, hat: id }),
+    h("h2", {}, hatName(id)),
+    D.hats[id].desc ? h("p", { class: "muted" }, D.hats[id].desc) : null,
+    h("p", { class: "small" }, afford ? `${price} 💎 · you have ${state.shards} 💎` : `${price} 💎 · you need ${price - state.shards} more`),
+    h("div", { class: "row", style: "justify-content:center" },
+      h("button", { class: "btn primary", type: "button", disabled: !afford, onclick: () => { close(); buy(id); } }, `Buy for ${price} 💎`),
+      h("button", { class: "btn", type: "button", onclick: () => close() }, "Not now"))));
+}
+
+function buy(id) {
+  const cat = activeCat();
+  const { state: next, result } = Game.buyHat(state, id);
+  commit(next);
+  if (!result.milestones.length) { toast(`You bought the ${hatName(id)}.`); return; }
+  const close = overlay(h("div", { class: "sheet", style: "text-align:center;justify-items:center" },
+    h("p", { class: "tag" }, `YOU BOUGHT THE ${hatName(id).toUpperCase()}`),
+    result.milestones.map((m) => milestoneCard(cat, m, (hat) => { close(); commit(Game.markSeen(Game.wear(state, cat.id, hat), hat)); toast(`${cat.name} is wearing the ${hatName(hat)}.`); })),
+    h("button", { class: "btn", type: "button", onclick: () => close() }, "Done")));
+}
+
+function sell(id) {
+  const { state: next, result } = Game.sellDuplicates(state, id);
+  commit(next);
+  toast(`Sold ${result.sold} ${hatName(id)} for ${result.shards} 💎.`);
+}
+
+function sellAll(btn, spares) {
+  if (!ui.sellArmed) { ui.sellArmed = true; btn.textContent = `Tap again to sell all ${spares}`; return; }
+  ui.sellArmed = false;
+  const { state: next, result } = Game.sellDuplicates(state);
+  commit(next);
+  toast(`Sold ${result.sold} spare${result.sold === 1 ? "" : "s"} for ${result.shards} 💎.`);
 }
 
 function openDressSheet(catId) {
@@ -567,6 +706,13 @@ function overlay(content, { onClose, dismissable = true } = {}) {
   return close;
 }
 
+function milestoneCard(cat, m, onWear) {
+  return h("div", { class: "milestone fade-in" }, h("h2", {}, `${m.label}!`),
+    h("p", { class: "small" }, `You've found ${m.threshold} ${Game.SETS[m.box].name}. Here's ${m.hat ? `${article(hatName(m.hat))} ${hatName(m.hat)} and ` : ""}${m.shards} 💎.`),
+    m.hat ? sprite(cat.coat, m.hat, 2.5) : null,
+    m.hat ? h("button", { class: "btn small", type: "button", onclick: (e) => { e.stopPropagation(); onWear(m.hat); } }, `Wear the ${hatName(m.hat)}`) : null);
+}
+
 async function startReveal(boxId) {
   const cat = activeCat();
   const boxInfo = Game.BOXES[boxId];
@@ -593,10 +739,11 @@ async function startReveal(boxId) {
   const badges = h("div", { class: "badges fade-in" },
     result.isNew ? h("span", { class: "badge new" }, "NEW!") : h("span", { class: "badge" }, `YOU HAVE ${result.count}`),
     result.shards ? h("span", { class: "badge" }, `+${result.shards} 💎`) : null,
-    h("span", { class: "badge" }, `${Game.uniquePoolHats(state)} / ${boxInfo.pool.length} FOUND`),
+    h("span", { class: "badge" }, `${Game.uniquePoolHats(state, boxId)} / ${boxInfo.pool.length} FOUND`),
     result.friendship.gained ? h("span", { class: "badge heart" }, `+${result.friendship.gained} ♥ ${cat.name.toUpperCase()}`) : null);
   const desc = D.hats[hat].desc ? h("p", { class: "small muted fade-in" }, D.hats[hat].desc) : null;
-  sheet.append(badges, desc);
+  sheet.append(badges);
+  if (desc) sheet.append(desc);
   const finish = (wearHat) => {
     close();
     if (wearHat) {
@@ -608,10 +755,7 @@ async function startReveal(boxId) {
   };
   for (const m of result.milestones) {
     await wait(500);
-    sheet.append(h("div", { class: "milestone fade-in" }, h("h2", {}, `${m.label}!`),
-      h("p", { class: "small" }, `You've found ${m.threshold} Animal Hoods. Here's ${article(hatName(m.hat))} ${hatName(m.hat)} and ${m.shards} 💎.`),
-      sprite(cat.coat, m.hat, 2.5),
-      h("button", { class: "btn small", type: "button", onclick: (e) => { e.stopPropagation(); finish(m.hat); } }, `Wear the ${hatName(m.hat)}`)));
+    sheet.append(milestoneCard(cat, m, finish));
   }
   if (result.friendship.unlocked) { await wait(500); sheet.append(specialCard(cat, result.friendship.unlocked, finish)); }
   sheet.append(h("div", { class: "row fade-in", style: "justify-content:center" },
@@ -630,8 +774,9 @@ function openHatSheet(id) {
       h("h2", {}, n ? hat.display : "Not found yet"),
       n ? h("span", { class: "tag" }, `${hat.id} · ${hat.name.toUpperCase()}`) : null,
       n && hat.desc ? h("p", { class: "muted" }, hat.desc) : null,
-      h("p", { class: "small" }, n ? `You have ${n}.` : reward ? `Reward for collecting ${reward.threshold} Animal Hoods.`
-        : owner ? `${owner.name}'s special hat. Unlocks at ${Game.FRIENDSHIP.hearts} hearts.` : "Keep opening boxes. It's in there somewhere.")),
+      h("p", { class: "small" }, n ? `You have ${n}.` : reward ? `Reward for collecting ${reward.threshold} ${Game.BOXES[reward.box].name}.`
+        : owner ? `${owner.name}'s special hat. Unlocks at ${Game.FRIENDSHIP.hearts} hearts.`
+        : Game.SHOP.prices[id] ? `Sold in the shop for ${Game.SHOP.prices[id]} 💎.` : "Keep opening boxes. It's in there somewhere.")),
     h("div", { class: "row" },
       n && cat.hat !== id ? h("button", { class: "btn primary", type: "button", onclick: () => { close(); commit(Game.wear(state, cat.id, id)); toast(`${cat.name} is wearing the ${hat.display}.`); } }, `Wear on ${cat.name}`) : null,
       n && cat.hat === id ? h("span", { class: "tag" }, `${cat.name.toUpperCase()} IS WEARING THIS`) : null,
@@ -653,7 +798,7 @@ function openTools() {
         if (result.unlocked) openSpecialSheet(cat.id, result.unlocked); else toast(`+10 friendship with ${cat.name}`);
       } }, `+10 friendship with ${activeCat().name}`),
       h("button", { class: "btn", type: "button", onclick: () => {
-        const coats = Object.keys(D.coats).filter((k) => !owned.has(k));
+        const coats = Object.keys(D.coats).filter((k) => !owned.has(k) && !Game.SHOP.cats[k]);
         if (!coats.length) { toast("Every coat already lives here."); return; }
         const coat = pick(coats), name = pick(NAMES.filter((n) => !state.cats.some((c) => c.name === n)));
         close();
@@ -685,20 +830,24 @@ function render() {
   const view = $("#view");
   view.replaceChildren();
   const onboard = !state;
-  $("#tabs").hidden = onboard; $("#shards").hidden = onboard; $("#tools-btn").hidden = onboard;
+  $("#tabs").hidden = onboard; $("#shards").hidden = onboard; $("#tools-btn").hidden = onboard; $("#featured").hidden = onboard;
   if (onboard) { renderOnboarding(view); return; }
   $("#shards").textContent = `${state.shards} 💎`;
-  const tabs = [["cats", "Cats", "♥"], ["box", "Box", "?"], ["collection", "Collection", "▤"]];
+  $("#featured").replaceChildren(h("span", { class: "star", "aria-hidden": "true" }, "★ "), activeCat().name);
+  $("#featured").setAttribute("aria-label", `Featured cat: ${activeCat().name}`);
+  const tabs = [["cats", "Cats", "♥"], ["box", "Box", "?"], ["collection", "Collection", "▤"], ["shop", "Shop", "◆"]];
   $("#tabs-inner").replaceChildren(...tabs.map(([k, label, glyph]) => h("button", { class: "tab", type: "button", "aria-current": ui.screen === k ? "page" : null, onclick: () => go(k) },
     h("span", { class: "glyph", "aria-hidden": "true" }, glyph), label,
     k === "cats" && !Game.pettedToday(state, activeCat(), Date.now()) ? h("span", { class: "dot", "aria-label": "Wants pets" }) : null,
     k === "box" && Game.canOpen(state, Date.now()) ? h("span", { class: "dot", "aria-label": "Box ready" }) : null,
     k === "collection" && state.unseen.length ? h("span", { class: "dot", "aria-label": "New hats" }) : null)));
-  ({ cats: renderCats, box: renderBox, collection: renderCollection })[ui.screen](view);
+  ui.sellArmed = false;
+  ({ cats: renderCats, box: renderBox, collection: renderCollection, shop: renderShop })[ui.screen](view);
 }
 
 document.documentElement.style.setProperty("--mannequin", `url("${D.mannequin}")`);
 $("#tools-btn").addEventListener("click", openTools);
+$("#featured").addEventListener("click", () => { ui.viewCat = state.activeCat; go("cats"); });
 setInterval(() => {
   if (!state || ui.screen !== "box") return;
   if (Game.canOpen(state, Date.now())) { if (!$(".boxcard")) render(); }

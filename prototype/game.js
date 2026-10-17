@@ -4,16 +4,33 @@
  * Numbers follow the 2022 game: uniform draw over the pool, 0/1/2 bonus shards, milestones never re-awarded.
  */
 const Game = (() => {
-  const POOL = Array.from({ length: 18 }, (_, i) => `AC${String(i + 1).padStart(2, "0")}`);
-  // One box per live set; the player picks which one to open each day. Only Animal Hoods exists in the slice.
-  const BOXES = { animals: { id: "animals", name: "Animal Hoods", pool: POOL } };
+  const ids = (prefix, n) => Array.from({ length: n }, (_, i) => `${prefix}${String(i + 1).padStart(2, "0")}`);
+  const POOL = ids("AC", 18); // Animal Hoods
+  // Every set comes from one place: a daily box, or the shop. Box hats can never be bought.
+  // "Classics" is the 2022 Basic set under a new display name.
+  const SETS = {
+    animals: { id: "animals", name: "Animal Hoods", source: "box", pool: POOL },
+    basic: { id: "basic", name: "Classics", source: "box", pool: ids("AB", 12) },
+    // A shop-only set goes here with source: "shop", plus a price per hat in SHOP.prices. None right now.
+  };
+  // One box per box set; the player picks which one to open each day.
+  const BOXES = Object.fromEntries(Object.entries(SETS).filter(([, set]) => set.source === "box"));
+  // Set rewards, never re-awarded. Reward hats don't count toward their own set.
   const MILESTONES = [
-    { id: "animals-9", threshold: 9, hat: "AC19", shards: 50, label: "Halfway there" },
-    { id: "animals-18", threshold: 18, hat: "AC20", shards: 200, label: "Set complete" },
+    { id: "animals-9", box: "animals", threshold: 9, hat: "AC19", shards: 50, label: "Halfway there" },
+    { id: "animals-18", box: "animals", threshold: 18, hat: "AC20", shards: 200, label: "Set complete" },
+    { id: "basic-6", box: "basic", threshold: 6, hat: null, shards: 50, label: "Halfway there" },
+    { id: "basic-12", box: "basic", threshold: 12, hat: null, shards: 200, label: "Set complete" },
   ];
   // Friendship: pet once a day (+1), open the day's box together (+2). Five hearts unlocks the cat's special hat.
   const FRIENDSHIP = { perHeart: 6, hearts: 5, pet: 1, box: 2 };
   const MAX_FRIENDSHIP = FRIENDSHIP.perHeart * FRIENDSHIP.hearts;
+  // Shop: shop-only sets priced per hat, and special cats to adopt (one of each). Spare hats sell back.
+  const SHOP = {
+    sellPrice: 2,
+    cats: { "*C01": 200, "*C02": 200, "*C03": 200, "*C04": 200 }, // Galaxy, Glass, Meadow, Magma
+    prices: {},
+  };
   const SAVE_VERSION = 1;
 
   /** Local calendar day, shifted by the prototype's "skip a day" offset. */
@@ -81,7 +98,61 @@ const Game = (() => {
     return { state: next, result: befriend(next, catId, points) };
   }
 
-  const uniquePoolHats = (state) => POOL.filter((id) => (state.hats[id] || 0) > 0).length;
+  const uniquePoolHats = (state, set = "animals") => SETS[set].pool.filter((id) => (state.hats[id] || 0) > 0).length;
+
+  /** Award any milestones the player now qualifies for in a box (mutates a cloned state). */
+  function claimMilestones(next, box) {
+    const have = uniquePoolHats(next, box), won = [];
+    for (const m of MILESTONES.filter((x) => x.box === box)) {
+      if (have >= m.threshold && !next.claimed.includes(m.id)) {
+        next.claimed.push(m.id);
+        if (m.hat) {
+          next.hats[m.hat] = (next.hats[m.hat] || 0) + 1;
+          next.unseen.push(m.hat);
+        }
+        next.shards += m.shards;
+        won.push(m);
+      }
+    }
+    return won;
+  }
+
+  const setOf = (hat) => Object.values(SETS).find((set) => set.pool.includes(hat));
+
+  /** Buy one hat from a shop set. Box hats are never for sale. */
+  function buyHat(state, hat) {
+    const price = SHOP.prices[hat];
+    if (!price) throw new Error(`${hat} isn't sold in the shop.`);
+    if (state.hats[hat]) throw new Error(`You already have ${hat}.`);
+    if (state.shards < price) throw new Error("Not enough shards.");
+    const next = structuredClone(state);
+    next.shards -= price;
+    next.hats[hat] = 1;
+    next.unseen.push(hat);
+    return { state: next, result: { hat, price, milestones: claimMilestones(next, setOf(hat).id) } };
+  }
+
+  /** Adopt a special cat from the shop. Each one can only be adopted once. */
+  function adoptFromShop(state, { coat, name, line, special }, now) {
+    const price = SHOP.cats[coat];
+    if (!price) throw new Error(`${coat} isn't in the shop.`);
+    if (state.cats.some((c) => c.coat === coat)) throw new Error("That cat already lives with you.");
+    if (state.shards < price) throw new Error("Not enough shards.");
+    const paid = { ...state, shards: state.shards - price };
+    return adoptCat(paid, { coat, name, line, special }, now);
+  }
+
+  /** Sell spare copies, always keeping one. Omit hat to sell every duplicate. */
+  function sellDuplicates(state, hat) {
+    const next = structuredClone(state);
+    let sold = 0;
+    for (const id of hat ? [hat] : Object.keys(next.hats)) {
+      const extra = (next.hats[id] || 0) - 1;
+      if (extra > 0) { next.hats[id] = 1; sold += extra; }
+    }
+    next.shards += sold * SHOP.sellPrice;
+    return { state: next, result: { sold, shards: sold * SHOP.sellPrice } };
+  }
   const canOpen = (state, now) => state.lastOpenDay !== dayKey(now, state.dayOffset);
 
   /**
@@ -103,16 +174,8 @@ const Game = (() => {
     next.lastOpenDay = dayKey(now, state.dayOffset);
 
     const milestones = [];
-    const have = uniquePoolHats(next);
-    for (const m of MILESTONES) {
-      if (have >= m.threshold && !next.claimed.includes(m.id)) {
-        next.claimed.push(m.id);
-        next.hats[m.hat] = (next.hats[m.hat] || 0) + 1;
-        next.unseen.push(m.hat);
-        next.shards += m.shards;
-        milestones.push(m);
-      }
-    }
+    const have = uniquePoolHats(next, box);
+    milestones.push(...claimMilestones(next, box));
     const friendship = befriend(next, cat, FRIENDSHIP.box);
     next.log.push({ day: next.lastOpenDay, box, cat, hat, isNew, shards, milestones: milestones.map((m) => m.id) });
     return { state: next, result: { hat, shards, isNew, count: next.hats[hat], unique: have, milestones, friendship } };
@@ -124,8 +187,13 @@ const Game = (() => {
     const cat = next.cats.find((c) => c.id === catId);
     if (!cat) throw new Error(`No cat ${catId}.`);
     cat.hat = hat;
-    next.activeCat = catId;
     return next;
+  }
+
+  /** Choose the featured cat: the one who comes to the box (and earns box friendship). */
+  function feature(state, catId) {
+    if (!state.cats.some((c) => c.id === catId)) throw new Error(`No cat ${catId}.`);
+    return { ...state, activeCat: catId };
   }
 
   function adoptCat(state, { coat, name, line, special }, now) {
@@ -152,8 +220,9 @@ const Game = (() => {
     return { ...state, dayOffset: state.dayOffset + 1 };
   }
 
-  return { POOL, BOXES, MILESTONES, FRIENDSHIP, MAX_FRIENDSHIP, SAVE_VERSION, dayKey, newGame, normalize, hearts, pet, pettedToday, addFriendship,
-    uniquePoolHats, canOpen, openBox, wear, adoptCat, renameCat, markSeen, skipDay };
+  return { POOL, SETS, BOXES, MILESTONES, FRIENDSHIP, MAX_FRIENDSHIP, SHOP, SAVE_VERSION, dayKey, newGame, normalize, hearts, pet, pettedToday, addFriendship,
+    setOf, buyHat, adoptFromShop, sellDuplicates,
+    uniquePoolHats, canOpen, openBox, wear, feature, adoptCat, renameCat, markSeen, skipDay };
 })();
 
 if (typeof module !== "undefined") module.exports = Game;

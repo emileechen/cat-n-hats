@@ -230,7 +230,7 @@ Sources: the main sheet's **Planning** tab (To Do list, one column per set idea)
 | **Birds** ("finish birds hat collection" was on the To Do list) | **11:** Secretary Bird, Great Horned Owl, Flamingo, Swan, Black Swan, Chestnut-backed Chickadee, Black-capped Chickadee, Blackburnian Warbler, Yellow(-rumped) Warbler, Cerulean Warbler (m), Cerulean Warbler (f). The 2023 sheet leaves slot #4 blank. | Hummingbird, Barn Swallow, Peacock, Dove with Olive Crown |
 | **Food** ("finish food hat collection" was on the To Do list) | **5:** Fried Egg, Pancakes, Pancakes Cut (listed as "Eaten" in the sheet), Pancakes Fruit, Pancakes Ombre | Spaghetti, Corn, Yam, Mini Broccoli Clips, Ice Cream, Taiyaki?; "Sunny Side Up" is probably the Fried Egg |
 | **Winter** (the 2023 sheet's name for the 2022 holiday art) | **2:** String Lights Multi, String Lights Warm | Earmuffs |
-| Fruit | **1:** Strawberry | Lime Slice, Lemon Slice, Cherry on Top, Watermelon |
+| Fruit (planned as a full set) | **1:** Strawberry | Lime Slice, Lemon Slice, Cherry on Top, Watermelon |
 | Water Animals | — | Axolotl, Crab, Shark, Fish, Fish Eating Head |
 | Costume | — | Witch, Halo, Horns, Masquerade, Flame, Knight's Helm |
 | Streetwear | — | Headphones, Headband, Straw Hat, Glasses, Sunglasses, Headband (listed twice) |
@@ -339,7 +339,7 @@ These came out of playing the vertical slice (`prototype/`). They override the s
 
 - **Cats are individuals, not paint.** Each cat has its own coat, which is part of who they are. You adopt your first cat from four who are waiting for a home, and more cats join slowly; how they arrive is still open. Hats are what you collect and swap. This replaces "cat colours as paintbrushes" (§4, §5.1, §5.4) and turns colour rewards and Shop Exclusive colours into cats (§5.3, §5.5, §5.9).
 - **One box per player per day, and the player picks which set's box to open.** Hats are drawn evenly from that set only. New sets arrive as new boxes, and the shared pool no longer slows every set down as it grows (§5.2).
-- **Your featured cat comes to the box.** You choose the featured cat on the Cats tab, and the hat drops onto them. Owning more cats never means more boxes.
+- **Your featured cat comes to the box.** On the Cats tab, the cat picker is just for browsing; a separate "Make … your featured cat" button chooses who comes to the box, and the top bar shows "★ name". Dressing up a cat doesn't change who's featured. The hat drops onto the featured cat. Owning more cats never means more boxes.
 - **Friendship.** Each cat has friendship points.
   - Pet a cat once a day for +1; more pets are just for fun. Opening the day's box together is +2.
   - Five hearts (30 points) unlocks **that cat's special hat**: about 10 days for a featured cat you pet daily.
@@ -351,6 +351,15 @@ These came out of playing the vertical slice (`prototype/`). They override the s
   - **Collection:** each set, with progress and rewards, plus a Friendship hats row
 - **Collection shows each hat on the mannequin.** Hats you haven't found show as silhouettes. Reward hats sit inside their set on a gold tile.
 - **Animal Hoods is complete at 18** (the reward hats don't count toward their own set).
+- **Every set's completion reward is a hat for that set, plus 💎.** The halfway reward is 💎, plus optionally more: a set-themed hat if you've drawn one (as with the Crowned Froggy), or possibly a new cat. In practice a set costs one extra hat to draw. Classics (the 2022 Basic set, renamed so Streetwear stays free for its planned set) still needs its completion hat; for now it gives 💎 only.
+- **Set sizes are multiples of 4.** A set's box (or shop) hats plus its reward hats must add up to a multiple of 4, because sets display 4 across. Today: Animal Hoods 18 + 2 = 20 ✅. Classics 12 + 1 = 13 ❌ (draw 3 more → 16, or retire one → 12). Planned: Birds 15 + Dove = 16. Fruit 7 + 1 or 11 + 1. **[Decide]** how to fix Classics.
+- **Every set comes from exactly one place: a daily box or the shop.** Box hats are never for sale, so finding them stays the point of the box.
+- **The shop sells its own sets.** You buy the specific hat you want, priced per hat, and those hats never come from a box.
+  - **No shop sets for now.** A trial Brunch set (the drawn Food art) was removed on 2026-10-13. The shop currently holds the special cats and selling duplicates.
+  - The **Strawberry stays out of Brunch.** It belongs to a full **Fruit** set, still to be drawn.
+- **Spare copies sell for 2 💎 each,** and you always keep one.
+- **Special cats are adopted in the shop:** Galaxy, Glass, Meadow and Magma, 200 💎 each (the 2022 price), one of each. A new cat becomes featured, with its own friendship track and special hat.
+- **Still open:** does a shop set have a completion hat too? Does stock rotate? Do everyday cats (tabbies, calicos) arrive some other way, for example at halfway milestones (undecided)? **[Decide]** These replace the shop sketched in §5.7–§5.9.
 - **No icons anywhere.** Hats show on the mannequin (Collection, dress-up picker, box history) or on the cat. The cat card's name plate is just the name.
 
 ---

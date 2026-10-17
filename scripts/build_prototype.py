@@ -24,7 +24,7 @@ def uri(path):
 def build_data():
     hats = {}
     for h in json.loads((CATALOG / "hats.json").read_text()):
-        if h["set"] != "Animals":
+        if h["set"] not in ("Animals", "Basic"):
             continue
         display, short = REWARD_NAMES.get(h["id"], (h["display_name"], h["display_name"]))
         desc = (h["description"] or "").replace("🎁 Reward.", "").strip() or None
@@ -44,8 +44,7 @@ def build_data():
                               "layer": uri(ART / "extras" / "prototype-hats" / f"{slug}.png")}
     order = STARTERS + [c for c in coats if c not in STARTERS]
     special_by_coat = {coat: f"SP-{specials[i % len(specials)][0]}" for i, coat in enumerate(order)}
-    locked = [{"name": "Basic Hats", "layer": uri(ART / "hats/basic/partyhat-blue.png")},
-              {"name": "Birds", "layer": uri(ART / "hats/birds/flamingo.png")}]
+    locked = [{"name": "Birds", "layer": uri(ART / "hats/birds/flamingo.png")}]
     return {"hats": hats, "coats": coats, "starters": STARTERS, "lines": lines,
             "mannequin": uri(ART / "mannequin.png"), "lockedBoxes": locked, "specialByCoat": special_by_coat}
 
