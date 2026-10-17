@@ -4,7 +4,7 @@ A cozy pixel-art collection game where you collect more hats than cats. It origi
 
 ## Play the playtest
 
-**https://emileechen.github.io/cat-n-hats/**
+**https://www.emileechen.com/cat-n-hats/**
 
 This is the vertical-slice prototype, rebuilt and published automatically on every push to `main` (`.github/workflows/pages.yml`). Progress is saved in your browser only, so it won't follow you to another device, and clearing site data starts you over. TOOLS (top right) skips days and speeds things up for testing.
 
