@@ -1,9 +1,11 @@
 """Bundle the vertical-slice prototype into one self-contained page.
 
 Usage:
-    python3 scripts/build_prototype.py        # writes build/prototype.html
+    python3 scripts/build_prototype.py        # writes build/prototype.html and build/site/index.html
 
-Inlines prototype/game.js and the Animal Hoods + cat coat art (as data URIs) into prototype/app.html.
+Inlines prototype/game.js and the hat and cat coat art (as data URIs) into prototype/app.html.
+build/prototype.html is the body-only page for a claude.ai artifact (which supplies the document wrapper);
+build/site/index.html is a complete document for static hosting such as GitHub Pages.
 """
 
 import base64
@@ -49,6 +51,24 @@ def build_data():
             "mannequin": uri(ART / "mannequin.png"), "lockedBoxes": locked, "specialByCoat": special_by_coat}
 
 
+STANDALONE_HEAD = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Cats & Hats: a cozy pixel-art game where you collect more hats than cats. Playtest build.">
+<link rel="icon" type="image/png" href="{icon}">
+<link rel="apple-touch-icon" href="{icon}">
+<style>
+  html {{ -webkit-text-size-adjust: 100%; }}
+  body {{ margin: 0; }}
+  :root {{ padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }}
+  img {{ max-width: 100%; }}
+  [hidden] {{ display: none !important; }}
+</style>
+"""
+
+
 def main():
     page = (ROOT / "prototype" / "app.html").read_text()
     page = page.replace("/*__GAME__*/", (ROOT / "prototype" / "game.js").read_text())
@@ -57,6 +77,13 @@ def main():
     out.parent.mkdir(exist_ok=True)
     out.write_text(page)
     print(f"Wrote {out.relative_to(ROOT)} ({out.stat().st_size // 1024} KB)")
+
+    # The page's <title>, <link> and <style> stay in the body, which browsers accept.
+    site = ROOT / "build" / "site" / "index.html"
+    site.parent.mkdir(exist_ok=True)
+    head = STANDALONE_HEAD.format(icon=uri(ART / "cats" / "orange.png"))
+    site.write_text(head + "</head>\n<body>\n" + page + "\n</body>\n</html>\n")
+    print(f"Wrote {site.relative_to(ROOT)} ({site.stat().st_size // 1024} KB)")
 
 
 if __name__ == "__main__":

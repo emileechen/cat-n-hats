@@ -2,6 +2,12 @@
 
 A cozy pixel-art collection game where you collect more hats than cats. It originally ran by hand on the Secundi Discord in 2022 and is being rebuilt as a mobile-first web app.
 
+## Play the playtest
+
+**https://emileechen.github.io/cat-n-hats/**
+
+This is the vertical-slice prototype, rebuilt and published automatically on every push to `main` (`.github/workflows/pages.yml`). Progress is saved in your browser only, so it won't follow you to another device, and clearing site data starts you over. TOOLS (top right) skips days and speeds things up for testing.
+
 ## What's here
 
 | Path | What it is |
@@ -21,7 +27,7 @@ The Python scripts need Pillow (`pip install pillow`); `extract_sheet.py` also n
 
 ```bash
 node --test prototype/game.test.js                 # game rule tests
-python3 scripts/build_prototype.py                 # -> build/prototype.html
+python3 scripts/build_prototype.py                 # -> build/prototype.html and build/site/index.html
 python3 scripts/build_asset_browser.py             # -> build/asset-browser.html
 python3 scripts/check_art.py --sheet build/all-hats-on-all-cats.png
 python3 scripts/extract_sheet.py data/source/cats-and-hats-sheet-2026-10-08.xlsx data
